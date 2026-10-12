@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BRIL Online Fee Payment Portal | Brilliant Institute of Engineering and Technology</title>
+    <meta name="description" content="Official Online Fee Payment Portal for Brilliant Institute of Engineering & Technology (BRIL), Hyderabad. Pay Tuition, Exam, Transport, and Admission fees securely via PhonePe, Google Pay, Paytm, UPI, Cards, and Net Banking.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- QR Code Generator Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- 1. Top Announcement Marquee -->
+    <header class="top-announcement-bar">
+        <div class="announcement-badge">
+            <i class="fas fa-bullhorn"></i> Fee Portal Notice
+        </div>
+        <div class="announcement-marquee">
+            <span class="marquee-text">
+                🎓 <strong>Academic Year 2026-27 Fee Payment is Now Live!</strong> Pay Tuition, Autonomous / JNTU-H Exam Fees, Transcript Fees (₹60), and Transport Passes securely via PhonePe, Google Pay, Paytm &amp; UPI. For billing support, call: <a href="tel:+919908810491">+91-990-881-0491</a> | Email: <a href="mailto:accounts@b-iet.ac.in">accounts@b-iet.ac.in</a>
+            </span>
+        </div>
+    </header>
+
+    <!-- 2. Header Top Bar -->
+    <div class="header-top-bar">
+        <div class="container-fluid top-bar-content">
+            <div class="top-contacts">
+                <a href="mailto:info@bgti.in"><i class="fas fa-envelope"></i> info@bgti.in</a>
+                <a href="tel:+919908810491"><i class="fas fa-phone"></i> +91-990-881-0491</a>
+                <span class="campus-address"><i class="fas fa-map-marker-alt"></i> Abdullapurmet, Hyderabad - 501 513</span>
+            </div>
+            <div class="top-nav-links">
+                <a href="https://b-iet.ac.in" target="_blank" class="top-link"><i class="fas fa-globe"></i> Main Website</a>
+                <a href="http://b-ieterp.in/examcell/examresults" target="_blank" class="top-badge-link"><i class="fas fa-poll-h"></i> Results</a>
+                <a href="https://webprosindia.com/bril/Default.aspx" target="_blank" class="top-link"><i class="fas fa-user-circle"></i> E-CAP Login</a>
+                <button id="lookupReceiptBtn" class="receipt-lookup-btn"><i class="fas fa-receipt"></i> Find Past Receipt</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Main Branding Header -->
+    <div class="main-header">
+        <div class="container-fluid header-container">
+            <div class="header-brand-wrap">
+                <div class="logo-box">
+                    <img src="https://b-iet.ac.in/images/bril-logo.webp" alt="BRIL Logo" onerror="this.src='https://b-iet.ac.in/images/bril-new-logo.webp'">
+                </div>
+                <div class="institute-info">
+                    <h1 class="inst-name">BRILLIANT INSTITUTE OF ENGINEERING &amp; TECHNOLOGY</h1>
+                    <div class="inst-autonomous-tag">UGC AUTONOMOUS INSTITUTION</div>
+                    <div class="inst-accreditation">Accredited by NAAC with "A" Grade &bull; Approved by AICTE &bull; Affiliated to JNTU-Hyderabad</div>
+                    <div class="inst-location">Abdullapur (V), Abdullapurmet (M), Rangareddy Dist, Hyderabad - 501513, Telangana</div>
+                </div>
+            </div>
+
+            <!-- Accreditation Badges & Code -->
+            <div class="header-right-badges">
+                <div class="eamcet-pill">
+                    <span class="eamcet-label">EAPCET / ECET / ICET Code</span>
+                    <span class="eamcet-code">BRIL</span>
+                </div>
+                <div class="accreditation-badges">
+                    <span class="badge-item" title="18 Years of Academic Excellence"><strong>18+</strong> Yrs</span>
+                    <span class="badge-item" title="AICTE Approved">AICTE</span>
+                    <span class="badge-item" title="JNTU-H Affiliated">JNTU-H</span>
+                    <span class="badge-item" title="UGC Autonomous">UGC</span>
+                    <span class="badge-item badge-naac" title="NAAC A Grade">NAAC 'A'</span>
+                    <span class="badge-item badge-nirf" title="NIRF Ranked">NIRF</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. Portal Navigation Bar -->
+    <nav class="portal-nav">
+        <div class="container-fluid nav-container">
+            <div class="nav-brand-title">
+                <i class="fas fa-shield-halved"></i>
+                <span>ONLINE FEE PAYMENT GATEWAY</span>
+            </div>
+            <div class="nav-links">
+                <a href="#payment-container" class="active"><i class="fas fa-credit-card"></i> Pay Fees Online</a>
+                <a href="#fee-categories"><i class="fas fa-layer-group"></i> Fee Structure</a>
+                <a href="#quick-verify"><i class="fas fa-qrcode"></i> Scan &amp; Pay QR</a>
+                <a href="#faq-section"><i class="fas fa-circle-question"></i> Help &amp; FAQs</a>
+            </div>
+            <div class="gateway-live-pill">
+                <span class="pulse-dot"></span>
+                <span>Payment Server: Active</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 5. Main Hero / Gateway Container -->
+    <main class="page-main" id="payment-container">
+        <div class="portal-grid">
+            
+            <!-- Left Side: Student Identification & Fee Selection Form -->
+            <section class="portal-card payment-form-card">
+                <div class="card-header-bar">
+                    <div class="header-title-box">
+                        <span class="step-num">Step 1</span>
+                        <h2>Student &amp; Fee Details</h2>
+                    </div>
+                    <div class="mode-selector">
+                        <button type="button" class="btn-demo-quick" id="quickFillDemoBtn" title="Auto-fill with sample student data for testing">
+                            <i class="fas fa-wand-magic-sparkles"></i> Auto Fill Sample
+                        </button>
+                    </div>
+                </div>
+
+                <form id="feePaymentForm" onsubmit="event.preventDefault(); initiatePaymentFlow();">
+                    
+                    <!-- Search Roll Number / Identification -->
+                    <div class="form-section">
+                        <label class="section-label"><i class="fas fa-id-card"></i> Student Identification</label>
+                        <div class="form-row-2">
+                            <div class="form-group">
+                                <label for="studentRoll">Hall Ticket / Roll / Application No. <span class="req">*</span></label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-fingerprint"></i>
+                                    <input type="text" id="studentRoll" placeholder="e.g., 22BR1A0501 or 2026-ADM-108" required maxlength="15" autocomplete="off">
+                                </div>
+                                <span class="input-hint">Enter your 10-digit JNTU/BRIL Hall Ticket or Admission Number</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="academicProgram">Course &amp; Department <span class="req">*</span></label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    <select id="academicProgram" required>
+                                        <option value="">-- Select Course / Branch --</option>
+                                        <optgroup label="B.Tech (Undergraduate)">
+                                            <option value="B.Tech - Computer Science & Engineering (CSE)">B.Tech - CSE</option>
+                                            <option value="B.Tech - CSE (AI & Machine Learning)">B.Tech - CSE (AIML)</option>
+                                            <option value="B.Tech - Computer Engineering (Software Engineering)">B.Tech - CSE (SE)</option>
+                                            <option value="B.Tech - CSE (Data Science)">B.Tech - CSE (Data Science)</option>
+                                            <option value="B.Tech - CSE (Cyber Security)">B.Tech - CSE (Cyber Security)</option>
+                                            <option value="B.Tech - Electronics & Communication (ECE)">B.Tech - ECE</option>
+                                            <option value="B.Tech - Electrical & Electronics (EEE)">B.Tech - EEE</option>
+                                            <option value="B.Tech - Mechanical Engineering">B.Tech - Mechanical</option>
+                                            <option value="B.Tech - Civil Engineering">B.Tech - Civil</option>
+                                        </optgroup>
+                                        <optgroup label="Postgraduate & Diploma">
+                                            <option value="MBA - Master of Business Administration">MBA</option>
+                                            <option value="M.Tech - Computer Science & Engineering">M.Tech - CSE</option>
+                                            <option value="M.Tech - VLSI System Design">M.Tech - VLSI</option>
+                                            <option value="Diploma - Polytechnic (All Branches)">Polytechnic / Diploma</option>
+                                        </optgroup>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row-3">
+                            <div class="form-group">
+                                <label for="studentName">Student Full Name <span class="req">*</span></label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-user"></i>
+                                    <input type="text" id="studentName" placeholder="As registered with college" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="studentMobile">Mobile Number <span class="req">*</span></label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-phone"></i>
+                                    <input type="tel" id="studentMobile" placeholder="10-digit mobile number" pattern="[0-9]{10}" maxlength="10" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="studentEmail">Email ID (for e-Receipt) <span class="req">*</span></label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-envelope"></i>
+                                    <input type="email" id="studentEmail" placeholder="student@example.com" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Fee Category & Breakdown -->
+                    <div class="form-section">
+                        <label class="section-label"><i class="fas fa-money-check-dollar"></i> Fee Category &amp; Amount</label>
+
+                        <div class="fee-category-cards">
+                            <label class="fee-cat-card active">
+                                <input type="radio" name="feeCategory" value="tuition" checked onchange="handleCategoryChange(this.value)">
+                                <div class="cat-icon"><i class="fas fa-book-open-reader"></i></div>
+                                <div class="cat-details">
+                                    <strong>College Tuition Fee</strong>
+                                    <span>Semester / Annual Dues</span>
+                                </div>
+                            </label>
+
+                            <label class="fee-cat-card">
+                                <input type="radio" name="feeCategory" value="exam" onchange="handleCategoryChange(this.value)">
+                                <div class="cat-icon"><i class="fas fa-file-invoice"></i></div>
+                                <div class="cat-details">
+                                    <strong>Exam &amp; Transcript</strong>
+                                    <span>Regular, Supply, ₹60 Transcripts</span>
+                                </div>
+                            </label>
+
+                            <label class="fee-cat-card">
+                                <input type="radio" name="feeCategory" value="admission" onchange="handleCategoryChange(this.value)">
+                                <div class="cat-icon"><i class="fas fa-user-plus"></i></div>
+                                <div class="cat-details">
+                                    <strong>Admission / Registration</strong>
+                                    <span>Application &amp; Processing</span>
+                                </div>
+                            </label>
+
+                            <label class="fee-cat-card">
+                                <input type="radio" name="feeCategory" value="transport" onchange="handleCategoryChange(this.value)">
+                                <div class="cat-icon"><i class="fas fa-bus-simple"></i></div>
+                                <div class="cat-details">
+                                    <strong>Bus / Transport Pass</strong>
+                                    <span>Hyderabad &amp; Secunderabad</span>
+                                </div>
+                            </label>
+
+                            <label class="fee-cat-card">
+                                <input type="radio" name="feeCategory" value="hostel" onchange="handleCategoryChange(this.value)">
+                                <div class="cat-icon"><i class="fas fa-hotel"></i></div>
+                                <div class="cat-details">
+                                    <strong>Hostel &amp; Mess</strong>
+                                    <span>Accommodation Charges</span>
+                                </div>
+                            </label>
+
+                            <label class="fee-cat-card">
+                                <input type="radio" name="feeCategory" value="custom" onchange="handleCategoryChange(this.value)">
+                                <div class="cat-icon"><i class="fas fa-receipt"></i></div>
+                                <div class="cat-details">
+                                    <strong>Other / Miscellaneous</strong>
+                                    <span>Custom dues &amp; certifications</span>
+                                </div>
+                            </label>
+                        </div>
+
+                        <!-- Dynamic Sub-Options Container -->
+                        <div id="dynamicSubOptions" class="dynamic-suboptions">
+                            <!-- Populated via JavaScript depending on selected category -->
+                        </div>
+
+                        <!-- Amount Specification Row -->
+                        <div class="form-row-2 amount-specification-row">
+                            <div class="form-group">
+                                <label for="feePurpose">Fee Head / Remarks <span class="req">*</span></label>
+                                <input type="text" id="feePurpose" readonly value="B.Tech Annual Tuition Fee - Sem I/II">
+                            </div>
+
+                            <div class="form-group amount-display-group">
+                                <label for="payableAmount">Amount to Pay (INR ₹) <span class="req">*</span></label>
+                                <div class="input-with-icon amount-box">
+                                    <span class="currency-symbol">₹</span>
+                                    <input type="number" id="payableAmount" min="10" step="1" value="35000" required>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-submit-row">
+                        <button type="submit" class="btn-proceed-pay" id="proceedPayBtn">
+                            <span class="btn-icon"><i class="fas fa-lock"></i></span>
+                            <span class="btn-text">Proceed to Payment Gateway &nbsp;•&nbsp; <strong id="btnPayAmount">₹35,000</strong></span>
+                            <span class="btn-arrow"><i class="fas fa-arrow-right"></i></span>
+                        </button>
+                    </div>
+
+                    <div class="security-guarantee-note">
+                        <i class="fas fa-shield-check"></i>
+                        <span>End-to-End 256-Bit SSL Encryption. Supported: PhonePe &bull; Google Pay &bull; Paytm &bull; UPI Apps &bull; All Bank Debit/Credit Cards &bull; 50+ NetBanking Options.</span>
+                    </div>
+
+                </form>
+            </section>
+
+            <!-- Right Side: Gateway Selector, Live UPI QR, Fee Summary & Quick Actions -->
+            <aside class="portal-card gateway-summary-card">
+                <div class="card-header-bar">
+                    <div class="header-title-box">
+                        <span class="step-num">Step 2</span>
+                        <h2>Instant Payment Modes</h2>
+                    </div>
+                    <span class="instant-settle-pill"><i class="fas fa-bolt"></i> Instant e-Receipt</span>
+                </div>
+
+                <!-- Instant UPI Apps Box -->
+                <div class="upi-apps-highlight-box">
+                    <div class="apps-title">
+                        <span>Preferred Payment Apps</span>
+                        <span class="zero-fee">0% Convenience Fee</span>
+                    </div>
+
+                    <div class="upi-apps-grid">
+                        <!-- PhonePe -->
+                        <button type="button" class="app-chip app-phonepe" onclick="selectQuickUpiApp('PhonePe')">
+                            <div class="app-logo phonepe-logo">
+                                <i class="fas fa-mobile-screen"></i>
+                            </div>
+                            <div class="app-info">
+                                <strong>PhonePe</strong>
+                                <span>UPI &amp; Wallet</span>
+                            </div>
+                            <span class="app-badge"><i class="fas fa-check"></i></span>
+                        </button>
+
+                        <!-- Google Pay -->
+                        <button type="button" class="app-chip app-gpay" onclick="selectQuickUpiApp('Google Pay')">
+                            <div class="app-logo gpay-logo">
+                                <i class="fab fa-google"></i>
+                            </div>
+                            <div class="app-info">
+                                <strong>Google Pay</strong>
+                                <span>Tez UPI</span>
+                            </div>
+                            <span class="app-badge"><i class="fas fa-check"></i></span>
+                        </button>
+
+                        <!-- Paytm -->
+                        <button type="button" class="app-chip app-paytm" onclick="selectQuickUpiApp('Paytm')">
+                            <div class="app-logo paytm-logo">
+                                <i class="fas fa-wallet"></i>
+                            </div>
+                            <div class="app-info">
+                                <strong>Paytm</strong>
+                                <span>UPI / Wallet / Postpaid</span>
+                            </div>
+                            <span class="app-badge"><i class="fas fa-check"></i></span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Dynamic Real-Time UPI QR Box -->
+                <div class="instant-qr-container" id="quick-verify">
+                    <div class="qr-header">
+                        <div class="qr-title-text">
+                            <i class="fas fa-qrcode"></i>
+                            <div>
+                                <strong>Instant Dynamic UPI QR</strong>
+                                <small>Scan using PhonePe, GPay, Paytm or BHIM</small>
+                            </div>
+                        </div>
+                        <span class="vpa-tag">brilcollege@sbi</span>
+                    </div>
+
+                    <div class="qr-code-wrapper">
+                        <div id="dynamicQRElement" class="qr-canvas-holder">
+                            <!-- Canvas generated via QRCode JS -->
+                        </div>
+                        <div class="qr-overlay-brand">
+                            <span class="qr-bril-badge">BRIL</span>
+                        </div>
+                    </div>
+
+                    <div class="qr-amount-indicator">
+                        <span>Payable Now:</span>
+                        <strong id="qrAmountDisplay">₹35,000</strong>
+                    </div>
+
+                    <div class="qr-scan-instructions">
+                        <span><i class="fas fa-camera"></i> Open any UPI App</span>
+                        <span>&bull;</span>
+                        <span><i class="fas fa-expand"></i> Scan QR</span>
+                        <span>&bull;</span>
+                        <span><i class="fas fa-check-circle"></i> Instant e-Receipt</span>
+                    </div>
+                </div>
+
+                <!-- Current Summary Box -->
+                <div class="fee-summary-box">
+                    <div class="summary-header">
+                        <i class="fas fa-receipt"></i>
+                        <span>Payment Summary Preview</span>
+                    </div>
+                    <div class="summary-line">
+                        <span>Student Reference:</span>
+                        <strong id="summaryRoll">22BR1A0501</strong>
+                    </div>
+                    <div class="summary-line">
+                        <span>Fee Head:</span>
+                        <strong id="summaryHead">Tuition Fee</strong>
+                    </div>
+                    <div class="summary-line">
+                        <span>Base Amount:</span>
+                        <strong id="summaryBase">₹35,000.00</strong>
+                    </div>
+                    <div class="summary-line">
+                        <span>Gateway Processing Fee:</span>
+                        <strong class="text-free">₹0.00 (Waived)</strong>
+                    </div>
+                    <div class="summary-line total-line">
+                        <span>Total Payable:</span>
+                        <strong id="summaryTotal">₹35,000.00</strong>
+                    </div>
+                </div>
+
+                <!-- Verified College Bank Seal -->
+                <div class="college-seal-box">
+                    <div class="seal-icon"><i class="fas fa-building-columns"></i></div>
+                    <div class="seal-text">
+                        <strong>State Bank of India (SBI) Institutional Account</strong>
+                        <p>Brilliant Institute of Engineering &amp; Technology &bull; A/C: 38290192831 &bull; IFSC: SBIN0020491 &bull; Abdullapurmet Branch</p>
+                    </div>
+                </div>
+
+            </aside>
+
+        </div>
+    </main>
+
+    <!-- 6. Features & Highlights Row -->
+    <section class="portal-features-section" id="fee-categories">
+        <div class="container-fluid">
+            <h3 class="section-heading text-center">Comprehensive Fee Support for All College Operations</h3>
+            <p class="section-subheading text-center">Eliminating physical queues at SBI bank counters and college cash offices</p>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feat-icon"><i class="fas fa-graduation-cap"></i></div>
+                    <h4>B.Tech, MBA &amp; Diploma</h4>
+                    <p>Pay semester-wise or annual tuition fee with instant ledger reconciliation and e-CAP ERP sync.</p>
+                </div>
+
+                <div class="feature-card highlight-card">
+                    <div class="feat-icon"><i class="fas fa-file-shield"></i></div>
+                    <h4>Exam Branch &amp; Transcripts</h4>
+                    <p>Direct ₹60/copy transcript fee payment replacing traditional SBI Challan or offline Demand Drafts (DD).</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feat-icon"><i class="fas fa-bus"></i></div>
+                    <h4>College Bus Pass</h4>
+                    <p>Semester transportation fee covering 15+ RTC routes across Dilsukhnagar, LB Nagar, Uppal &amp; ECIL.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feat-icon"><i class="fas fa-stamp"></i></div>
+                    <h4>Instant Digital Receipt</h4>
+                    <p>Auto-generated digitally signed PDF receipt with unique reference code, accepted at administrative desks.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. FAQ & Help Section -->
+    <section class="portal-faq-section" id="faq-section">
+        <div class="container-fluid">
+            <h3 class="section-heading text-center">Frequently Asked Questions</h3>
+            
+            <div class="faq-accordion-grid">
+                <details class="faq-item" open>
+                    <summary><strong>Can I pay using PhonePe, Google Pay, or Paytm directly from my phone?</strong></summary>
+                    <p>Yes! Our portal supports instant UPI intent. When using a mobile device, clicking on PhonePe, Google Pay, or Paytm will directly launch the app. On desktop or laptop, you can simply scan the dynamic on-screen QR code with any UPI app.</p>
+                </details>
+
+                <details class="faq-item">
+                    <summary><strong>How does this replace the offline SBI Challan for Exam Transcripts?</strong></summary>
+                    <p>Previously, students had to visit an SBI branch to deposit ₹60 per transcript copy. Now, select "Exam &amp; Transcript Fee" on this portal, enter the number of copies, and pay ₹60 via PhonePe/GPay/Paytm. Print the generated e-Receipt and attach it to your transcript application form.</p>
+                </details>
+
+                <details class="faq-item">
+                    <summary><strong>What happens if the money is debited but the receipt is not generated?</strong></summary>
+                    <p>Every transaction has a unique gateway reference. In rare network interruptions, click the <strong>"Find Past Receipt"</strong> button in the top navigation and enter your Roll Number or Phone Number to fetch your verified payment slip.</p>
+                </details>
+
+                <details class="faq-item">
+                    <summary><strong>Can educational loans or Net Banking be used for tuition fee?</strong></summary>
+                    <p>Yes. The gateway accepts Net Banking across 50+ major banks (SBI, HDFC, ICICI, Axis, Union Bank, etc.) as well as RuPay, Visa, and MasterCard debit/credit cards.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. Footer -->
+    <footer class="portal-footer">
+        <div class="container-fluid footer-content">
+            <div class="footer-col">
+                <h5>Brilliant Institute of Engineering &amp; Technology</h5>
+                <p>Ramoji Film City, Abdullahpurmet (M), Near Abdullapur, Hyderabad, Telangana - 501513</p>
+                <p>UGC Autonomous &bull; NAAC 'A' Grade &bull; AICTE Approved &bull; Affiliated to JNTUH</p>
+            </div>
+            <div class="footer-col">
+                <h5>Accounts &amp; Payment Desk</h5>
+                <p><i class="fas fa-phone"></i> Admissions &amp; Fees: +91-990-881-0491</p>
+                <p><i class="fas fa-phone"></i> Exam Branch: +91-960-800-1234</p>
+                <p><i class="fas fa-envelope"></i> accounts@b-iet.ac.in | principal@b-iet.ac.in</p>
+            </div>
+            <div class="footer-col">
+                <h5>Accepted Modes</h5>
+                <div class="footer-badges">
+                    <span class="f-badge"><i class="fas fa-mobile-screen"></i> PhonePe</span>
+                    <span class="f-badge"><i class="fab fa-google"></i> Google Pay</span>
+                    <span class="f-badge"><i class="fas fa-wallet"></i> Paytm</span>
+                    <span class="f-badge"><i class="fas fa-qrcode"></i> BHIM UPI</span>
+                    <span class="f-badge"><i class="fas fa-credit-card"></i> Cards &amp; NetBanking</span>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Brilliant Institute of Engineering and Technology (BRIL). All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- ======================================================== -->
+    <!-- MODAL 1: Interactive Payment Gateway Checkout Modal     -->
+    <!-- ======================================================== -->
+    <div id="paymentGatewayModal" class="modal-overlay">
+        <div class="modal-card">
+            
+            <div class="modal-header">
+                <div class="modal-inst-badge">
+                    <img src="https://b-iet.ac.in/images/bril-logo.webp" alt="BRIL Logo" class="modal-logo">
+                    <div>
+                        <h3>BRIL SECURE PAYMENT GATEWAY</h3>
+                        <span>Merchant: Brilliant Institute of Engineering and Technology</span>
+                    </div>
+                </div>
+                <button type="button" class="modal-close-btn" onclick="closePaymentModal()">&times;</button>
+            </div>
+
+            <!-- Amount Banner in Modal -->
+            <div class="modal-amount-banner">
+                <div class="m-amt-label">Paying For: <strong id="modalFeeTitle">B.Tech Annual Tuition Fee</strong></div>
+                <div class="m-amt-value" id="modalFeeValue">₹35,000</div>
+            </div>
+
+            <!-- Payment Tabs -->
+            <div class="gateway-tabs-wrap">
+                <div class="gateway-tabs-nav">
+                    <button type="button" class="tab-btn active" onclick="switchGatewayTab('upi')">
+                        <i class="fas fa-mobile-screen-button"></i> UPI &amp; Apps
+                    </button>
+                    <button type="button" class="tab-btn" onclick="switchGatewayTab('qr')">
+                        <i class="fas fa-qrcode"></i> Scan QR Code
+                    </button>
+                    <button type="button" class="tab-btn" onclick="switchGatewayTab('card')">
+                        <i class="fas fa-credit-card"></i> Debit / Credit Card
+                    </button>
+                    <button type="button" class="tab-btn" onclick="switchGatewayTab('netbanking')">
+                        <i class="fas fa-building-columns"></i> Net Banking
+                    </button>
+                </div>
+
+                <!-- Tab 1: UPI Apps & VPA -->
+                <div id="tab-upi" class="tab-content active">
+                    <div class="tab-inner-box">
+                        <h4 class="tab-subheading">Select your UPI Application</h4>
+
+                        <div class="modal-upi-apps">
+                            <!-- PhonePe Button -->
+                            <div class="modal-app-choice" onclick="executeAppPayment('PhonePe')">
+                                <div class="choice-icon pp-color"><i class="fas fa-mobile-screen"></i></div>
+                                <div class="choice-text">
+                                    <strong>PhonePe</strong>
+                                    <span>Fast UPI &amp; Auto-pay</span>
+                                </div>
+                                <button type="button" class="btn-app-pay">Pay with PhonePe</button>
+                            </div>
+
+                            <!-- Google Pay Button -->
+                            <div class="modal-app-choice" onclick="executeAppPayment('Google Pay')">
+                                <div class="choice-icon gp-color"><i class="fab fa-google"></i></div>
+                                <div class="choice-text">
+                                    <strong>Google Pay</strong>
+                                    <span>Google UPI Instant</span>
+                                </div>
+                                <button type="button" class="btn-app-pay">Pay with GPay</button>
+                            </div>
+
+                            <!-- Paytm Button -->
+                            <div class="modal-app-choice" onclick="executeAppPayment('Paytm')">
+                                <div class="choice-icon pt-color"><i class="fas fa-wallet"></i></div>
+                                <div class="choice-text">
+                                    <strong>Paytm</strong>
+                                    <span>UPI / Wallet / Bank</span>
+                                </div>
+                                <button type="button" class="btn-app-pay">Pay with Paytm</button>
+                            </div>
+                        </div>
+
+                        <div class="or-divider"><span>OR ENTER ANY UPI ID (VPA)</span></div>
+
+                        <div class="vpa-input-group">
+                            <label for="customVpa">Enter Virtual Payment Address (UPI ID)</label>
+                            <div class="vpa-input-row">
+                                <input type="text" id="customVpa" placeholder="e.g. yourname@oksbi, mobile@ybl, user@paytm">
+                                <button type="button" class="btn-vpa-verify" onclick="executeVpaPayment()">Request &amp; Pay</button>
+                            </div>
+                            <span class="vpa-hint">You will receive a payment request notification on your UPI app</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 2: Dynamic QR -->
+                <div id="tab-qr" class="tab-content">
+                    <div class="tab-inner-box text-center">
+                        <h4 class="tab-subheading">Scan &amp; Pay with Any Mobile Banking / UPI App</h4>
+                        <div class="modal-qr-holder" id="modalDynamicQR"></div>
+                        <div class="qr-timer-box">
+                            <i class="fas fa-clock"></i>
+                            <span>Session active: <strong id="qrCountdown">05:00</strong></span>
+                        </div>
+                        <p class="qr-note">Scan this dynamic code using <strong>PhonePe, Google Pay, Paytm, CRED or BHIM</strong>. Payment is verified automatically within seconds.</p>
+                        <button type="button" class="btn-simulate-complete" onclick="simulatePaymentSuccess('UPI QR')">
+                            <i class="fas fa-check-circle"></i> I have completed the payment on mobile
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tab 3: Debit / Credit Card -->
+                <div id="tab-card" class="tab-content">
+                    <div class="tab-inner-box">
+                        <div class="form-group mb-3">
+                            <label>Card Number</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-credit-card"></i>
+                                <input type="text" id="cardNumber" placeholder="4123 &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; 9012" maxlength="19" oninput="formatCardNumber(this)">
+                            </div>
+                        </div>
+                        <div class="form-row-2">
+                            <div class="form-group">
+                                <label>Expiry Date</label>
+                                <input type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5">
+                            </div>
+                            <div class="form-group">
+                                <label>CVV / CVC</label>
+                                <input type="password" id="cardCvv" placeholder="3 digits" maxlength="4">
+                            </div>
+                        </div>
+                        <div class="form-group mt-3">
+                            <label>Cardholder Name</label>
+                            <input type="text" id="cardName" placeholder="Name on card">
+                        </div>
+                        <button type="button" class="btn-full-pay mt-4" onclick="executeCardPayment()">
+                            <i class="fas fa-shield-alt"></i> Pay Securely via Card
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tab 4: Net Banking -->
+                <div id="tab-netbanking" class="tab-content">
+                    <div class="tab-inner-box">
+                        <h4 class="tab-subheading">Popular Banks</h4>
+                        <div class="popular-banks-grid">
+                            <label class="bank-pill">
+                                <input type="radio" name="bankOption" value="State Bank of India (SBI)" checked>
+                                <span>SBI</span>
+                            </label>
+                            <label class="bank-pill">
+                                <input type="radio" name="bankOption" value="HDFC Bank">
+                                <span>HDFC</span>
+                            </label>
+                            <label class="bank-pill">
+                                <input type="radio" name="bankOption" value="ICICI Bank">
+                                <span>ICICI</span>
+                            </label>
+                            <label class="bank-pill">
+                                <input type="radio" name="bankOption" value="Axis Bank">
+                                <span>Axis</span>
+                            </label>
+                            <label class="bank-pill">
+                                <input type="radio" name="bankOption" value="Union Bank of India">
+                                <span>Union Bank</span>
+                            </label>
+                            <label class="bank-pill">
+                                <input type="radio" name="bankOption" value="Canara Bank">
+                                <span>Canara</span>
+                            </label>
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <label>Or Select Other Bank</label>
+                            <select id="otherBankSelect">
+                                <option value="">-- 50+ Other Indian Banks --</option>
+                                <option value="Bank of Baroda">Bank of Baroda</option>
+                                <option value="Punjab National Bank">Punjab National Bank</option>
+                                <option value="Kotak Mahindra Bank">Kotak Mahindra Bank</option>
+                                <option value="Indian Bank">Indian Bank</option>
+                                <option value="IDBI Bank">IDBI Bank</option>
+                                <option value="Federal Bank">Federal Bank</option>
+                            </select>
+                        </div>
+
+                        <button type="button" class="btn-full-pay mt-4" onclick="executeNetBankingPayment()">
+                            <i class="fas fa-arrow-up-right-from-square"></i> Proceed to Bank Portal
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <span class="safe-tag"><i class="fas fa-lock"></i> PCI-DSS Level 1 Compliant &bull; 256-Bit SSL</span>
+                <span class="bril-ref">Order Ref: <code id="modalOrderRef">BRIL-ORD-90214</code></span>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- MODAL 2: Processing / Verification Animation Spinner    -->
+    <!-- ======================================================== -->
+    <div id="processingModal" class="modal-overlay">
+        <div class="processing-card">
+            <div class="payment-spinner"></div>
+            <h3 id="processingTitle">Processing Payment...</h3>
+            <p id="processingSubtitle">Communicating securely with the payment server. Please do not close or refresh this tab.</p>
+            <div class="secure-badge-pill">
+                <i class="fas fa-shield-halved"></i> 256-Bit Bank Handshake in Progress
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- MODAL 3: Official BRIL Fee Receipt Modal (Printable)     -->
+    <!-- ======================================================== -->
+    <div id="receiptModal" class="modal-overlay">
+        <div class="receipt-card-container">
+            
+            <div class="receipt-actions-bar">
+                <div class="receipt-status-success">
+                    <i class="fas fa-circle-check"></i>
+                    <span>Payment Received Successfully!</span>
+                </div>
+                <div class="receipt-buttons">
+                    <button type="button" class="btn-receipt-action btn-print" onclick="window.print()">
+                        <i class="fas fa-print"></i> Print Receipt
+                    </button>
+                    <button type="button" class="btn-receipt-action btn-close-receipt" onclick="closeReceiptModal()">
+                        <i class="fas fa-times"></i> Close
+                    </button>
+                </div>
+            </div>
+
+            <!-- The Official Printable Receipt Document -->
+            <div class="printable-receipt" id="printableReceipt">
+                
+                <!-- Watermark -->
+                <div class="receipt-watermark">BRIL PAID</div>
+
+                <!-- Receipt Header -->
+                <div class="receipt-header">
+                    <div class="receipt-header-left">
+                        <img src="https://b-iet.ac.in/images/bril-logo.webp" alt="BRIL Logo" class="receipt-logo" onerror="this.src='https://b-iet.ac.in/images/bril-new-logo.webp'">
+                    </div>
+                    <div class="receipt-header-center">
+                        <h2>BRILLIANT INSTITUTE OF ENGINEERING &amp; TECHNOLOGY</h2>
+                        <div class="sub-header-tag">UGC AUTONOMOUS INSTITUTION &bull; NAAC 'A' GRADE</div>
+                        <div class="sub-header-addr">Abdullapur (V), Abdullapurmet (M), Rangareddy Dist, Hyderabad - 501513, Telangana</div>
+                        <div class="receipt-type-title">OFFICIAL E-FEE PAYMENT RECEIPT (STUDENT COPY)</div>
+                    </div>
+                    <div class="receipt-header-right">
+                        <div id="receiptQrCodeHolder" class="receipt-qr-box"></div>
+                    </div>
+                </div>
+
+                <div class="receipt-divider"></div>
+
+                <!-- Receipt Metadata Grid -->
+                <div class="receipt-meta-grid">
+                    <div class="meta-item">
+                        <span class="m-label">Receipt Number:</span>
+                        <strong class="m-val" id="rcptNo">BRIL-REC-2026-8819</strong>
+                    </div>
+                    <div class="meta-item">
+                        <span class="m-label">Transaction Reference:</span>
+                        <strong class="m-val" id="rcptTxnId">TXN-PHONPE-9821738210</strong>
+                    </div>
+                    <div class="meta-item">
+                        <span class="m-label">Payment Date &amp; Time:</span>
+                        <strong class="m-val" id="rcptDate">12-Oct-2026 12:15 PM</strong>
+                    </div>
+                    <div class="meta-item">
+                        <span class="m-label">Payment Mode:</span>
+                        <strong class="m-val" id="rcptMode">PhonePe UPI</strong>
+                    </div>
+                </div>
+
+                <!-- Student Information Grid -->
+                <div class="receipt-student-grid">
+                    <div class="s-info-item">
+                        <span class="s-lbl">Student Name:</span>
+                        <span class="s-data" id="rcptName">Uday Kiran Thathi</span>
+                    </div>
+                    <div class="s-info-item">
+                        <span class="s-lbl">Hall Ticket / Roll No:</span>
+                        <span class="s-data" id="rcptRoll">22BR1A0501</span>
+                    </div>
+                    <div class="s-info-item">
+                        <span class="s-lbl">Branch / Department:</span>
+                        <span class="s-data" id="rcptBranch">Computer Science and Engineering</span>
+                    </div>
+                    <div class="s-info-item">
+                        <span class="s-lbl">Mobile Number:</span>
+                        <span class="s-data" id="rcptMobile">+91-9908810491</span>
+                    </div>
+                </div>
+
+                <!-- Receipt Table -->
+                <table class="receipt-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 10%;">S.No</th>
+                            <th style="width: 55%;">Fee Head / Description</th>
+                            <th style="width: 15%;">Academic Year</th>
+                            <th style="width: 20%; text-align: right;">Amount (INR)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td id="rcptParticulars">B.Tech Annual Tuition Fee - Sem I/II</td>
+                            <td>2026-27</td>
+                            <td style="text-align: right;" id="rcptTableAmount">₹35,000.00</td>
+                        </tr>
+                        <tr class="table-subtotal-row">
+                            <td colspan="3" style="text-align: right;"><strong>Gateway Charges:</strong></td>
+                            <td style="text-align: right;">₹0.00</td>
+                        </tr>
+                        <tr class="table-total-row">
+                            <td colspan="3" style="text-align: right;"><strong>TOTAL PAID:</strong></td>
+                            <td style="text-align: right;"><strong id="rcptTotalPaid">₹35,000.00</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="amount-in-words">
+                    <strong>Amount in Words:</strong> <span id="rcptAmountWords">Rupees Thirty Five Thousand Only</span>
+                </div>
+
+                <!-- Receipt Footer Verification -->
+                <div class="receipt-footer-signatures">
+                    <div class="sig-col">
+                        <div class="sig-note">
+                            <i class="fas fa-check-double text-success"></i> <strong>System Verified</strong><br>
+                            This is an authorized computer-generated electronic receipt with cryptographically signed verification QR. No manual signature required.
+                        </div>
+                    </div>
+                    <div class="sig-col text-end">
+                        <div class="digital-stamp">
+                            <div class="stamp-circle">
+                                <span>BRIL HYD</span>
+                                <strong>ACCOUNTS</strong>
+                                <span>FEES PAID</span>
+                            </div>
+                        </div>
+                        <div class="sig-title">Finance &amp; Accounts Officer</div>
+                        <div class="sig-inst">BRIL, Hyderabad</div>
+                    </div>
+                </div>
+
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- MODAL 4: Past Receipt Search Lookup                      -->
+    <!-- ======================================================== -->
+    <div id="receiptLookupModal" class="modal-overlay">
+        <div class="modal-card lookup-modal-card">
+            <div class="modal-header">
+                <h3><i class="fas fa-magnifying-glass"></i> Find / Reprint Past Fee Receipt</h3>
+                <button type="button" class="modal-close-btn" onclick="closeLookupModal()">&times;</button>
+            </div>
+            <div class="tab-inner-box">
+                <p>Enter your <strong>Hall Ticket Number</strong>, <strong>Mobile Number</strong>, or <strong>Transaction ID</strong> to reprint past fee receipts issued by this portal:</p>
+                <div class="vpa-input-row mt-3">
+                    <input type="text" id="lookupQuery" placeholder="e.g., 22BR1A0501 or BRIL-REC-2026-8819">
+                    <button type="button" class="btn-vpa-verify" onclick="searchPastReceipt()">Search</button>
+                </div>
+                <div id="lookupResults" class="lookup-results-box mt-3">
+                    <!-- Results rendered via JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script -->
+    <script src="payment.js"></script>
+</body>
+</html>

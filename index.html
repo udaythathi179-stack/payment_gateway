@@ -22,90 +22,294 @@
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
+    <script>
+        // Apply saved theme before paint to avoid flash
+        (function () {
+            try {
+                var saved = localStorage.getItem('bril-theme');
+                var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                document.documentElement.setAttribute('data-theme', theme);
+            } catch (e) { document.documentElement.setAttribute('data-theme', 'light'); }
+        })();
+    </script>
 </head>
 <body>
 
-    <!-- 1. Top Announcement Marquee -->
-    <header class="top-announcement-bar">
-        <div class="announcement-badge">
-            <i class="fas fa-bullhorn"></i> Fee Portal Notice
+    <!-- 1. Authentic B-IET Announcement Marquee Bar -->
+    <div class="announcement-bar">
+        <div class="announcement-label">
+            <i class="fas fa-bullhorn me-1"></i> NOTICE
         </div>
-        <div class="announcement-marquee">
-            <span class="marquee-text">
-                🎓 <strong>Academic Year 2026-27 Fee Payment is Now Live!</strong> Pay Tuition, Autonomous / JNTU-H Exam Fees, Transcript Fees (₹60), and Transport Passes securely via PhonePe, Google Pay, Paytm &amp; UPI. For billing support, call: <a href="tel:+919908810491">+91-990-881-0491</a> | Email: <a href="mailto:accounts@b-iet.ac.in">accounts@b-iet.ac.in</a>
-            </span>
-        </div>
-    </header>
-
-    <!-- 2. Header Top Bar -->
-    <div class="header-top-bar">
-        <div class="container-fluid top-bar-content">
-            <div class="top-contacts">
-                <a href="mailto:info@bgti.in"><i class="fas fa-envelope"></i> info@bgti.in</a>
-                <a href="tel:+919908810491"><i class="fas fa-phone"></i> +91-990-881-0491</a>
-                <span class="campus-address"><i class="fas fa-map-marker-alt"></i> Abdullapurmet, Hyderabad - 501 513</span>
-            </div>
-            <div class="top-nav-links">
-                <a href="https://b-iet.ac.in" target="_blank" class="top-link"><i class="fas fa-globe"></i> Main Website</a>
-                <a href="http://b-ieterp.in/examcell/examresults" target="_blank" class="top-badge-link"><i class="fas fa-poll-h"></i> Results</a>
-                <a href="https://webprosindia.com/bril/Default.aspx" target="_blank" class="top-link"><i class="fas fa-user-circle"></i> E-CAP Login</a>
-                <button id="lookupReceiptBtn" class="receipt-lookup-btn"><i class="fas fa-receipt"></i> Find Past Receipt</button>
+        <div class="announcement-track-wrap">
+            <div class="announcement-track" style="animation-duration:22s">
+                <span class="announcement-item">
+                    🎓 <strong>CSE Batch 2024-2028 Fee Payment Portal Active:</strong> Annual Tuition Fee: ₹72,000 | JNTU University Fee: ₹6,500 | Sec A (501-560), Sec B (561-D0), Sec C (D1-510) &amp; Management Quota. Official Billing: <a href="tel:+919908810491">+91-990-881-0491</a> &nbsp;|&nbsp; <a href="https://wa.me/919908810491?text=Fee%20Payment%20Enquiry%20CSE%202024-28" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp Helpdesk</a> &nbsp;&nbsp;&bull;&nbsp;&nbsp; Orientations Day &amp; Admissions Open 2026-27 &nbsp;&nbsp;&bull;&nbsp;&nbsp; Call: <a href="tel:+919908810491">+91-990-881-0491</a>
+                </span>
+                <span class="announcement-item">
+                    🎓 <strong>CSE Batch 2024-2028 Fee Payment Portal Active:</strong> Annual Tuition Fee: ₹72,000 | JNTU University Fee: ₹6,500 | Sec A (501-560), Sec B (561-D0), Sec C (D1-510) &amp; Management Quota. Official Billing: <a href="tel:+919908810491">+91-990-881-0491</a> &nbsp;|&nbsp; <a href="https://wa.me/919908810491?text=Fee%20Payment%20Enquiry%20CSE%202024-28" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp Helpdesk</a> &nbsp;&nbsp;&bull;&nbsp;&nbsp; Orientations Day &amp; Admissions Open 2026-27 &nbsp;&nbsp;&bull;&nbsp;&nbsp; Call: <a href="tel:+919908810491">+91-990-881-0491</a>
+                </span>
             </div>
         </div>
     </div>
 
-    <!-- 3. Main Branding Header -->
-    <div class="main-header">
-        <div class="container-fluid header-container">
-            <div class="header-brand-wrap">
-                <div class="logo-box">
-                    <img src="https://b-iet.ac.in/images/bril-logo.webp" alt="BRIL Logo" onerror="this.src='https://b-iet.ac.in/images/bril-new-logo.webp'">
+    <!-- 2. Authentic B-IET Top Header Row -->
+    <div class="top-header py-2 d-none d-md-block">
+        <div class="container-fluid px-3 px-lg-4">
+            <div class="row align-items-center" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
+                <div class="col-lg-4 col-md-5" style="display:flex; gap:16px; align-items:center;">
+                    <a href="mailto:info@bgti.in" class="text-white header-top-link"><i class="fas fa-envelope me-1"></i> info@bgti.in</a>
+                    <a href="tel:+919908810491" class="text-white header-top-link"><i class="fas fa-phone me-1"></i> +91-990-881-0491</a>
                 </div>
-                <div class="institute-info">
-                    <h1 class="inst-name">BRILLIANT INSTITUTE OF ENGINEERING &amp; TECHNOLOGY</h1>
-                    <div class="inst-autonomous-tag">UGC AUTONOMOUS INSTITUTION</div>
-                    <div class="inst-accreditation">Accredited by NAAC with "A" Grade &bull; Approved by AICTE &bull; Affiliated to JNTU-Hyderabad</div>
-                    <div class="inst-location">Abdullapur (V), Abdullapurmet (M), Rangareddy Dist, Hyderabad - 501513, Telangana</div>
+                <div class="col-lg-4 col-md-3 text-center d-none d-lg-block" style="font-size:12px; color:#ffffff; opacity:0.9;">
+                    <i class="fas fa-location-dot me-1 text-warning"></i> Abdullapurmet, Hyderabad - 501 513 | Near Ramoji Film City
                 </div>
-            </div>
-
-            <!-- Accreditation Badges & Code -->
-            <div class="header-right-badges">
-                <div class="eamcet-pill">
-                    <span class="eamcet-label">EAPCET / ECET / ICET Code</span>
-                    <span class="eamcet-code">BRIL</span>
-                </div>
-                <div class="accreditation-badges">
-                    <span class="badge-item" title="18 Years of Academic Excellence"><strong>18+</strong> Yrs</span>
-                    <span class="badge-item" title="AICTE Approved">AICTE</span>
-                    <span class="badge-item" title="JNTU-H Affiliated">JNTU-H</span>
-                    <span class="badge-item" title="UGC Autonomous">UGC</span>
-                    <span class="badge-item badge-naac" title="NAAC A Grade">NAAC 'A'</span>
-                    <span class="badge-item badge-nirf" title="NIRF Ranked">NIRF</span>
+                <div class="col-lg-4 col-md-7 text-end" style="display:flex; justify-content:flex-end; align-items:center; gap:12px;">
+                    <a href="http://b-ieterp.in/examcell/examresults" target="_blank" rel="noopener" class="header-results-btn">
+                        <i class="fas fa-poll-h me-1"></i>Check Results
+                    </a>
+                    <a href="https://webprosindia.com/bril/Default.aspx" target="_blank" rel="noopener" class="text-white header-top-link">
+                        <i class="fas fa-user-circle me-1"></i>E-CAP Login
+                    </a>
+                    <button type="button" class="receipt-lookup-btn" onclick="openStudentDirectoryModal()" title="Browse all 199 CSE Students">
+                        <i class="fas fa-users-viewfinder"></i> Directory (199)
+                    </button>
+                    <button type="button" class="receipt-lookup-btn" onclick="openLookupModal()" title="Search past receipts">
+                        <i class="fas fa-receipt"></i> Find Receipt
+                    </button>
+                    <div class="social-links d-none d-sm-flex" style="display:inline-flex; gap:6px;">
+                        <a href="https://www.facebook.com/BGTIS/" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://twitter.com/brilliantgroups" target="_blank" rel="noopener" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/brilliantgroup_/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com/company/brilliantgroup/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                    <button type="button" class="theme-toggle-btn" onclick="toggleTheme()" title="Switch Light / Dark mode" aria-label="Toggle dark mode">
+                        <i class="fas fa-moon"></i><i class="fas fa-sun"></i>
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 4. Portal Navigation Bar -->
-    <nav class="portal-nav">
-        <div class="container-fluid nav-container">
-            <div class="nav-brand-title">
-                <i class="fas fa-shield-halved"></i>
-                <span>ONLINE FEE PAYMENT GATEWAY</span>
-            </div>
-            <div class="nav-links">
-                <a href="#payment-container" class="active"><i class="fas fa-credit-card"></i> Pay Fees Online</a>
-                <a href="#fee-categories"><i class="fas fa-layer-group"></i> Fee Structure</a>
-                <a href="#quick-verify"><i class="fas fa-qrcode"></i> Scan &amp; Pay QR</a>
-                <a href="#faq-section"><i class="fas fa-circle-question"></i> Help &amp; FAQs</a>
-            </div>
-            <div class="gateway-live-pill">
-                <span class="pulse-dot"></span>
-                <span>Payment Server: Active</span>
+    <!-- 3. Authentic B-IET Logo & Accreditation Section -->
+    <div class="logo-section py-2">
+        <div class="container-fluid px-3 px-lg-4">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+                <!-- Brand Title & Badges -->
+                <div style="display:flex; align-items:center; gap:16px; flex:1; min-width:300px;">
+                    <a href="/" style="display:inline-block; flex-shrink:0;">
+                        <img src="https://b-iet.ac.in/images/bril-logo.webp" alt="BRIL Logo" class="header-logo" onerror="this.src='https://b-iet.ac.in/images/bril-new-logo.webp'">
+                    </a>
+                    <div class="header-institute-text">
+                        <div class="header-inst-name">BRILLIANT INSTITUTE OF ENGINEERING &amp; TECHNOLOGY</div>
+                        <div class="header-inst-tag1">UGC AUTONOMOUS INSTITUTION</div>
+                        <div class="header-inst-tag2">Accredited by NAAC with "A" Grade &nbsp;|&nbsp; Approved by AICTE &nbsp;|&nbsp; Affiliated to JNTU-H</div>
+                        <div class="header-inst-tag3">Abdullapur (V), Abdullapurmet (M), Rangareddy (D), Hyderabad - 501 513</div>
+                    </div>
+                </div>
+
+                <!-- Right Awards & EAPCET Block -->
+                <div class="header-awards-block d-none d-md-flex">
+                    <!-- EAPCET Code Pill -->
+                    <div class="header-code-pill">
+                        <span class="header-code-label">EAPCET / ECET / POLYCET / PGECET / ICET Code:</span>
+                        <span class="header-code-bril">BRIL</span>
+                    </div>
+
+                    <!-- 6 Authentic Accreditation Badges from b-iet.ac.in -->
+                    <div class="header-logos-row">
+                        <div class="header-logo-badge" title="18 Years of Excellence">
+                            <img src="https://b-iet.ac.in/images/18%20Years_Small_header.webp" alt="18 Years" onerror="this.src='https://b-iet.ac.in/images/bril-logo.webp'">
+                        </div>
+                        <div class="header-logo-badge" title="AICTE Approved">
+                            <img src="https://b-iet.ac.in/images/All_India_Council_for_Technical_Education_logo.webp" alt="AICTE">
+                        </div>
+                        <div class="header-logo-badge" title="JNTU-H Affiliated">
+                            <img src="https://b-iet.ac.in/images/JNTU_Hyderabad_logo.webp" alt="JNTU-H">
+                        </div>
+                        <div class="header-logo-badge" title="UGC Autonomous">
+                            <img src="https://b-iet.ac.in/images/UGC_India_Logo.webp" alt="UGC">
+                        </div>
+                        <div class="header-logo-badge header-logo-badge-wide" title="NAAC A Grade">
+                            <img src="https://b-iet.ac.in/images/NAAC-A.webp" alt="NAAC A Grade">
+                        </div>
+                        <div class="header-logo-badge header-logo-badge-wide" title="NIRF Ranked">
+                            <img src="https://b-iet.ac.in/images/NIRF.webp" alt="NIRF">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+    </div>
+
+    <!-- 4. Authentic B-IET Navigation Bar with Mega Dropdowns -->
+    <nav class="bril-main-menu-wrapper">
+        <ul class="bril-menu-list">
+            <li class="menu-item">
+                <a href="/" class="menu-link"><i class="fas fa-home me-1"></i> Home</a>
+            </li>
+
+            <!-- About Dropdown -->
+            <li class="menu-item has-mega-menu">
+                <a href="#" class="menu-link">About <i class="fas fa-chevron-down ms-1" style="font-size:10px;"></i></a>
+                <ul class="menu-dropdown menu-mega menu-mega-3col">
+                    <li class="menu-mega-col">
+                        <a href="https://b-iet.ac.in/about/logo-flag-theme" target="_blank" class="menu-link">Logo | Flag | Theme</a>
+                        <a href="https://b-iet.ac.in/about/brilliant-group-of-technical-institutions" target="_blank" class="menu-link">About Brilliant Group (BGTI)</a>
+                        <a href="https://b-iet.ac.in/about/index" target="_blank" class="menu-link">About Brilliant Institute (BRIL)</a>
+                        <a href="https://b-iet.ac.in/about/vision-mission" target="_blank" class="menu-link">Vision &amp; Mission</a>
+                        <a href="https://b-iet.ac.in/about/objectives" target="_blank" class="menu-link">Objectives &amp; Aspirations</a>
+                    </li>
+                    <li class="menu-mega-col">
+                        <a href="https://b-iet.ac.in/about/chairman-desk" target="_blank" class="menu-link">Chairman's Desk</a>
+                        <a href="https://b-iet.ac.in/about/vice-chairman" target="_blank" class="menu-link">Vice Chairman</a>
+                        <a href="https://b-iet.ac.in/about/principal-message" target="_blank" class="menu-link">Principal's Message</a>
+                        <a href="https://b-iet.ac.in/about/governing-council" target="_blank" class="menu-link">Governing Council</a>
+                        <a href="https://b-iet.ac.in/about/academic-advisory-board" target="_blank" class="menu-link">Academic Advisory Board</a>
+                    </li>
+                    <li class="menu-mega-col">
+                        <a href="https://b-iet.ac.in/about/imp_doc" target="_blank" class="menu-link">AICTE Disclosures</a>
+                        <a href="https://b-iet.ac.in/about/mandatory-disclosure" target="_blank" class="menu-link">Mandatory Disclosures</a>
+                        <a href="https://b-iet.ac.in/about/gallery" target="_blank" class="menu-link">Campus Gallery</a>
+                        <a href="https://b-iet.ac.in/about/ombudsperson" target="_blank" class="menu-link">Ombudsperson</a>
+                    </li>
+                </ul>
+            </li>
+
+            <!-- Departments Mega Dropdown -->
+            <li class="menu-item">
+                <a href="#" class="menu-link">Departments <i class="fas fa-chevron-down ms-1" style="font-size:10px;"></i></a>
+                <div class="dept-mega-dropdown">
+                    <!-- Diploma Courses Section -->
+                    <div class="dept-section">
+                        <div class="dept-section-header">Diploma Courses</div>
+                        <div class="dept-list">
+                            <a href="https://b-iet.ac.in/departments/diploma-cse/about" target="_blank" class="menu-link">Computer Science Engineering</a>
+                            <a href="https://b-iet.ac.in/departments/diploma-ece/about" target="_blank" class="menu-link">Electronics &amp; Communication</a>
+                            <a href="https://b-iet.ac.in/departments/diploma-eee/about" target="_blank" class="menu-link">Electrical &amp; Electronics</a>
+                            <a href="https://b-iet.ac.in/departments/diploma-mech/about" target="_blank" class="menu-link">Mechanical Engineering</a>
+                            <a href="https://b-iet.ac.in/departments/diploma-civil/about" target="_blank" class="menu-link">Civil Engineering</a>
+                        </div>
+                    </div>
+
+                    <!-- UG Courses Section 1 -->
+                    <div class="dept-section">
+                        <div class="dept-section-header">UG Engineering (B.Tech)</div>
+                        <div class="dept-list">
+                            <a href="https://b-iet.ac.in/departments/ug-cse/about" target="_blank" class="menu-link" style="color:#0000cc; font-weight:700;"><i class="fas fa-angle-right me-1"></i> Computer Science &amp; Engg (CSE)</a>
+                            <a href="https://b-iet.ac.in/departments/ug-cse-aiml/about" target="_blank" class="menu-link">CSE (AI &amp; Machine Learning)</a>
+                            <a href="https://b-iet.ac.in/departments/ug-cse-ds/about" target="_blank" class="menu-link">CSE (Data Science)</a>
+                            <a href="https://b-iet.ac.in/departments/ug-cse-cs/about" target="_blank" class="menu-link">CSE (Cyber Security)</a>
+                            <a href="https://b-iet.ac.in/departments/ug-cse-se/about" target="_blank" class="menu-link">Computer Engg (Software Engg)</a>
+                        </div>
+                    </div>
+
+                    <!-- UG Courses Section 2 -->
+                    <div class="dept-section">
+                        <div class="dept-section-header">Core Engineering</div>
+                        <div class="dept-list">
+                            <a href="https://b-iet.ac.in/departments/ug-ece/about" target="_blank" class="menu-link">Electronics &amp; Communication (ECE)</a>
+                            <a href="https://b-iet.ac.in/departments/ug-eee/about" target="_blank" class="menu-link">Electrical &amp; Electronics (EEE)</a>
+                            <a href="https://b-iet.ac.in/departments/ug-mech/about" target="_blank" class="menu-link">Mechanical Engineering (MECH)</a>
+                            <a href="https://b-iet.ac.in/departments/ug-civil/about" target="_blank" class="menu-link">Civil Engineering (CIVIL)</a>
+                            <a href="https://b-iet.ac.in/departments/ug-hs/about" target="_blank" class="menu-link">Humanities &amp; Sciences (H&amp;S)</a>
+                        </div>
+                    </div>
+
+                    <!-- PG Courses Section -->
+                    <div class="dept-section">
+                        <div class="dept-section-header">Postgraduate (PG)</div>
+                        <div class="dept-list">
+                            <a href="https://b-iet.ac.in/departments/pg-mba/about" target="_blank" class="menu-link">MBA (Master of Business Admin)</a>
+                            <a href="https://b-iet.ac.in/departments/pg-mtech-cse/about" target="_blank" class="menu-link">M.Tech - Computer Science</a>
+                            <a href="https://b-iet.ac.in/departments/pg-mtech-vlsi/about" target="_blank" class="menu-link">M.Tech - VLSI &amp; Embedded Systems</a>
+                            <a href="https://b-iet.ac.in/departments/pg-mtech-te/about" target="_blank" class="menu-link">M.Tech - Transportation Engg</a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Admissions -->
+            <li class="menu-item">
+                <a href="#" class="menu-link">Admissions <i class="fas fa-chevron-down ms-1" style="font-size:10px;"></i></a>
+                <ul class="menu-dropdown">
+                    <li class="menu-item"><a href="https://b-iet.ac.in/admissions/admission-process-guidelines" target="_blank" class="menu-link">Admission Process &amp; Guidelines</a></li>
+                    <li class="menu-item"><a href="https://b-iet.ac.in/admissions/courses-offered-intake" target="_blank" class="menu-link">Courses Offered &amp; Intake</a></li>
+                    <li class="menu-item"><a href="https://b-iet.ac.in/admissions/admission-form" target="_blank" class="menu-link">Admissions Form 2026-27</a></li>
+                    <li class="menu-item"><a href="https://telanganaepass.cgg.gov.in/" target="_blank" class="menu-link">ePASS Scholarships</a></li>
+                </ul>
+            </li>
+
+            <!-- Exam Branch -->
+            <li class="menu-item">
+                <a href="#" class="menu-link">Exam Branch <i class="fas fa-chevron-down ms-1" style="font-size:10px;"></i></a>
+                <ul class="menu-dropdown">
+                    <li class="menu-item"><a href="http://b-ieterp.in/examcell/examresults" target="_blank" class="menu-link">Autonomous Exam Results</a></li>
+                    <li class="menu-item"><a href="https://b-iet.ac.in/exam-branch/exam-timetable" target="_blank" class="menu-link">Exam Timetable</a></li>
+                    <li class="menu-item"><a href="https://b-iet.ac.in/exam-branch/transcript-procedure" target="_blank" class="menu-link">Procedure for Transcripts</a></li>
+                    <li class="menu-item"><a href="https://b-iet.ac.in/exam-branch/academic-calendar-autonomous" target="_blank" class="menu-link">Academic Calendar</a></li>
+                </ul>
+            </li>
+
+            <!-- Placements -->
+            <li class="menu-item">
+                <a href="#" class="menu-link">Placements <i class="fas fa-chevron-down ms-1" style="font-size:10px;"></i></a>
+                <ul class="menu-dropdown">
+                    <li class="menu-item"><a href="https://b-iet.ac.in/placements/about-placement-cell" target="_blank" class="menu-link">About Placement Cell</a></li>
+                    <li class="menu-item"><a href="https://b-iet.ac.in/placements/top-companies-visited" target="_blank" class="menu-link">Top Recruiters (150+ Cos)</a></li>
+                    <li class="menu-item"><a href="https://b-iet.ac.in/placements/placements-2025-2026" target="_blank" class="menu-link">Placement Record 2025-2026</a></li>
+                </ul>
+            </li>
+
+            <!-- NAAC -->
+            <li class="menu-item">
+                <a href="https://b-iet.ac.in/NAAC/index" target="_blank" class="menu-link">NAAC 'A'</a>
+            </li>
+
+            <!-- 🌟 CORE FEATURE TAB: ONLINE FEE PAYMENT SESSION (HIGHLIGHTED) -->
+            <li class="menu-item">
+                <a href="#payment-container" class="menu-link active-portal-link" title="Active Payment Session: CSE Batch 2024-2028">
+                    <i class="fas fa-credit-card me-1"></i> Fee Payment (CSE 2024-28)
+                </a>
+            </li>
+
+            <!-- Student Directory & Past Receipt Quick Access -->
+            <li class="menu-item d-none d-xl-block">
+                <a href="javascript:void(0)" onclick="openStudentDirectoryModal()" class="menu-link" style="color:#ffe066;">
+                    <i class="fas fa-users me-1"></i> Student Directory
+                </a>
+            </li>
+        </ul>
     </nav>
+
+    <!-- 5. Campus Hero Section (Faithful to b-iet.ac.in) -->
+    <section class="campus-hero-banner">
+        <div class="campus-hero-content">
+            <div class="campus-hero-tag">
+                <i class="fas fa-shield-halved"></i> UGC Autonomous &bull; NAAC "A" Grade &bull; Affiliated to JNTU-H
+            </div>
+            <h2 class="campus-hero-title">Online Fee Payment Portal</h2>
+            <p class="campus-hero-subtitle">
+                Official secure online tuition and university examination fee payment session for <strong>B.Tech Computer Science &amp; Engineering (CSE) Batch 2024&ndash;2028</strong>. Instant verification, automated ledger sync, and verifiable digital receipts.
+            </p>
+            <div class="campus-hero-badges">
+                <div class="campus-badge-item">
+                    <i class="fas fa-graduation-cap"></i> CSE Batch: 2024 - 2028
+                </div>
+                <div class="campus-badge-item">
+                    <i class="fas fa-money-check-dollar"></i> Tuition Fee: ₹72,000 / Year
+                </div>
+                <div class="campus-badge-item">
+                    <i class="fas fa-building-columns"></i> JNTU University Fee: ₹6,500
+                </div>
+                <div class="campus-badge-item">
+                    <i class="fas fa-qrcode"></i> Instant UPI (PhonePe &bull; GPay &bull; Paytm)
+                </div>
+                <div class="campus-badge-item">
+                    <i class="fas fa-certificate"></i> Digital Stamped e-Receipt
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- 5. Main Hero / Gateway Container -->
     <main class="page-main" id="payment-container">
@@ -113,182 +317,268 @@
             
             <!-- Left Side: Student Identification & Fee Selection Form -->
             <section class="portal-card payment-form-card">
-                <div class="card-header-bar">
-                    <div class="header-title-box">
-                        <span class="step-num">Step 1</span>
-                        <h2>Student &amp; Fee Details</h2>
+                
+                <!-- Step Progress Bar -->
+                <div class="entrance-stepper">
+                    <div class="step-indicator active" id="stepIndicator1">
+                        <span class="step-bubble">1</span>
+                        <div class="step-info">
+                            <strong>Enter Roll Number</strong>
+                            <small>CSE Batch 2024 - 2028</small>
+                        </div>
                     </div>
-                    <div class="mode-selector">
-                        <button type="button" class="btn-demo-quick" id="quickFillDemoBtn" title="Auto-fill with sample student data for testing">
-                            <i class="fas fa-wand-magic-sparkles"></i> Auto Fill Sample
-                        </button>
+                    <div class="step-connector"></div>
+                    <div class="step-indicator" id="stepIndicator2">
+                        <span class="step-bubble">2</span>
+                        <div class="step-info">
+                            <strong>Choose Payment</strong>
+                            <small>Tuition (₹72k) or JNTU (₹6.5k)</small>
+                        </div>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="step-indicator" id="stepIndicator3">
+                        <span class="step-bubble">3</span>
+                        <div class="step-info">
+                            <strong>Pay &amp; Receipt</strong>
+                            <small>Instant e-Receipt</small>
+                        </div>
                     </div>
                 </div>
 
                 <form id="feePaymentForm" onsubmit="event.preventDefault(); initiatePaymentFlow();">
                     
-                    <!-- Search Roll Number / Identification -->
-                    <div class="form-section">
-                        <label class="section-label"><i class="fas fa-id-card"></i> Student Identification</label>
-                        <div class="form-row-2">
-                            <div class="form-group">
-                                <label for="studentRoll">Hall Ticket / Roll / Application No. <span class="req">*</span></label>
-                                <div class="input-with-icon">
-                                    <i class="fas fa-fingerprint"></i>
-                                    <input type="text" id="studentRoll" placeholder="e.g., 22BR1A0501 or 2026-ADM-108" required maxlength="15" autocomplete="off">
-                                </div>
-                                <span class="input-hint">Enter your 10-digit JNTU/BRIL Hall Ticket or Admission Number</span>
+                    <!-- ======================================================== -->
+                    <!-- ENTRANCE: STEP 1 - ENTER ROLL NUMBER                     -->
+                    <!-- ======================================================== -->
+                    <div class="entrance-step-box" id="entranceStep1">
+                        <div class="entrance-header">
+                            <div class="entrance-icon-circle">
+                                <i class="fas fa-id-card-clip"></i>
                             </div>
-
-                            <div class="form-group">
-                                <label for="academicProgram">Course &amp; Department <span class="req">*</span></label>
-                                <div class="input-with-icon">
-                                    <i class="fas fa-graduation-cap"></i>
-                                    <select id="academicProgram" required>
-                                        <option value="">-- Select Course / Branch --</option>
-                                        <optgroup label="B.Tech (Undergraduate)">
-                                            <option value="B.Tech - Computer Science & Engineering (CSE)">B.Tech - CSE</option>
-                                            <option value="B.Tech - CSE (AI & Machine Learning)">B.Tech - CSE (AIML)</option>
-                                            <option value="B.Tech - Computer Engineering (Software Engineering)">B.Tech - CSE (SE)</option>
-                                            <option value="B.Tech - CSE (Data Science)">B.Tech - CSE (Data Science)</option>
-                                            <option value="B.Tech - CSE (Cyber Security)">B.Tech - CSE (Cyber Security)</option>
-                                            <option value="B.Tech - Electronics & Communication (ECE)">B.Tech - ECE</option>
-                                            <option value="B.Tech - Electrical & Electronics (EEE)">B.Tech - EEE</option>
-                                            <option value="B.Tech - Mechanical Engineering">B.Tech - Mechanical</option>
-                                            <option value="B.Tech - Civil Engineering">B.Tech - Civil</option>
-                                        </optgroup>
-                                        <optgroup label="Postgraduate & Diploma">
-                                            <option value="MBA - Master of Business Administration">MBA</option>
-                                            <option value="M.Tech - Computer Science & Engineering">M.Tech - CSE</option>
-                                            <option value="M.Tech - VLSI System Design">M.Tech - VLSI</option>
-                                            <option value="Diploma - Polytechnic (All Branches)">Polytechnic / Diploma</option>
-                                        </optgroup>
-                                    </select>
-                                </div>
+                            <div class="entrance-titles">
+                                <h3>Enter Student Roll Number / Hall Ticket</h3>
+                                <p>Access official fee account for <strong>B.Tech CSE Batch 2024 - 2028</strong></p>
                             </div>
                         </div>
 
-                        <div class="form-row-3">
-                            <div class="form-group">
-                                <label for="studentName">Student Full Name <span class="req">*</span></label>
-                                <div class="input-with-icon">
-                                    <i class="fas fa-user"></i>
-                                    <input type="text" id="studentName" placeholder="As registered with college" required>
-                                </div>
+                        <div class="entrance-input-wrapper">
+                            <div class="input-with-icon entrance-input-box">
+                                <i class="fas fa-fingerprint entrance-fa-icon"></i>
+                                <input type="text" id="studentRoll" placeholder="Type Roll (e.g. 501, 561, 5D4, 510 or 24QA1A0501)..." required maxlength="15" autocomplete="off" autofocus>
+                                <div id="rollVerifiedIcon" class="roll-verified-icon" style="display:none;" title="Verified Student from CSE 2024-2028 Database"><i class="fas fa-circle-check"></i></div>
+                                <div id="rollSuggestions" class="roll-suggestions-dropdown"></div>
                             </div>
+                            <button type="button" class="btn-verify-continue" id="verifyRollBtn" onclick="handleVerifyContinue()">
+                                <span>Verify &amp; Continue</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
 
-                            <div class="form-group">
-                                <label for="studentMobile">Mobile Number <span class="req">*</span></label>
-                                <div class="input-with-icon">
-                                    <i class="fas fa-phone"></i>
-                                    <input type="tel" id="studentMobile" placeholder="10-digit mobile number" pattern="[0-9]{10}" maxlength="10" required>
-                                </div>
-                            </div>
+                        <!-- Status Alert Line -->
+                        <div id="rollMatchStatus" class="roll-match-status">
+                            <span class="match-info"><i class="fas fa-bolt text-warning"></i> Type any roll number to auto-load student records</span>
+                        </div>
 
-                            <div class="form-group">
-                                <label for="studentEmail">Email ID (for e-Receipt) <span class="req">*</span></label>
-                                <div class="input-with-icon">
-                                    <i class="fas fa-envelope"></i>
-                                    <input type="email" id="studentEmail" placeholder="student@example.com" required>
-                                </div>
+                        <!-- Quick Test Pills -->
+                        <div class="entrance-quick-pills">
+                            <span class="quick-pills-label">Quick Test Roll Numbers:</span>
+                            <div class="pills-flex">
+                                <button type="button" class="quick-pill" onclick="quickFillRoll('501')">501 <small>(Sec A)</small></button>
+                                <button type="button" class="quick-pill" onclick="quickFillRoll('561')">561 <small>(Sec B)</small></button>
+                                <button type="button" class="quick-pill" onclick="quickFillRoll('5D4')">5D4 <small>(Sec C)</small></button>
+                                <button type="button" class="quick-pill" onclick="quickFillRoll('510')">510 <small>(Lateral C)</small></button>
+                                <button type="button" class="quick-pill pill-mgmt" onclick="quickFillRoll('515')"><i class="fas fa-crown"></i> 515 <small>(Mgmt)</small></button>
+                                <button type="button" class="quick-pill pill-dir" onclick="openStudentDirectoryModal()"><i class="fas fa-users"></i> Directory (199)</button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Fee Category & Breakdown -->
-                    <div class="form-section">
-                        <label class="section-label"><i class="fas fa-money-check-dollar"></i> Fee Category &amp; Amount</label>
+                    <!-- Verified Student Record Card Display -->
+                    <div id="studentVerifiedCard" class="student-verified-card"></div>
 
-                        <div class="fee-category-cards">
-                            <label class="fee-cat-card active">
-                                <input type="radio" name="feeCategory" value="tuition" checked onchange="handleCategoryChange(this.value)">
-                                <div class="cat-icon"><i class="fas fa-book-open-reader"></i></div>
-                                <div class="cat-details">
-                                    <strong>College Tuition Fee</strong>
-                                    <span>Semester / Annual Dues</span>
-                                </div>
-                            </label>
+                    <!-- Hidden/Synchronized Profile Details for Checkout -->
+                    <div class="student-hidden-form-fields" id="studentFormDetails" style="display:none;">
+                        <input type="text" id="studentName">
+                        <input type="tel" id="studentMobile">
+                        <input type="email" id="studentEmail">
+                        <select id="academicProgram">
+                            <option value="B.Tech - Computer Science & Engineering (CSE)" selected>B.Tech - CSE</option>
+                        </select>
+                    </div>
 
-                            <label class="fee-cat-card">
-                                <input type="radio" name="feeCategory" value="exam" onchange="handleCategoryChange(this.value)">
-                                <div class="cat-icon"><i class="fas fa-file-invoice"></i></div>
-                                <div class="cat-details">
-                                    <strong>Exam &amp; Transcript</strong>
-                                    <span>Regular, Supply, ₹60 Transcripts</span>
+                    <!-- ======================================================== -->
+                    <!-- ENTRANCE: STEP 2 - "WHAT PAYMENT ARE YOU MAKING?"        -->
+                    <!-- ======================================================== -->
+                    <div class="payment-selection-step" id="paymentSelectionStep2">
+                        
+                        <div class="step2-header-card">
+                            <div class="step2-title-box">
+                                <div class="step2-badge">Step 2</div>
+                                <div>
+                                    <h3 class="step2-heading">What payment are you making?</h3>
+                                    <p class="step2-subtext" id="step2StudentTarget">Select either <strong>College Tuition Fees (₹72,000)</strong> or <strong>JNTU Fees (₹6,500)</strong></p>
                                 </div>
-                            </label>
-
-                            <label class="fee-cat-card">
-                                <input type="radio" name="feeCategory" value="admission" onchange="handleCategoryChange(this.value)">
-                                <div class="cat-icon"><i class="fas fa-user-plus"></i></div>
-                                <div class="cat-details">
-                                    <strong>Admission / Registration</strong>
-                                    <span>Application &amp; Processing</span>
-                                </div>
-                            </label>
-
-                            <label class="fee-cat-card">
-                                <input type="radio" name="feeCategory" value="transport" onchange="handleCategoryChange(this.value)">
-                                <div class="cat-icon"><i class="fas fa-bus-simple"></i></div>
-                                <div class="cat-details">
-                                    <strong>Bus / Transport Pass</strong>
-                                    <span>Hyderabad &amp; Secunderabad</span>
-                                </div>
-                            </label>
-
-                            <label class="fee-cat-card">
-                                <input type="radio" name="feeCategory" value="hostel" onchange="handleCategoryChange(this.value)">
-                                <div class="cat-icon"><i class="fas fa-hotel"></i></div>
-                                <div class="cat-details">
-                                    <strong>Hostel &amp; Mess</strong>
-                                    <span>Accommodation Charges</span>
-                                </div>
-                            </label>
-
-                            <label class="fee-cat-card">
-                                <input type="radio" name="feeCategory" value="custom" onchange="handleCategoryChange(this.value)">
-                                <div class="cat-icon"><i class="fas fa-receipt"></i></div>
-                                <div class="cat-details">
-                                    <strong>Other / Miscellaneous</strong>
-                                    <span>Custom dues &amp; certifications</span>
-                                </div>
-                            </label>
+                            </div>
+                            <button type="button" class="btn-change-roll" onclick="handleChangeRollClick()">
+                                <i class="fas fa-pen-to-square"></i> Change Roll No.
+                            </button>
                         </div>
 
-                        <!-- Dynamic Sub-Options Container -->
-                        <div id="dynamicSubOptions" class="dynamic-suboptions">
-                            <!-- Populated via JavaScript depending on selected category -->
-                        </div>
-
-                        <!-- Amount Specification Row -->
-                        <div class="form-row-2 amount-specification-row">
-                            <div class="form-group">
-                                <label for="feePurpose">Fee Head / Remarks <span class="req">*</span></label>
-                                <input type="text" id="feePurpose" readonly value="B.Tech Annual Tuition Fee - Sem I/II">
+                        <!-- Primary Fee Choice Cards: Tuition Fees or JNTU Fees -->
+                        <div class="primary-fee-cards">
+                            
+                            <!-- Card 1: College Tuition Fees -->
+                            <div class="primary-fee-card active" id="cardFeeTuition" onclick="selectPaymentChoice('tuition')">
+                                <div class="card-radio-box">
+                                    <input type="radio" name="feeCategory" id="radioTuition" value="tuition" checked onchange="handleCategoryChange(this.value)">
+                                </div>
+                                <div class="card-content-box">
+                                    <div class="card-top-row">
+                                        <div class="card-icon-wrap icon-tuition">
+                                            <i class="fas fa-book-open-reader"></i>
+                                        </div>
+                                        <span class="card-badge badge-mandated">Prescribed Fee</span>
+                                    </div>
+                                    <h4 class="card-fee-title">College Tuition Fee</h4>
+                                    <div class="card-fee-cost">₹72,000 <small>/ Year</small></div>
+                                    <p class="card-fee-desc">B.Tech CSE Annual Tuition Fee for 2024-2028 batch. Semester installments also available.</p>
+                                    
+                                    <!-- Installment Sub-options -->
+                                    <div class="tuition-installments-box" id="tuitionInstallmentsBox">
+                                        <label class="inst-label">Select Installment / Term:</label>
+                                        <select id="subOptTuitionSem" onchange="updateTuitionPreset(this.value)" onclick="event.stopPropagation()">
+                                            <option value="annual" selected>Full Academic Year (Annual: ₹72,000)</option>
+                                            <option value="sem1">Semester I Installment (50%: ₹36,000)</option>
+                                            <option value="sem2">Semester II Installment (50%: ₹36,000)</option>
+                                            <option value="dues">Part Payment / Balance Dues</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
 
-                            <div class="form-group amount-display-group">
-                                <label for="payableAmount">Amount to Pay (INR ₹) <span class="req">*</span></label>
+                            <!-- Card 2: JNTU University Fees -->
+                            <div class="primary-fee-card" id="cardFeeJntu" onclick="selectPaymentChoice('jntu')">
+                                <div class="card-radio-box">
+                                    <input type="radio" name="feeCategory" id="radioJntu" value="jntu" onchange="handleCategoryChange(this.value)">
+                                </div>
+                                <div class="card-content-box">
+                                    <div class="card-top-row">
+                                        <div class="card-icon-wrap icon-jntu">
+                                            <i class="fas fa-university"></i>
+                                        </div>
+                                        <span class="card-badge badge-univ">JNTUH Fee</span>
+                                    </div>
+                                    <h4 class="card-fee-title">JNTU University Fee</h4>
+                                    <div class="card-fee-cost">₹6,500 <small>/ Year</small></div>
+                                    <p class="card-fee-desc">JNTU-Hyderabad University Common Services Fee, Affiliation &amp; Student Registration.</p>
+                                    
+                                    <div class="jntu-included-pill">
+                                        <i class="fas fa-check-circle"></i> Official JNTUH Affiliation &bull; Common Services
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 3: Combined Both (Tuition + JNTU) -->
+                            <div class="primary-fee-card card-highlight-both" id="cardFeeCombined" onclick="selectPaymentChoice('combined')">
+                                <div class="card-radio-box">
+                                    <input type="radio" name="feeCategory" id="radioCombined" value="combined" onchange="handleCategoryChange(this.value)">
+                                </div>
+                                <div class="card-content-box">
+                                    <div class="card-top-row">
+                                        <div class="card-icon-wrap icon-combined">
+                                            <i class="fas fa-layer-group"></i>
+                                        </div>
+                                        <span class="card-badge badge-best">Best Option</span>
+                                    </div>
+                                    <h4 class="card-fee-title">Tuition + JNTU Package</h4>
+                                    <div class="card-fee-cost text-success">₹78,500 <small>Total</small></div>
+                                    <p class="card-fee-desc">Pay both Tuition Fee (₹72,000) &amp; JNTU Fee (₹6,500) together in a single transaction.</p>
+                                    
+                                    <div class="combined-breakdown-pill">
+                                        <span>Tuition: <strong>₹72k</strong></span> + <span>JNTU: <strong>₹6.5k</strong></span> = <strong>₹78,500</strong>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Secondary / Other Payments Accordion Toggle -->
+                        <div class="other-payments-accordion">
+                            <button type="button" class="btn-toggle-other-fees" id="toggleOtherFeesBtn" onclick="toggleOtherFeeOptions()">
+                                <span><i class="fas fa-ellipsis"></i> Other College Payments (Transcripts ₹60, Exam, Bus, Hostel, Custom)</span>
+                                <i class="fas fa-chevron-down" id="otherFeesChevron"></i>
+                            </button>
+
+                            <div class="other-fees-container" id="otherFeesContainer" style="display:none;">
+                                <div class="fee-category-cards secondary-cards-grid">
+                                    <label class="fee-cat-card">
+                                        <input type="radio" name="feeCategory" value="exam" onchange="handleCategoryChange(this.value); syncPaymentCardActive('exam')">
+                                        <div class="cat-icon"><i class="fas fa-file-invoice"></i></div>
+                                        <div class="cat-details">
+                                            <strong>Exam &amp; Transcript</strong>
+                                            <span>Regular, Supply, ₹60 Transcripts</span>
+                                        </div>
+                                    </label>
+                                    <label class="fee-cat-card">
+                                        <input type="radio" name="feeCategory" value="transport" onchange="handleCategoryChange(this.value); syncPaymentCardActive('transport')">
+                                        <div class="cat-icon"><i class="fas fa-bus-simple"></i></div>
+                                        <div class="cat-details">
+                                            <strong>Bus / Transport Pass</strong>
+                                            <span>Hyderabad &amp; Secunderabad</span>
+                                        </div>
+                                    </label>
+                                    <label class="fee-cat-card">
+                                        <input type="radio" name="feeCategory" value="hostel" onchange="handleCategoryChange(this.value); syncPaymentCardActive('hostel')">
+                                        <div class="cat-icon"><i class="fas fa-hotel"></i></div>
+                                        <div class="cat-details">
+                                            <strong>Hostel &amp; Mess</strong>
+                                            <span>Accommodation Charges</span>
+                                        </div>
+                                    </label>
+                                    <label class="fee-cat-card">
+                                        <input type="radio" name="feeCategory" value="custom" onchange="handleCategoryChange(this.value); syncPaymentCardActive('custom')">
+                                        <div class="cat-icon"><i class="fas fa-receipt"></i></div>
+                                        <div class="cat-details">
+                                            <strong>Other / Miscellaneous</strong>
+                                            <span>Custom dues &amp; certifications</span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Dynamic Sub-Options Container (for transcripts, transport routes, etc.) -->
+                        <div id="dynamicSubOptions" class="dynamic-suboptions" style="display:none;"></div>
+
+                        <!-- Amount & Remarks Confirmation Row -->
+                        <div class="payment-confirm-strip">
+                            <div class="confirm-head-box">
+                                <label for="feePurpose">Selected Payment Head:</label>
+                                <input type="text" id="feePurpose" readonly value="B.Tech Annual Tuition Fee (2024-2028 Batch) - ₹72,000">
+                            </div>
+                            <div class="confirm-amt-box">
+                                <label for="payableAmount">Amount to Pay (INR ₹):</label>
                                 <div class="input-with-icon amount-box">
                                     <span class="currency-symbol">₹</span>
-                                    <input type="number" id="payableAmount" min="10" step="1" value="35000" required>
+                                    <input type="number" id="payableAmount" min="10" step="1" value="72000" required>
                                 </div>
                             </div>
                         </div>
 
-                    </div>
+                        <!-- Submit Button -->
+                        <div class="form-submit-row">
+                            <button type="submit" class="btn-proceed-pay" id="proceedPayBtn">
+                                <span class="btn-icon"><i class="fas fa-lock"></i></span>
+                                <span class="btn-text">Proceed to Payment Gateway &nbsp;&bull;&nbsp; <strong id="btnPayAmount">₹72,000</strong></span>
+                                <span class="btn-arrow"><i class="fas fa-arrow-right"></i></span>
+                            </button>
+                        </div>
 
-                    <div class="form-submit-row">
-                        <button type="submit" class="btn-proceed-pay" id="proceedPayBtn">
-                            <span class="btn-icon"><i class="fas fa-lock"></i></span>
-                            <span class="btn-text">Proceed to Payment Gateway &nbsp;•&nbsp; <strong id="btnPayAmount">₹35,000</strong></span>
-                            <span class="btn-arrow"><i class="fas fa-arrow-right"></i></span>
-                        </button>
-                    </div>
+                        <div class="security-guarantee-note">
+                            <i class="fas fa-shield-check"></i>
+                            <span>Instant Payment Gateway &bull; Supported: PhonePe &bull; Google Pay &bull; Paytm &bull; BHIM UPI &bull; All Bank Cards &bull; 50+ NetBanking Options.</span>
+                        </div>
 
-                    <div class="security-guarantee-note">
-                        <i class="fas fa-shield-check"></i>
-                        <span>End-to-End 256-Bit SSL Encryption. Supported: PhonePe &bull; Google Pay &bull; Paytm &bull; UPI Apps &bull; All Bank Debit/Credit Cards &bull; 50+ NetBanking Options.</span>
                     </div>
 
                 </form>
@@ -374,7 +664,7 @@
 
                     <div class="qr-amount-indicator">
                         <span>Payable Now:</span>
-                        <strong id="qrAmountDisplay">₹35,000</strong>
+                        <strong id="qrAmountDisplay">₹72,000</strong>
                     </div>
 
                     <div class="qr-scan-instructions">
@@ -491,35 +781,183 @@
         </div>
     </section>
 
-    <!-- 8. Footer -->
-    <footer class="portal-footer">
-        <div class="container-fluid footer-content">
-            <div class="footer-col">
-                <h5>Brilliant Institute of Engineering &amp; Technology</h5>
-                <p>Ramoji Film City, Abdullahpurmet (M), Near Abdullapur, Hyderabad, Telangana - 501513</p>
-                <p>UGC Autonomous &bull; NAAC 'A' Grade &bull; AICTE Approved &bull; Affiliated to JNTUH</p>
+    <!-- 8. Authentic B-IET Official 5-Column & Legal Footer -->
+    <footer class="page-footer text-light">
+        <div class="container-fluid px-3 px-lg-5 py-5">
+            <div class="row g-4" style="display:flex; flex-wrap:wrap; justify-content:space-between;">
+
+                <!-- 1. Address & Directions -->
+                <div class="col-lg-3 col-md-6 mb-4" style="flex:1; min-width:260px;">
+                    <h6 class="text-uppercase fw-bold mb-3"><i class="fas fa-location-dot me-2"></i>Campus Address</h6>
+                    <p class="mb-1"><strong>BRIL &ndash; Brilliant Institute of Engineering &amp; Technology</strong></p>
+                    <p class="mb-1">Abdullapur (V), Abdullapurmet (M), Rangareddy Dist</p>
+                    <p class="mb-1">Near Ramoji Film City, Hyderabad - 501513</p>
+                    <p class="mb-3">Telangana State, India</p>
+
+                    <!-- Social Icons -->
+                    <div class="footer-social-wrap mb-4">
+                        <a href="https://www.facebook.com/BGTIS/" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://twitter.com/brilliantgroups" target="_blank" rel="noopener" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/brilliantgroup_/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com/company/brilliantgroup/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+
+                    <!-- Get Directions Input Form -->
+                    <h6 class="text-uppercase fw-bold mb-2"><i class="fas fa-route me-2"></i>Get Driving Directions</h6>
+                    <form action="https://www.google.com/maps" method="get" target="_blank">
+                        <div class="input-group input-group-sm mb-3" style="display:flex; max-width:320px;">
+                            <input type="text" name="saddr" class="form-control" placeholder="Enter your current location..." required style="padding:6px 10px; font-size:12px; border-radius:4px 0 0 4px; border:1px solid #ced4da; flex:1;">
+                            <input type="hidden" name="daddr" value="BRIL - Brilliant Institute of Engineering and Technology, Ramoji Film City, Abdullahpurmet, Near Abdullapur, Hyderabad, Telangana 501513">
+                            <button class="btn btn-light" type="submit" style="background:#ffd700; border:none; padding:6px 14px; font-weight:800; border-radius:0 4px 4px 0; color:#0a0a2e; cursor:pointer;">Go</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- 2. Quick Links -->
+                <div class="col-lg-2 col-md-3 mb-4" style="flex:1; min-width:180px;">
+                    <h6 class="text-uppercase fw-bold mb-3"><i class="fas fa-link me-2"></i>Quick Links</h6>
+                    <p><a href="https://b-iet.ac.in/campus-news" target="_blank" class="d-block mb-1">Campus News</a></p>
+                    <p><a href="https://b-iet.ac.in/about/about-bril" target="_blank" class="d-block mb-1">About BRIL</a></p>
+                    <p><a href="https://b-iet.ac.in/admissions/admission-form" target="_blank" class="d-block mb-1">Admissions 2026-27</a></p>
+                    <p><a href="https://b-iet.ac.in/academics" target="_blank" class="d-block mb-1">Academics &amp; Curriculum</a></p>
+                    <p><a href="https://b-iet.ac.in/exam-branch" target="_blank" class="d-block mb-1">Autonomous Exam Branch</a></p>
+                    <p><a href="https://b-iet.ac.in/departments" target="_blank" class="d-block mb-1">Academic Departments</a></p>
+                    <p><a href="https://b-iet.ac.in/placements/placements-2025-2026" target="_blank" class="d-block mb-1">Placements Cell</a></p>
+                </div>
+
+                <!-- 3. Important Campus Cells -->
+                <div class="col-lg-2 col-md-3 mb-4" style="flex:1; min-width:180px;">
+                    <h6 class="text-uppercase fw-bold mb-3"><i class="fas fa-shield-alt me-2"></i>Campus Cells</h6>
+                    <p><a href="https://b-iet.ac.in/cells/grievance-cell" target="_blank" class="d-block mb-1">Grievance Redressal</a></p>
+                    <p><a href="https://b-iet.ac.in/navtarang-cultural-club" target="_blank" class="d-block mb-1">Navtarang Cultural Club</a></p>
+                    <p><a href="https://b-iet.ac.in/cells/anti-ragging" target="_blank" class="d-block mb-1">Anti-Ragging Committee</a></p>
+                    <p><a href="https://b-iet.ac.in/cells/women-protection-cell" target="_blank" class="d-block mb-1">Women Protection Cell</a></p>
+                    <p><a href="https://b-iet.ac.in/cells/nss-cell" target="_blank" class="d-block mb-1">NSS &amp; Community Cell</a></p>
+                    <p><a href="https://b-iet.ac.in/cells/edc-cell" target="_blank" class="d-block mb-1">EDC Innovation Cell</a></p>
+                    <p><a href="https://b-iet.ac.in/cells/student-council" target="_blank" class="d-block mb-1">Student Council</a></p>
+                </div>
+
+                <!-- 4. Important Contacts -->
+                <div class="col-lg-2 col-md-6 mb-4" style="flex:1; min-width:200px;">
+                    <h6 class="text-uppercase fw-bold mb-3"><i class="fas fa-headset me-2"></i>Key Contacts</h6>
+                    <p class="mb-1">Admissions: <a href="tel:+919908810491" class="text-white">+91-990-881-0491</a></p>
+                    <p class="mb-1">Principal Desk: <a href="tel:+919652929786" class="text-white">+91-965-292-9786</a></p>
+                    <p class="mb-1">Placements TPO: <a href="tel:+919951980625" class="text-white">+91-995-198-0625</a></p>
+                    <p class="mb-1">Transport Incharge: <a href="tel:+919052253338" class="text-white">+91-905-225-3338</a></p>
+                    <p class="mb-1">Exam Cell: <a href="tel:+919608001234" class="text-white">+91-960-800-1234</a></p>
+                    <p class="mb-1">Campus Security: <a href="tel:+919876543210" class="text-white">+91-987-654-3210</a></p>
+                </div>
+
+                <!-- 5. Official Emails & Fee Billing Desk -->
+                <div class="col-lg-3 col-md-6 mb-4" style="flex:1; min-width:240px;">
+                    <h6 class="text-uppercase fw-bold mb-3"><i class="fas fa-envelope-open me-2"></i>Official Emails</h6>
+                    <p class="mb-1"><strong>General Enquiry:</strong> <a href="mailto:info@bgti.in" class="text-white">info@bgti.in</a></p>
+                    <p class="mb-1"><strong>Principal:</strong> <a href="mailto:principal@b-iet.ac.in" class="text-white">principal@b-iet.ac.in</a></p>
+                    <p class="mb-1"><strong>Fee Accounts Desk:</strong> <a href="mailto:accounts@b-iet.ac.in" class="text-white">accounts@b-iet.ac.in</a></p>
+                    <p class="mb-1"><strong>Exam Branch:</strong> <a href="mailto:exambranch@b-iet.ac.in" class="text-white">exambranch@b-iet.ac.in</a></p>
+                    <p class="mb-1"><strong>Placements Cell:</strong> <a href="mailto:tpo@b-iet.ac.in" class="text-white">tpo@b-iet.ac.in</a></p>
+                    <p class="mb-1"><strong>Grievance:</strong> <a href="mailto:grievance@b-iet.ac.in" class="text-white">grievance@b-iet.ac.in</a></p>
+                </div>
+
             </div>
-            <div class="footer-col">
-                <h5>Accounts &amp; Payment Desk</h5>
-                <p><i class="fas fa-phone"></i> Admissions &amp; Fees: +91-990-881-0491</p>
-                <p><i class="fas fa-phone"></i> Exam Branch: +91-960-800-1234</p>
-                <p><i class="fas fa-envelope"></i> accounts@b-iet.ac.in | principal@b-iet.ac.in</p>
-            </div>
-            <div class="footer-col">
-                <h5>Accepted Modes</h5>
-                <div class="footer-badges">
-                    <span class="f-badge"><i class="fas fa-mobile-screen"></i> PhonePe</span>
-                    <span class="f-badge"><i class="fab fa-google"></i> Google Pay</span>
-                    <span class="f-badge"><i class="fas fa-wallet"></i> Paytm</span>
-                    <span class="f-badge"><i class="fas fa-qrcode"></i> BHIM UPI</span>
-                    <span class="f-badge"><i class="fas fa-credit-card"></i> Cards &amp; NetBanking</span>
+        </div>
+
+        <!-- 6. Legal & Visitors Row -->
+        <div class="footer-legal-bar">
+            <div class="container-fluid px-3 px-lg-5">
+                <div class="row align-items-center" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+                    <div class="col-md-5 text-center text-md-start">
+                        <span>&copy; 2026 BRIL &ndash; Brilliant Institute of Engineering &amp; Technology. All Rights Reserved.</span>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <span style="background:rgba(255,255,255,0.12); padding:3px 12px; border-radius:12px; border:1px solid rgba(255,255,255,0.2);">
+                            <i class="fas fa-eye me-1 text-warning"></i> Total Visitors: <strong>251,964</strong>
+                        </span>
+                    </div>
+                    <div class="col-md-4 text-center text-md-end" style="display:flex; justify-content:flex-end; gap:16px;">
+                        <a href="https://b-iet.ac.in/terms" target="_blank" class="text-white">Terms &amp; Conditions</a>
+                        <a href="https://b-iet.ac.in/privacy" target="_blank" class="text-white">Privacy Policy</a>
+                        <a href="https://b-iet.ac.in/disclaimer" target="_blank" class="text-white">Disclaimer</a>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Brilliant Institute of Engineering and Technology (BRIL). All Rights Reserved.</p>
-        </div>
     </footer>
+
+    <!-- ── Floating Quick Enquiry Button (Sitewide like b-iet.ac.in) ── -->
+    <button id="admFloatBtn" onclick="openAdmissionsPopup()" aria-label="Quick Admissions Enquiry">
+        <i class="fas fa-graduation-cap"></i>
+        <span>Quick Enquiry</span>
+    </button>
+
+    <!-- ── Scroll to Top (Sitewide like b-iet.ac.in) ── -->
+    <button id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top" aria-label="Scroll to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- ── WhatsApp Fixed Button (Sitewide like b-iet.ac.in) ── -->
+    <a id="waFixedBtn" href="https://wa.me/919908810491?text=Hello%2C%20I%20have%20an%20enquiry%20regarding%20CSE%20Batch%20Fee%20Payment" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- ── Floating Social Stack on Right (Sitewide like b-iet.ac.in) ── -->
+    <div id="socialFloatStack">
+        <a href="https://www.facebook.com/BGTIS/" target="_blank" rel="noopener noreferrer" class="sf-btn" style="background:#1877F2;" aria-label="Facebook">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="https://www.instagram.com/brilliantgroup_/" target="_blank" rel="noopener noreferrer" class="sf-btn sf-insta" aria-label="Instagram">
+            <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.linkedin.com/company/brilliantgroup/" target="_blank" rel="noopener noreferrer" class="sf-btn" style="background:#0A66C2;" aria-label="LinkedIn">
+            <i class="fab fa-linkedin-in"></i>
+        </a>
+        <a href="https://www.youtube.com/@brilliantgroup" target="_blank" rel="noopener noreferrer" class="sf-btn" style="background:#FF0000;" aria-label="YouTube">
+            <i class="fab fa-youtube"></i>
+        </a>
+        <a href="https://api.whatsapp.com/send?text=BRIL%20Fee%20Payment%20Portal%20CSE%20Batch%202024-2028%20https%3A%2F%2Fb-iet.ac.in" target="_blank" rel="noopener noreferrer" class="sf-btn" style="background:#34B7F1;" aria-label="Share">
+            <i class="fas fa-share-alt"></i>
+        </a>
+    </div>
+
+    <!-- ── Admissions Popup Overlay (Sitewide from b-iet.ac.in) ── -->
+    <div id="admPopupOverlay">
+        <div class="adm-popup-box">
+            <div class="adm-popup-header">
+                <div>
+                    <h3 class="adm-popup-title"><i class="fas fa-graduation-cap me-2"></i>Admissions &amp; Fee Enquiry 2026-27</h3>
+                    <p class="adm-popup-subtitle"><strong>BRIL HYDERABAD</strong> &bull; Fill the form and our administrative desk will call you within 24 hours</p>
+                </div>
+                <button type="button" onclick="closeAdmissionsPopup()" class="adm-close-btn" aria-label="Close">&times;</button>
+            </div>
+            <div class="adm-popup-body">
+                <form id="admQuickForm" onsubmit="event.preventDefault(); alert('Enquiry Submitted Successfully! An official counselor will contact you.'); closeAdmissionsPopup();">
+                    <div class="adm-field-group">
+                        <label class="adm-label">Student / Parent Name <span style="color:#ef4444;">*</span></label>
+                        <input type="text" class="form-control" placeholder="Enter Full Name" required style="width:100%; padding:9px 12px; border:1px solid #ced4da; border-radius:6px;">
+                    </div>
+                    <div class="adm-field-group">
+                        <label class="adm-label">Mobile Number <span style="color:#ef4444;">*</span></label>
+                        <input type="tel" class="form-control" placeholder="10-digit mobile number" pattern="[0-9]{10}" maxlength="10" required style="width:100%; padding:9px 12px; border:1px solid #ced4da; border-radius:6px;">
+                    </div>
+                    <div class="adm-field-group">
+                        <label class="adm-label">Course of Interest</label>
+                        <select style="width:100%; padding:9px 12px; border:1px solid #ced4da; border-radius:6px;">
+                            <option>B.Tech &ndash; Computer Science and Engineering (CSE)</option>
+                            <option>B.Tech &ndash; CSE (AI &amp; Machine Learning)</option>
+                            <option>B.Tech &ndash; CSE (Data Science)</option>
+                            <option>B.Tech &ndash; Electronics &amp; Communication (ECE)</option>
+                            <option>MBA &ndash; Master of Business Administration</option>
+                            <option>Diploma in Engineering</option>
+                        </select>
+                    </div>
+                    <div style="display:flex; gap:10px; margin-top:16px;">
+                        <button type="submit" class="adm-submit-btn"><i class="fas fa-paper-plane me-2"></i> Submit Quick Enquiry</button>
+                        <a href="https://wa.me/919908810491?text=BRIL%20Admissions%20Enquiry" target="_blank" class="adm-whatsapp-btn"><i class="fab fa-whatsapp me-2"></i> WhatsApp Us</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <!-- ======================================================== -->
     <!-- MODAL 1: Interactive Payment Gateway Checkout Modal     -->
@@ -892,6 +1330,56 @@
                 </div>
                 <div id="lookupResults" class="lookup-results-box mt-3">
                     <!-- Results rendered via JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <!-- ======================================================== -->
+    <!-- MODAL 5: Student Directory (CSE Batch 2024-2028)         -->
+    <!-- ======================================================== -->
+    <div id="studentDirectoryModal" class="modal-overlay">
+        <div class="modal-card directory-modal-card">
+            <div class="modal-header">
+                <div class="dir-modal-header-titles">
+                    <h3><i class="fas fa-users-viewfinder"></i> CSE Batch 2024 - 2028 Student Directory</h3>
+                    <p class="modal-subtext">199 Students Enrolled &bull; Section A (501 to 560) | Section B (61 to d0) | Section C (d1 to 510) &bull; Tuition: ₹72,000 | JNTU: ₹6,500</p>
+                </div>
+                <button type="button" class="modal-close-btn" onclick="closeStudentDirectoryModal()">&times;</button>
+            </div>
+            <div class="directory-modal-content">
+                <div class="directory-toolbar">
+                    <div class="directory-tabs">
+                        <button type="button" class="dir-tab-btn active" data-filter="all" onclick="filterStudentDirectory('all')">
+                            All Students (199)
+                        </button>
+                        <button type="button" class="dir-tab-btn" data-filter="A" onclick="filterStudentDirectory('A')">
+                            Section A (501-560) <span class="tab-badge">60</span>
+                        </button>
+                        <button type="button" class="dir-tab-btn" data-filter="B" onclick="filterStudentDirectory('B')">
+                            Section B (61-D0) <span class="tab-badge">69</span>
+                        </button>
+                        <button type="button" class="dir-tab-btn" data-filter="C" onclick="filterStudentDirectory('C')">
+                            Section C (D1-510) <span class="tab-badge">70</span>
+                        </button>
+                        <button type="button" class="dir-tab-btn dir-tab-mgmt" data-filter="mgmt" onclick="filterStudentDirectory('mgmt')">
+                            <i class="fas fa-crown"></i> Management Quota <span class="tab-badge">45</span>
+                        </button>
+                    </div>
+                    <div class="directory-search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="directorySearchInput" placeholder="Search by roll number or student name (e.g. 501, 561, 5D4, Vishnu)..." oninput="renderStudentDirectoryList()">
+                    </div>
+                </div>
+
+                <div class="directory-info-strip">
+                    <span id="directoryCountBadge" class="dir-counter-badge">Showing 199 Students</span>
+                    <span class="dir-help-text"><i class="fas fa-circle-info"></i> Click <strong>Select &amp; Pay</strong> to instantly prefill the fee payment form for that student</span>
+                </div>
+
+                <div id="studentDirectoryGrid" class="student-directory-grid">
+                    <!-- Populated dynamically via JavaScript -->
                 </div>
             </div>
         </div>

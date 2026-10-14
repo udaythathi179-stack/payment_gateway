@@ -10,10 +10,12 @@
 header('Content-Type: application/json; charset=utf-8');
 
 // 1. Database Connection (MySQL / MariaDB for College ERP)
+// NOTE: All secrets MUST come from environment variables. No defaults are
+// hardcoded so a misconfigured server fails closed instead of leaking demo creds.
 $dbHost = getenv('DB_HOST') ?: 'localhost';
-$dbUser = getenv('DB_USER') ?: 'bril_admin';
-$dbPass = getenv('DB_PASS') ?: 'BrilCollege@2026';
-$dbName = getenv('DB_NAME') ?: 'bril_erp_db';
+$dbUser = getenv('DB_USER') ?: '';
+$dbPass = getenv('DB_PASS') ?: '';
+$dbName = getenv('DB_NAME') ?: '';
 
 /*
 // Uncomment when deploying to live server:
@@ -25,17 +27,17 @@ if ($conn->connect_error) {
 }
 */
 
-// 2. Gateway Credentials Configuration
+// 2. Gateway Credentials Configuration (env-only, no hardcoded secrets)
 $GATEWAY_CONFIG = [
     'phonepe' => [
-        'merchant_id'  => getenv('PHONEPE_MERCHANT_ID') ?: 'M2200BRILCOLLEGE',
-        'salt_key'     => getenv('PHONEPE_SALT_KEY') ?: 'YOUR_PHONEPE_SALT_KEY',
+        'merchant_id'  => getenv('PHONEPE_MERCHANT_ID') ?: '',
+        'salt_key'     => getenv('PHONEPE_SALT_KEY') ?: '',
         'salt_index'   => getenv('PHONEPE_SALT_INDEX') ?: '1',
         'api_url'      => 'https://api.phonepe.com/apis/hermes/pg/v1/pay'
     ],
     'razorpay' => [
-        'key_id'       => getenv('RAZORPAY_KEY_ID') ?: 'rzp_live_BRIL12345678',
-        'key_secret'   => getenv('RAZORPAY_KEY_SECRET') ?: 'YOUR_RAZORPAY_SECRET'
+        'key_id'       => getenv('RAZORPAY_KEY_ID') ?: '',
+        'key_secret'   => getenv('RAZORPAY_KEY_SECRET') ?: ''
     ]
 ];
 

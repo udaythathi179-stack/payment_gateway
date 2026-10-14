@@ -1,5 +1,5 @@
 @echo off
-cd /d "C:\Users\rajes\OneDrive\Desktop\BRIL"
+cd /d "%~dp0"
 echo ========================================================
 echo Pushing BRIL Payment Gateway Code to GitHub:
 echo https://github.com/udaythathi179-stack/payment_gateway.git

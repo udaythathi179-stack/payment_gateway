@@ -1,0 +1,17 @@
+{
+  "name": "bril-fee-payment-portal",
+  "version": "2.4.0",
+  "description": "Official Online Fee Payment Portal for Brilliant Institute of Engineering & Technology (BRIL), Hyderabad — B.Tech CSE Batch 2024-2028.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "node --check server.js && node --check payment.js && node test/test_portal.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "license": "UNLICENSED",
+  "private": true,
+  "keywords": ["bril", "fee-payment", "upi", "college-erp"]
+}

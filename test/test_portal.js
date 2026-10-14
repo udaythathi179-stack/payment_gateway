@@ -93,6 +93,7 @@ async function main() {
       'render.yaml',
       'Procfile',
       'robots.txt',
+      '.dockerignore',
     ];
     for (const f of requiredFiles) {
       assert(fs.existsSync(path.join(ROOT_DIR, f)), `Missing required file: ${f}`);
@@ -228,6 +229,11 @@ async function main() {
 
     await runAsyncTest('GET /.env.example is blocked with 403 Forbidden', async () => {
       const res = await request({ host, port, path: '/.env.example', method: 'GET' });
+      assert.strictEqual(res.statusCode, 403);
+    });
+
+    await runAsyncTest('GET /.dockerignore is blocked with 403 Forbidden', async () => {
+      const res = await request({ host, port, path: '/.dockerignore', method: 'GET' });
       assert.strictEqual(res.statusCode, 403);
     });
 

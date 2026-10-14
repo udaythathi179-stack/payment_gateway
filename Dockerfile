@@ -2,8 +2,7 @@ FROM node:20-alpine
 WORKDIR /app
 COPY package.json ./
 RUN npm install --omit=dev || true
-COPY index.html style.css payment.js students_data.json server.js ./
-COPY robots.txt ./
+COPY . .
 ENV NODE_ENV=production
 ENV PORT=3000
 ENV HOST=0.0.0.0

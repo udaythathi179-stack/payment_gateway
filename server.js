@@ -162,7 +162,7 @@ function serveFile(req, res, filePath, stats) {
   stream.pipe(res);
 }
 
-const server = http.createServer((req, res) => {
+function handleRequest(req, res) {
   const method = (req.method || 'GET').toUpperCase();
   const rawUrl = req.url || '/';
   const pathname = rawUrl.split('?')[0].split('#')[0] || '/';
@@ -235,12 +235,33 @@ const server = http.createServer((req, res) => {
       `${new Date().toISOString()} ${sanitizeForLog(method, 8)} ${sanitizeForLog(pathname)} -> ${res.statusCode} ${Date.now() - started}ms`
     );
   });
+}
+
+const server = http.createServer(handleRequest);
+
+function app(req, res) {
+  return handleRequest(req, res);
+}
+
+// Mirror http.Server interface on app so both Vercel Serverless (expects function)
+// and Node/tests (expect http.Server methods/events) work seamlessly.
+['listen', 'close', 'address', 'on', 'once', 'emit', 'removeListener'].forEach((method) => {
+  if (typeof server[method] === 'function') {
+    app[method] = server[method].bind(server);
+  }
+});
+Object.defineProperty(app, 'listening', {
+  get() {
+    return server.listening;
+  },
 });
 
-server.listen(PORT, HOST, () => {
-  // eslint-disable-next-line no-console
-  console.log(`BRIL Fee Payment Portal is running at http://${HOST === '0.0.0.0' ? 'localhost' : HOST}:${PORT} (env: ${process.env.NODE_ENV || 'development'})`);
-});
+if (!process.env.VERCEL) {
+  server.listen(PORT, HOST, () => {
+    // eslint-disable-next-line no-console
+    console.log(`BRIL Fee Payment Portal is running at http://${HOST === '0.0.0.0' ? 'localhost' : HOST}:${PORT} (env: ${process.env.NODE_ENV || 'development'})`);
+  });
+}
 
 function shutdown(signal) {
   // eslint-disable-next-line no-console
@@ -252,4 +273,5 @@ function shutdown(signal) {
 process.on('SIGTERM', () => shutdown('SIGTERM'));
 process.on('SIGINT', () => shutdown('SIGINT'));
 
-module.exports = server;
+module.exports = app;
+module.exports.server = server;

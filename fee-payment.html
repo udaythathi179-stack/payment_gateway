@@ -534,88 +534,127 @@
                             <!-- Card 1: College Tuition Fees -->
                             <div class="primary-fee-card active" id="cardFeeTuition"
                                 onclick="selectPaymentChoice('tuition')">
-                                <div class="card-radio-box">
-                                    <input type="radio" name="feeCategory" id="radioTuition" value="tuition" checked
-                                        onchange="handleCategoryChange(this.value)">
-                                </div>
-                                <div class="card-content-box">
-                                    <div class="card-top-row">
-                                        <div class="card-icon-wrap icon-tuition">
-                                            <i class="fas fa-book-open-reader"></i>
+                                <div class="card-body-wrap">
+                                    <div class="card-radio-box">
+                                        <input type="radio" name="feeCategory" id="radioTuition" value="tuition" checked
+                                            onchange="handleCategoryChange(this.value)">
+                                    </div>
+                                    <div class="card-content-box">
+                                        <div class="card-top-row">
+                                            <div class="card-icon-wrap icon-tuition">
+                                                <i class="fas fa-book-open-reader"></i>
+                                            </div>
+                                            <span class="card-badge badge-mandated">Prescribed Fee</span>
                                         </div>
-                                        <span class="card-badge badge-mandated">Prescribed Fee</span>
-                                    </div>
-                                    <h4 class="card-fee-title">College Tuition Fee</h4>
-                                    <div class="card-fee-cost">₹72,000 <small>/ Year</small></div>
-                                    <p class="card-fee-desc">B.Tech CSE Annual Tuition Fee for 2024-2028 batch. Semester
-                                        installments also available.</p>
+                                        <h4 class="card-fee-title">College Tuition Fee</h4>
+                                        <div class="card-fee-cost">₹72,000 <small>/ Year</small></div>
+                                        <p class="card-fee-desc">B.Tech CSE Annual Tuition Fee for 2024-2028 batch. Semester installments available.</p>
 
-                                    <!-- Installment Sub-options -->
-                                    <div class="tuition-installments-box" id="tuitionInstallmentsBox">
-                                        <label class="inst-label">Select Installment / Term:</label>
-                                        <select id="subOptTuitionSem" onchange="updateTuitionPreset(this.value)"
-                                            onclick="event.stopPropagation()">
-                                            <option value="annual" selected>Full Academic Year (Annual: ₹72,000)
-                                            </option>
-                                            <option value="sem1">Semester I Installment (50%: ₹36,000)</option>
-                                            <option value="sem2">Semester II Installment (50%: ₹36,000)</option>
-                                            <option value="dues">Part Payment / Balance Dues</option>
-                                        </select>
+                                        <!-- Installment Sub-options -->
+                                        <div class="tuition-installments-box" id="tuitionInstallmentsBox">
+                                            <label class="inst-label" for="subOptTuitionSem">Select Installment / Term:</label>
+                                            <select id="subOptTuitionSem" onchange="updateTuitionPreset(this.value)"
+                                                onclick="event.stopPropagation()">
+                                                <option value="annual" selected>Full Academic Year (Annual: ₹72,000)</option>
+                                                <option value="sem1">Semester I Installment (50%: ₹36,000)</option>
+                                                <option value="sem2">Semester II Installment (50%: ₹36,000)</option>
+                                                <option value="dues">Part Payment / Balance Dues</option>
+                                            </select>
+                                        </div>
                                     </div>
+                                </div>
+                                <div class="card-action-box">
+                                    <button type="button" class="btn-card-proceed" id="btnCardProceedTuition"
+                                        onclick="proceedFromCard('tuition', event)">
+                                        <span class="btn-card-text">Proceed &bull; <strong id="cardTuitionBtnAmt">₹72,000</strong></span>
+                                        <i class="fas fa-arrow-right"></i>
+                                    </button>
                                 </div>
                             </div>
 
                             <!-- Card 2: JNTU University Fees -->
                             <div class="primary-fee-card" id="cardFeeJntu" onclick="selectPaymentChoice('jntu')">
-                                <div class="card-radio-box">
-                                    <input type="radio" name="feeCategory" id="radioJntu" value="jntu"
-                                        onchange="handleCategoryChange(this.value)">
-                                </div>
-                                <div class="card-content-box">
-                                    <div class="card-top-row">
-                                        <div class="card-icon-wrap icon-jntu">
-                                            <i class="fas fa-university"></i>
+                                <div class="card-body-wrap">
+                                    <div class="card-radio-box">
+                                        <input type="radio" name="feeCategory" id="radioJntu" value="jntu"
+                                            onchange="handleCategoryChange(this.value)">
+                                    </div>
+                                    <div class="card-content-box">
+                                        <div class="card-top-row">
+                                            <div class="card-icon-wrap icon-jntu">
+                                                <i class="fas fa-university"></i>
+                                            </div>
+                                            <span class="card-badge badge-univ">JNTUH Fee</span>
                                         </div>
-                                        <span class="card-badge badge-univ">JNTUH Fee</span>
-                                    </div>
-                                    <h4 class="card-fee-title">JNTU University Fee</h4>
-                                    <div class="card-fee-cost">₹6,500 <small>/ Year</small></div>
-                                    <p class="card-fee-desc">JNTU-Hyderabad University Common Services Fee, Affiliation
-                                        &amp; Student Registration.</p>
+                                        <h4 class="card-fee-title">JNTU University Fee</h4>
+                                        <div class="card-fee-cost">₹6,500 <small>/ Year</small></div>
+                                        <p class="card-fee-desc">JNTU-Hyderabad University Common Services Fee, Affiliation &amp; Student Registration.</p>
 
-                                    <div class="jntu-included-pill">
-                                        <i class="fas fa-check-circle"></i> Official JNTUH Affiliation &bull; Common
-                                        Services
+                                        <div class="jntu-included-pill">
+                                            <i class="fas fa-check-circle"></i> Official JNTUH Affiliation &bull; Common Services
+                                        </div>
                                     </div>
+                                </div>
+                                <div class="card-action-box">
+                                    <button type="button" class="btn-card-proceed" id="btnCardProceedJntu"
+                                        onclick="proceedFromCard('jntu', event)">
+                                        <span class="btn-card-text">Proceed &bull; <strong>₹6,500</strong></span>
+                                        <i class="fas fa-arrow-right"></i>
+                                    </button>
                                 </div>
                             </div>
 
                             <!-- Card 3: Combined Both (Tuition + JNTU) -->
                             <div class="primary-fee-card card-highlight-both" id="cardFeeCombined"
                                 onclick="selectPaymentChoice('combined')">
-                                <div class="card-radio-box">
-                                    <input type="radio" name="feeCategory" id="radioCombined" value="combined"
-                                        onchange="handleCategoryChange(this.value)">
-                                </div>
-                                <div class="card-content-box">
-                                    <div class="card-top-row">
-                                        <div class="card-icon-wrap icon-combined">
-                                            <i class="fas fa-layer-group"></i>
+                                <div class="card-body-wrap">
+                                    <div class="card-radio-box">
+                                        <input type="radio" name="feeCategory" id="radioCombined" value="combined"
+                                            onchange="handleCategoryChange(this.value)">
+                                    </div>
+                                    <div class="card-content-box">
+                                        <div class="card-top-row">
+                                            <div class="card-icon-wrap icon-combined">
+                                                <i class="fas fa-layer-group"></i>
+                                            </div>
+                                            <span class="card-badge badge-best">Best Option</span>
                                         </div>
-                                        <span class="card-badge badge-best">Best Option</span>
-                                    </div>
-                                    <h4 class="card-fee-title">Tuition + JNTU Package</h4>
-                                    <div class="card-fee-cost text-success">₹78,500 <small>Total</small></div>
-                                    <p class="card-fee-desc">Pay both Tuition Fee (₹72,000) &amp; JNTU Fee (₹6,500)
-                                        together in a single transaction.</p>
+                                        <h4 class="card-fee-title">Tuition + JNTU Package</h4>
+                                        <div class="card-fee-cost text-success">₹78,500 <small>Total</small></div>
+                                        <p class="card-fee-desc">Pay both Tuition Fee (₹72,000) &amp; JNTU Fee (₹6,500) together in a single transaction.</p>
 
-                                    <div class="combined-breakdown-pill">
-                                        <span>Tuition: <strong>₹72k</strong></span> + <span>JNTU:
-                                            <strong>₹6.5k</strong></span> = <strong>₹78,500</strong>
+                                        <div class="combined-breakdown-pill">
+                                            <span>Tuition: <strong>₹72k</strong></span> + <span>JNTU: <strong>₹6.5k</strong></span> = <strong>₹78,500</strong>
+                                        </div>
                                     </div>
+                                </div>
+                                <div class="card-action-box">
+                                    <button type="button" class="btn-card-proceed" id="btnCardProceedCombined"
+                                        onclick="proceedFromCard('combined', event)">
+                                        <span class="btn-card-text">Proceed &bull; <strong>₹78,500</strong></span>
+                                        <i class="fas fa-arrow-right"></i>
+                                    </button>
                                 </div>
                             </div>
 
+                        </div>
+
+                        <!-- Instant Step 2 Selected & Proceed Bar -->
+                        <div class="step2-proceed-banner" id="step2ProceedBanner">
+                            <div class="step2-proceed-summary">
+                                <div class="step2-banner-badge" id="step2BannerBadge">
+                                    <i class="fas fa-bolt"></i> Ready to Pay
+                                </div>
+                                <div class="step2-banner-meta">
+                                    <span class="step2-banner-title" id="step2BannerTitle">College Tuition Fee (Annual)</span>
+                                    <span class="step2-banner-amount" id="step2BannerAmount">₹72,000</span>
+                                </div>
+                            </div>
+                            <button type="button" class="btn-step2-proceed" id="btnStep2Proceed" onclick="initiatePaymentFlow()">
+                                <span class="btn-proceed-icon"><i class="fas fa-lock"></i></span>
+                                <span class="btn-proceed-label">Proceed to Payment Gateway</span>
+                                <span class="btn-proceed-arrow"><i class="fas fa-arrow-right"></i></span>
+                            </button>
                         </div>
 
                         <!-- Secondary / Other Payments Accordion Toggle -->

@@ -3151,6 +3151,9 @@ function selectStudent(st, showToast = true) {
         step2Target.innerHTML = `Making payment for: <strong class="text-primary">${st.name}</strong> (<code>${st.roll}</code> &bull; ${st.section} &bull; ${st.quota})`;
     }
     updateStepperProgress(2);
+    if (typeof updateStep2ProceedBanner === 'function') {
+        updateStep2ProceedBanner('tuition');
+    }
 
     if (showToast) {
         showNotification(`✓ Loaded: ${st.name} (${st.roll}) - ${st.section} [${st.quota}]`);
@@ -3929,6 +3932,9 @@ function setFeeDetails(purpose, amount) {
 
     updateAmountDisplays();
     updateLiveQrCode();
+    if (typeof updateStep2ProceedBanner === 'function') {
+        updateStep2ProceedBanner(PaymentState.currentCategory);
+    }
 }
 
 // Update all amount labels across the page
@@ -4687,6 +4693,15 @@ function handleChangeRollClick() {
     }
 }
 
+// Proceed directly from an in-card button click
+function proceedFromCard(category, event) {
+    if (event) {
+        event.stopPropagation();
+    }
+    selectPaymentChoice(category);
+    initiatePaymentFlow();
+}
+
 // 1-Click Primary Payment Choice: 'tuition', 'jntu', 'combined'
 function selectPaymentChoice(category) {
     // Sync radio buttons
@@ -4701,6 +4716,9 @@ function selectPaymentChoice(category) {
 
     // Highlight Stepper 2
     updateStepperProgress(2);
+
+    // Update Step 2 Proceed Banner & in-card amounts
+    updateStep2ProceedBanner(category);
 }
 
 function syncPaymentCardActive(category) {
@@ -4712,6 +4730,37 @@ function syncPaymentCardActive(category) {
         document.getElementById('cardFeeJntu')?.classList.add('active');
     } else if (category === 'combined') {
         document.getElementById('cardFeeCombined')?.classList.add('active');
+    }
+}
+
+// Update Step 2 Selected & Proceed Banner
+function updateStep2ProceedBanner(category) {
+    const cat = category || PaymentState.currentCategory || 'tuition';
+    const titleEl = document.getElementById('step2BannerTitle');
+    const amtEl = document.getElementById('step2BannerAmount');
+    const tuitionBtnAmt = document.getElementById('cardTuitionBtnAmt');
+    const formatted = '₹' + PaymentState.amount.toLocaleString('en-IN');
+
+    if (titleEl) {
+        if (cat === 'tuition') {
+            const semSelect = document.getElementById('subOptTuitionSem');
+            const semText = semSelect && semSelect.selectedOptions && semSelect.selectedOptions[0] ? semSelect.selectedOptions[0].text.split('(')[0].trim() : 'Annual Tuition';
+            titleEl.textContent = `College Tuition Fee (${semText})`;
+        } else if (cat === 'jntu') {
+            titleEl.textContent = 'JNTU University Fee (Official JNTUH Affiliation)';
+        } else if (cat === 'combined') {
+            titleEl.textContent = 'Tuition + JNTU Package (Single Transaction)';
+        } else {
+            titleEl.textContent = PaymentState.purpose || 'Selected College Payment';
+        }
+    }
+
+    if (amtEl) {
+        amtEl.textContent = formatted;
+    }
+
+    if (tuitionBtnAmt && cat === 'tuition') {
+        tuitionBtnAmt.textContent = formatted;
     }
 }
 

@@ -179,6 +179,18 @@ async function main() {
       assert(res.body.includes(':root'));
     });
 
+    await runAsyncTest('GET /css/style.css returns college CSS stylesheet', async () => {
+      const res = await request({ host, port, path: '/css/style.css', method: 'GET' });
+      assert.strictEqual(res.statusCode, 200);
+      assert(res.headers['content-type'].includes('text/css'));
+    });
+
+    await runAsyncTest('GET /css/home.css returns home CSS stylesheet', async () => {
+      const res = await request({ host, port, path: '/css/home.css', method: 'GET' });
+      assert.strictEqual(res.statusCode, 200);
+      assert(res.headers['content-type'].includes('text/css'));
+    });
+
     await runAsyncTest('GET /payment.js returns JavaScript', async () => {
       const res = await request({ host, port, path: '/payment.js', method: 'GET' });
       assert.strictEqual(res.statusCode, 200);

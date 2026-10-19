@@ -1,5 +1,13 @@
 @echo off
 cd /d "%~dp0"
+
+where git >nul 2>nul
+if %ERRORLEVEL% neq 0 (
+    if exist "%LOCALAPPDATA%\Programs\MinGit\cmd" (
+        set "PATH=%LOCALAPPDATA%\Programs\MinGit\cmd;%PATH%"
+    )
+)
+
 echo ========================================================
 echo BRIL Payment Gateway - GitHub Sync
 echo Remote: https://github.com/udaythathi179-stack/payment_gateway.git

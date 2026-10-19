@@ -93,6 +93,7 @@ async function main() {
       'render.yaml',
       'Procfile',
       'robots.txt',
+      'fee-payment.html',
       '.dockerignore',
     ];
     for (const f of requiredFiles) {
@@ -131,6 +132,12 @@ async function main() {
       assert.strictEqual(res.headers['x-frame-options'], 'SAMEORIGIN');
       assert(res.headers['content-security-policy'], 'CSP header missing');
       assert(res.body.includes('Brilliant Institute of Engineering and Technology'));
+    });
+
+    await runAsyncTest('GET /fee-payment returns 200 with HTML', async () => {
+      const res = await request({ host, port, path: '/fee-payment', method: 'GET' });
+      assert.strictEqual(res.statusCode, 200);
+      assert(res.headers['content-type'].includes('text/html'));
     });
 
     await runAsyncTest('GET /health returns 200 with healthy status', async () => {

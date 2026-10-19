@@ -68,7 +68,12 @@ Manual:
 npx vercel --prod
 ```
 
-`vercel.json` sets security headers and caching. Note: `server.js` is not used on Vercel; static files are served from the repo root.
+`vercel.json` forces a **static site** deployment from the repo root:
+
+- `"framework": null` — disables Vercel's Node.js backend auto-detection (otherwise `package.json` + `server.js` make Vercel bundle only `index.html` / `fee-payment.html` into a serverless function and every `/css/*`, `/style.css`, `/payment.js` request returns 404 → unstyled page).
+- `"buildCommand": ""` — skips the build step so `css/`, `style.css`, `payment.js`, `students_data.json` and `robots.txt` are served as-is.
+
+`server.js` is not used on Vercel; all files are served from the repo root.
 
 ### Option C — Netlify / Cloudflare Pages / S3 static
 

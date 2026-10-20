@@ -430,16 +430,16 @@ body {
 
 /* 5. MAIN PORTAL LAYOUT */
 .page-main {
-    max-width: 1400px;
+    max-width: 980px;
     margin: 32px auto 60px auto;
     padding: 0 24px;
 }
 
 .portal-grid {
     display: grid;
-    grid-template-columns: 1.4fr 1fr;
-    gap: 28px;
-    align-items: start;
+    grid-template-columns: 1fr;
+    gap: 0;
+    width: 100%;
 }
 
 /* CARDS */
@@ -4144,6 +4144,24 @@ html[data-theme="dark"] .btn-ledger-apply:hover {
 .btn-verify-continue:hover {
     background: linear-gradient(135deg, #000099 0%, #0f172a 100%);
     transform: translateY(-1px);
+}
+
+.btn-go {
+    padding: 0 28px;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    min-width: 90px;
+    justify-content: center;
+}
+
+.btn-go span {
+    font-weight: 800;
+}
+
+.btn-go:hover {
+    box-shadow: 0 6px 18px rgba(0, 0, 204, 0.35);
+    transform: translateY(-1px) scale(1.02);
 }
 
 /* Quick Test Pills */

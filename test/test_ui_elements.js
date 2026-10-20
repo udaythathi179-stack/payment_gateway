@@ -22,4 +22,9 @@ assert(js.includes('function updateStep2ProceedBanner'), 'updateStep2ProceedBann
 assert(css.includes('.step2-proceed-banner'), '.step2-proceed-banner CSS missing');
 assert(css.includes('.btn-card-proceed'), '.btn-card-proceed CSS missing');
 
+// Verify rightside instant payment card has been removed
+assert(!html.includes('gateway-summary-card'), 'gateway-summary-card should be removed');
+assert(!html.includes('Instant Payment Modes'), 'Instant Payment Modes header should be removed');
+assert(css.includes('grid-template-columns: 1fr;'), 'portal-grid should be single-column 1fr');
+
 console.log('ALL UI verification checks passed successfully!');

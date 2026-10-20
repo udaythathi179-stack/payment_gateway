@@ -114,6 +114,7 @@ const selectStudent = (st, toast) => {
     context._tmpToast = toast;
     vm.runInContext('selectStudent(_tmpStudent, _tmpToast)', context);
 };
+const handleGoClick = () => vm.runInContext('handleGoClick()', context);
 const handleVerifyAndProceed = () => vm.runInContext('handleVerifyAndProceed()', context);
 const resetStudentFields = () => vm.runInContext('resetStudentFields()', context);
 
@@ -123,7 +124,7 @@ console.log('Testing Runtime Logic in payment.js...');
 assert.strictEqual(getPaymentState().student.roll, '', 'Initial roll should be blank');
 console.log('  ✓ Initial student roll is clean');
 
-// 2. Test auto-filling provided space on entering roll 501
+// 2. Test auto-filling student fields on entering roll 501
 console.log('Testing entering "501" into studentRoll...');
 const rollInput = document.getElementById('studentRoll');
 rollInput.value = '501';
@@ -144,7 +145,7 @@ assert.strictEqual(document.getElementById('studentEmail').value, '24QA1A0501@b-
 assert(document.getElementById('studentSection').value.includes('Section A'));
 assert(document.getElementById('studentQuota').value.includes('Convenor Quota'));
 
-console.log('  ✓ Provided Space fields populated correctly:');
+console.log('  ✓ Student fields populated correctly:');
 console.log('    - Name:', document.getElementById('studentName').value);
 console.log('    - Roll:', document.getElementById('studentRollDisplay').value);
 console.log('    - Program:', document.getElementById('academicProgram').value);
@@ -153,18 +154,18 @@ console.log('    - Quota:', document.getElementById('studentQuota').value);
 console.log('    - Mobile:', document.getElementById('studentMobile').value);
 console.log('    - Email:', document.getElementById('studentEmail').value);
 
-// 3. Test handleVerifyAndProceed()
-console.log('\nTesting clicking "Verify & Proceed" button...');
+// 3. Test handleGoClick() navigation to fees in Step 2
+console.log('\nTesting clicking "Go" button to navigate to fees...');
 let scrolledToStep2 = false;
 document.getElementById('paymentSelectionStep2').scrollIntoView = () => {
     scrolledToStep2 = true;
 };
 
-handleVerifyAndProceed();
+handleGoClick();
 
 assert.strictEqual(getPaymentState().student.roll, '24QA1A0501');
 assert.strictEqual(getPaymentState().student.name, 'Aparanjitha A.C.Ancy');
-console.log('  ✓ handleVerifyAndProceed() directly took student data into PaymentState');
+console.log('  ✓ handleGoClick() took student data and navigated to fees in Step 2');
 
 // 4. Test clearing the input resets the provided space
 console.log('\nTesting clearing the roll input...');

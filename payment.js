@@ -3611,7 +3611,7 @@ function initStudentSearchAndAutocomplete() {
     rollInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
-            handleVerifyAndProceed();
+            handleGoClick();
         } else if (e.key === 'Tab') {
             const val = rollInput.value.trim();
             const matched = findMatchingStudent(val);
@@ -4808,22 +4808,33 @@ function showNotification(msg) {
 // ENTRANCE WORKFLOW HELPERS: STEP 1 (ROLL) & STEP 2 (FEE CHOICE)
 // ===================================================================
 
-// Quick Pill Click Handler
+// Quick Pill Click Handler: auto-fills roll and navigates directly to fees
 function quickFillRoll(shortOrFullRoll) {
     const rollInput = document.getElementById('studentRoll');
     if (rollInput) {
         rollInput.value = shortOrFullRoll;
         const matched = findMatchingStudent(shortOrFullRoll);
         if (matched) {
-            selectStudent(matched, true);
+            selectStudent(matched, false);
             const box = document.getElementById('rollSuggestions');
             if (box) box.style.display = 'none';
+
+            // Navigate directly to the fee selection cards in Step 2
+            updateStepperProgress(2);
+            const step2 = document.getElementById('paymentSelectionStep2');
+            if (step2) {
+                step2.classList.add('step2-active-highlight');
+                setTimeout(() => {
+                    step2.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 60);
+            }
+            showNotification(`✓ Loaded: ${matched.name} (${matched.roll}). Select fee to pay below.`);
         }
     }
 }
 
-// Verify & Proceed Button Click Handler (unified for Step 1)
-function handleVerifyAndProceed() {
+// Go Button Click Handler: Navigates directly to the fees selection in Step 2
+function handleGoClick() {
     const rollInput = document.getElementById('studentRoll');
     if (!rollInput) return;
     const val = rollInput.value.trim();
@@ -4835,8 +4846,8 @@ function handleVerifyAndProceed() {
 
     const matched = findMatchingStudent(val);
     if (matched) {
-        // 1. Directly take student data into provided space fields & state
-        selectStudent(matched, true);
+        // 1. Directly take student data into state and synchronized inputs
+        selectStudent(matched, false);
 
         // 2. Hide suggestions
         const box = document.getElementById('rollSuggestions');
@@ -4845,17 +4856,17 @@ function handleVerifyAndProceed() {
         // 3. Mark Step 1 complete & activate Step 2
         updateStepperProgress(2);
 
-        // 4. Highlight Step 2 and scroll smoothly
+        // 4. Smoothly navigate directly to the fee options in Step 2
         const step2 = document.getElementById('paymentSelectionStep2');
         if (step2) {
             step2.classList.add('step2-active-highlight');
             setTimeout(() => {
                 step2.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 100);
+            }, 60);
         }
-        showNotification(`✓ Verified: ${matched.name} (${matched.roll}). Proceeding to fee payment.`);
+        showNotification(`✓ Verified: ${matched.name} (${matched.roll}). Select which fee you want to pay below.`);
     } else {
-        // Check if custom details were entered in provided space
+        // Check if custom details were entered
         const nameVal = document.getElementById('studentName')?.value.trim();
         if (nameVal) {
             syncStudentState();
@@ -4865,7 +4876,7 @@ function handleVerifyAndProceed() {
                 step2.classList.add('step2-active-highlight');
                 step2.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
-            showNotification(`Proceeding with details for ${nameVal} (${val}).`);
+            showNotification(`Proceeding with details for ${nameVal} (${val}). Select fee below.`);
         } else {
             showNotification(`Roll "${val}" not found in CSE 2024-2028 database. Please select from directory or enter valid roll.`);
             rollInput.focus();
@@ -4873,9 +4884,13 @@ function handleVerifyAndProceed() {
     }
 }
 
-// Keep handleVerifyContinue as alias for compatibility
+// Keep aliases for backwards compatibility
+function handleVerifyAndProceed() {
+    handleGoClick();
+}
+
 function handleVerifyContinue() {
-    handleVerifyAndProceed();
+    handleGoClick();
 }
 
 // Change Roll Number Button Click Handler

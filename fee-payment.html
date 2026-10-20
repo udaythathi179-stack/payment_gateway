@@ -462,18 +462,16 @@
                                         class="fas fa-circle-check"></i></div>
                                 <div id="rollSuggestions" class="roll-suggestions-dropdown"></div>
                             </div>
-                            <button type="button" class="btn-verify-continue" id="verifyRollBtn"
-                                onclick="handleVerifyAndProceed()">
-                                <i class="fas fa-circle-check"></i>
-                                <span>Verify &amp; Proceed</span>
+                            <button type="button" class="btn-verify-continue btn-go" id="verifyRollBtn"
+                                onclick="handleGoClick()">
+                                <span>Go</span>
                                 <i class="fas fa-arrow-right"></i>
                             </button>
                         </div>
 
                         <!-- Status Alert Line -->
                         <div id="rollMatchStatus" class="roll-match-status">
-                            <span class="match-info"><i class="fas fa-bolt text-warning"></i> Type any roll number to
-                                auto-load student records</span>
+                            <span class="match-info"><i class="fas fa-bolt text-warning"></i> Type any roll number and click <strong>Go</strong> to choose fee</span>
                         </div>
 
                         <!-- Quick Test Pills -->
@@ -497,131 +495,19 @@
                         </div>
                     </div>
 
-                    <!-- ======================================================== -->
-                    <!-- PROVIDED SPACE: STUDENT PROFILE & ACADEMIC DETAILS       -->
-                    <!-- ======================================================== -->
-                    <div class="student-provided-space" id="studentProvidedSpace">
-                        <div class="provided-space-header">
-                            <div class="ps-header-left">
-                                <div class="ps-header-icon">
-                                    <i class="fas fa-user-graduate"></i>
-                                </div>
-                                <div>
-                                    <h4 class="ps-title">Student Profile &amp; Verification Details</h4>
-                                    <p class="ps-subtitle">Official records directly loaded from institutional database</p>
-                                </div>
-                            </div>
-                            <div class="ps-status-badge" id="psStatusBadge">
-                                <span class="badge-waiting"><i class="fas fa-clock"></i> Awaiting Hall Ticket</span>
-                            </div>
-                        </div>
-
-                        <!-- Provided Fields Grid (Directly Populated upon Entering Hall Ticket) -->
-                        <div class="provided-fields-grid" id="studentFormDetails">
-                            <!-- 1. Student Full Name -->
-                            <div class="ps-field-group">
-                                <label for="studentName" class="ps-label">
-                                    <i class="fas fa-user"></i> Student Full Name <span class="req-star">*</span>
-                                </label>
-                                <div class="ps-input-wrap">
-                                    <input type="text" id="studentName" name="studentName" class="ps-input" 
-                                        placeholder="Auto-loads on entering Hall Ticket..." required>
-                                    <span class="ps-field-indicator"><i class="fas fa-check-circle"></i></span>
-                                </div>
-                            </div>
-
-                            <!-- 2. Hall Ticket Number -->
-                            <div class="ps-field-group">
-                                <label for="studentRollDisplay" class="ps-label">
-                                    <i class="fas fa-id-badge"></i> Hall Ticket Number <span class="req-star">*</span>
-                                </label>
-                                <div class="ps-input-wrap">
-                                    <input type="text" id="studentRollDisplay" class="ps-input ps-input-mono font-bold" 
-                                        placeholder="Auto-loads (e.g. 24QA1A0501)..." readonly>
-                                    <span class="ps-field-indicator"><i class="fas fa-shield-halved"></i></span>
-                                </div>
-                            </div>
-
-                            <!-- 3. Program & Degree -->
-                            <div class="ps-field-group">
-                                <label for="academicProgram" class="ps-label">
-                                    <i class="fas fa-graduation-cap"></i> Program &amp; Degree <span class="req-star">*</span>
-                                </label>
-                                <div class="ps-input-wrap">
-                                    <select id="academicProgram" name="academicProgram" class="ps-input ps-select">
-                                        <option value="B.Tech - Computer Science & Engineering (CSE)" selected>B.Tech - Computer Science &amp; Engineering (CSE)</option>
-                                        <option value="B.Tech - CSE (Artificial Intelligence & ML)">B.Tech - CSE (AI &amp; ML)</option>
-                                        <option value="B.Tech - CSE (Data Science)">B.Tech - CSE (Data Science)</option>
-                                        <option value="B.Tech - Electronics & Communication (ECE)">B.Tech - Electronics &amp; Communication (ECE)</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <!-- 4. Section & Academic Batch -->
-                            <div class="ps-field-group">
-                                <label for="studentSection" class="ps-label">
-                                    <i class="fas fa-users-rectangle"></i> Section &amp; Academic Batch
-                                </label>
-                                <div class="ps-input-wrap">
-                                    <input type="text" id="studentSection" class="ps-input" 
-                                        placeholder="Section &amp; Batch (e.g. Section A)..." readonly>
-                                    <span class="ps-field-indicator"><i class="fas fa-check-circle"></i></span>
-                                </div>
-                            </div>
-
-                            <!-- 5. Admission Quota -->
-                            <div class="ps-field-group">
-                                <label for="studentQuota" class="ps-label">
-                                    <i class="fas fa-award"></i> Admission Quota Category
-                                </label>
-                                <div class="ps-input-wrap">
-                                    <input type="text" id="studentQuota" class="ps-input" 
-                                        placeholder="Convenor / Management Quota..." readonly>
-                                    <span class="ps-field-indicator"><i class="fas fa-check-circle"></i></span>
-                                </div>
-                            </div>
-
-                            <!-- 6. Registered Mobile Number -->
-                            <div class="ps-field-group">
-                                <label for="studentMobile" class="ps-label">
-                                    <i class="fas fa-phone"></i> Registered Mobile Number <span class="req-star">*</span>
-                                </label>
-                                <div class="ps-input-wrap">
-                                    <input type="tel" id="studentMobile" name="studentMobile" class="ps-input ps-input-mono" 
-                                        placeholder="10-digit mobile number" maxlength="10" required>
-                                    <span class="ps-field-indicator"><i class="fas fa-check-circle"></i></span>
-                                </div>
-                            </div>
-
-                            <!-- 7. Official College Email -->
-                            <div class="ps-field-group ps-field-full">
-                                <label for="studentEmail" class="ps-label">
-                                    <i class="fas fa-envelope"></i> Official College / Receipt Email <span class="req-star">*</span>
-                                </label>
-                                <div class="ps-input-wrap">
-                                    <input type="email" id="studentEmail" name="studentEmail" class="ps-input ps-input-mono" 
-                                        placeholder="Official student email for receipt delivery" required>
-                                    <span class="ps-field-indicator"><i class="fas fa-check-circle"></i></span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Verified Student Record Card Display (Fee Ledger & Institutional Badges) -->
-                        <div id="studentVerifiedCard" class="student-verified-card"></div>
-
-                        <!-- Action Bar: Verify & Proceed Button inside Provided Space -->
-                        <div class="provided-space-actions">
-                            <button type="button" class="btn-verify-proceed-main" id="btnProvidedSpaceProceed"
-                                onclick="handleVerifyAndProceed()">
-                                <span class="btn-vp-icon"><i class="fas fa-circle-check"></i></span>
-                                <span class="btn-vp-text">
-                                    <strong id="btnProceedActionText">Verify &amp; Proceed to Fee Payment</strong>
-                                    <small id="btnProceedSubText">Confirm student data and choose tuition or JNTU fee</small>
-                                </span>
-                                <span class="btn-vp-arrow"><i class="fas fa-arrow-right"></i></span>
-                            </button>
-                        </div>
+                    <!-- Hidden/Synchronized Profile Details for Checkout & Ledger -->
+                    <div class="student-hidden-form-fields" id="studentFormDetails" style="display:none;">
+                        <input type="text" id="studentName">
+                        <input type="text" id="studentRollDisplay">
+                        <input type="tel" id="studentMobile">
+                        <input type="email" id="studentEmail">
+                        <select id="academicProgram">
+                            <option value="B.Tech - Computer Science & Engineering (CSE)" selected>B.Tech - CSE</option>
+                        </select>
+                        <input type="text" id="studentSection">
+                        <input type="text" id="studentQuota">
                     </div>
+                    <div id="studentVerifiedCard" class="student-verified-card" style="display:none;"></div>
 
                     <!-- ======================================================== -->
                     <!-- ENTRANCE: STEP 2 - "WHAT PAYMENT ARE YOU MAKING?"        -->
@@ -862,137 +748,6 @@
                 </form>
             </section>
 
-            <!-- Right Side: Gateway Selector, Live UPI QR, Fee Summary & Quick Actions -->
-            <aside class="portal-card gateway-summary-card">
-                <div class="card-header-bar">
-                    <div class="header-title-box">
-                        <span class="step-num">Step 2</span>
-                        <h2>Instant Payment Modes</h2>
-                    </div>
-                    <span class="instant-settle-pill"><i class="fas fa-bolt"></i> Instant e-Receipt</span>
-                </div>
-
-                <!-- Instant UPI Apps Box -->
-                <div class="upi-apps-highlight-box">
-                    <div class="apps-title">
-                        <span>Preferred Payment Apps</span>
-                        <span class="zero-fee">0% Convenience Fee</span>
-                    </div>
-
-                    <div class="upi-apps-grid">
-                        <!-- PhonePe -->
-                        <button type="button" class="app-chip app-phonepe" onclick="selectQuickUpiApp('PhonePe')">
-                            <div class="app-logo phonepe-logo">
-                                <i class="fas fa-mobile-screen"></i>
-                            </div>
-                            <div class="app-info">
-                                <strong>PhonePe</strong>
-                                <span>UPI &amp; Wallet</span>
-                            </div>
-                            <span class="app-badge"><i class="fas fa-check"></i></span>
-                        </button>
-
-                        <!-- Google Pay -->
-                        <button type="button" class="app-chip app-gpay" onclick="selectQuickUpiApp('Google Pay')">
-                            <div class="app-logo gpay-logo">
-                                <i class="fab fa-google"></i>
-                            </div>
-                            <div class="app-info">
-                                <strong>Google Pay</strong>
-                                <span>Tez UPI</span>
-                            </div>
-                            <span class="app-badge"><i class="fas fa-check"></i></span>
-                        </button>
-
-                        <!-- Paytm -->
-                        <button type="button" class="app-chip app-paytm" onclick="selectQuickUpiApp('Paytm')">
-                            <div class="app-logo paytm-logo">
-                                <i class="fas fa-wallet"></i>
-                            </div>
-                            <div class="app-info">
-                                <strong>Paytm</strong>
-                                <span>UPI / Wallet / Postpaid</span>
-                            </div>
-                            <span class="app-badge"><i class="fas fa-check"></i></span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Dynamic Real-Time UPI QR Box -->
-                <div class="instant-qr-container" id="quick-verify">
-                    <div class="qr-header">
-                        <div class="qr-title-text">
-                            <i class="fas fa-qrcode"></i>
-                            <div>
-                                <strong>Instant Dynamic UPI QR</strong>
-                                <small>Scan using PhonePe, GPay, Paytm or BHIM</small>
-                            </div>
-                        </div>
-                        <span class="vpa-tag">brilcollege@sbi</span>
-                    </div>
-
-                    <div class="qr-code-wrapper">
-                        <div id="dynamicQRElement" class="qr-canvas-holder">
-                            <!-- Canvas generated via QRCode JS -->
-                        </div>
-                        <div class="qr-overlay-brand">
-                            <span class="qr-bril-badge">BRIL</span>
-                        </div>
-                    </div>
-
-                    <div class="qr-amount-indicator">
-                        <span>Payable Now:</span>
-                        <strong id="qrAmountDisplay">₹72,000</strong>
-                    </div>
-
-                    <div class="qr-scan-instructions">
-                        <span><i class="fas fa-camera"></i> Open any UPI App</span>
-                        <span>&bull;</span>
-                        <span><i class="fas fa-expand"></i> Scan QR</span>
-                        <span>&bull;</span>
-                        <span><i class="fas fa-check-circle"></i> Instant e-Receipt</span>
-                    </div>
-                </div>
-
-                <!-- Current Summary Box -->
-                <div class="fee-summary-box">
-                    <div class="summary-header">
-                        <i class="fas fa-receipt"></i>
-                        <span>Payment Summary Preview</span>
-                    </div>
-                    <div class="summary-line">
-                        <span>Student Reference:</span>
-                        <strong id="summaryRoll">22BR1A0501</strong>
-                    </div>
-                    <div class="summary-line">
-                        <span>Fee Head:</span>
-                        <strong id="summaryHead">Tuition Fee</strong>
-                    </div>
-                    <div class="summary-line">
-                        <span>Base Amount:</span>
-                        <strong id="summaryBase">₹35,000.00</strong>
-                    </div>
-                    <div class="summary-line">
-                        <span>Gateway Processing Fee:</span>
-                        <strong class="text-free">₹0.00 (Waived)</strong>
-                    </div>
-                    <div class="summary-line total-line">
-                        <span>Total Payable:</span>
-                        <strong id="summaryTotal">₹35,000.00</strong>
-                    </div>
-                </div>
-
-                <!-- Verified College Bank Seal -->
-                <div class="college-seal-box">
-                    <div class="seal-icon"><i class="fas fa-building-columns"></i></div>
-                    <div class="seal-text">
-                        <strong>State Bank of India (SBI) Institutional Account</strong>
-                        <p>Brilliant Institute of Engineering &amp; Technology &bull; A/C: 38290192831 &bull; IFSC:
-                            SBIN0020491 &bull; Abdullapurmet Branch</p>
-                    </div>
-                </div>
-
-            </aside>
 
         </div>
     </main>

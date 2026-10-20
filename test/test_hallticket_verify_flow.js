@@ -50,7 +50,8 @@ const requiredJsFunctions = [
     'function handleVerifyAndProceed',
     'function handleVerifyContinue',
     'function selectStudent',
-    'function findMatchingStudent'
+    'function findMatchingStudent',
+    'function enterPersonName'
 ];
 
 requiredJsFunctions.forEach(fn => {
@@ -58,9 +59,11 @@ requiredJsFunctions.forEach(fn => {
     console.log(`  ✓ JavaScript function ${fn} is present`);
 });
 
-// 5. Check CSS styles for Go button
+// 5. Check CSS styles for Go button and Full-Screen Layout
 assert(css.includes('.btn-go'), 'Missing .btn-go CSS selector');
-console.log('  ✓ CSS selector .btn-go is present');
+assert(css.includes('max-width: 100% !important;'), 'Missing full-screen max-width for page-main');
+assert(css.includes('.person-name-click-card'), 'Missing .person-name-click-card CSS selector');
+console.log('  ✓ CSS selectors .btn-go, .person-name-click-card and full-screen layout are present');
 
 // 6. Test student database resolution
 const students = JSON.parse(fs.readFileSync(path.join(ROOT_DIR, 'students_data.json'), 'utf8'));

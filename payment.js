@@ -3138,8 +3138,10 @@ function resetStudentFields() {
     }
     if (nameInput) {
         nameInput.value = '';
-        nameInput.classList.remove('field-populated');
+        nameInput.classList.remove('field-populated', 'name-field-active');
     }
+    const nameVerifiedIcon = document.getElementById('nameVerifiedIcon');
+    if (nameVerifiedIcon) nameVerifiedIcon.style.display = 'none';
     if (secInput) {
         secInput.value = '';
         secInput.classList.remove('field-populated');
@@ -3207,6 +3209,41 @@ function prefillDefaultStudent() {
     resetStudentFields();
 }
 
+// Directly Enter Person Name into Student Name field on click
+function enterPersonName(name, roll) {
+    if (!name) return;
+    const nameInput = document.getElementById('studentName');
+    const rollInput = document.getElementById('studentRoll');
+    const nameIcon = document.getElementById('nameVerifiedIcon');
+    const rollIcon = document.getElementById('rollVerifiedIcon');
+
+    if (nameInput) {
+        nameInput.value = name;
+        nameInput.classList.add('field-populated', 'name-field-active');
+    }
+    if (nameIcon) {
+        nameIcon.style.display = 'flex';
+    }
+
+    if (roll) {
+        if (rollInput && (!rollInput.value || !rollInput.value.includes(roll))) {
+            rollInput.value = roll;
+            rollInput.classList.add('roll-input-matched');
+        }
+        if (rollIcon) {
+            rollIcon.style.display = 'flex';
+        }
+        const student = CSE_STUDENTS_DATABASE.find(s => s.roll === roll);
+        if (student) {
+            selectStudent(student, false);
+            showNotification(`✓ Directly entered "${name}" in the student name field!`);
+            return;
+        }
+    }
+
+    showNotification(`✓ Directly entered "${name}" in the student name field!`);
+}
+
 // Select a student and populate form
 function selectStudent(st, showToast = true) {
     if (!st) return;
@@ -3241,6 +3278,7 @@ function selectStudent(st, showToast = true) {
     const verifyRollBtn = document.getElementById('verifyRollBtn');
     const btnProvidedProceed = document.getElementById('btnProvidedSpaceProceed');
     const verifiedIcon = document.getElementById('rollVerifiedIcon');
+    const nameVerifiedIcon = document.getElementById('nameVerifiedIcon');
 
     // Populate Hall Ticket inputs
     if (rollInput) {
@@ -3255,7 +3293,10 @@ function selectStudent(st, showToast = true) {
     // Populate Name
     if (nameInput) {
         nameInput.value = st.name;
-        nameInput.classList.add('field-populated');
+        nameInput.classList.add('field-populated', 'name-field-active');
+    }
+    if (nameVerifiedIcon) {
+        nameVerifiedIcon.style.display = 'flex';
     }
 
     // Populate Program
@@ -3319,7 +3360,29 @@ function selectStudent(st, showToast = true) {
 
     const matchStatus = document.getElementById('rollMatchStatus');
     if (matchStatus) {
-        matchStatus.innerHTML = `<span class="match-success"><i class="fas fa-circle-check text-success"></i> <strong>${st.name}</strong> (${st.roll}) &bull; ${st.section} &bull; ${st.quota} &bull; Tuition: ₹72,000</span>`;
+        const safeName = (st.name || '').replace(/'/g, "\\'");
+        matchStatus.innerHTML = `
+            <div class="person-name-click-card" onclick="enterPersonName('${safeName}', '${st.roll}')" title="Click to enter ${st.name} directly into the field">
+                <div class="pnc-header">
+                    <i class="fas fa-hand-pointer text-warning"></i>
+                    <span>Student Verified &bull; Click name to enter directly in field:</span>
+                </div>
+                <div class="pnc-body">
+                    <button type="button" class="btn-person-name" onclick="enterPersonName('${safeName}', '${st.roll}'); event.stopPropagation();">
+                        <i class="fas fa-user-check"></i>
+                        <span class="pnc-name-highlight">${st.name}</span>
+                        <span class="pnc-click-badge"><i class="fas fa-arrow-turn-down"></i> Click to Enter</span>
+                    </button>
+                    <div class="pnc-meta">
+                        <span class="pnc-roll"><code>${st.roll}</code></span>
+                        <span>&bull;</span>
+                        <span class="pnc-sec">${st.section}</span>
+                        <span>&bull;</span>
+                        <span class="pnc-quota">${st.quota}</span>
+                    </div>
+                </div>
+            </div>
+        `;
     }
 
     if (typeof updateStep2ProceedBanner === 'function') {
@@ -3666,7 +3729,7 @@ function initStudentSearchAndAutocomplete() {
 function handleSuggestionClick(roll) {
     const student = CSE_STUDENTS_DATABASE.find(s => s.roll === roll);
     if (student) {
-        selectStudent(student, true);
+        enterPersonName(student.name, student.roll);
     }
     const box = document.getElementById('rollSuggestions');
     if (box) box.style.display = 'none';

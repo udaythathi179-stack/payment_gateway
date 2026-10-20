@@ -25,7 +25,7 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=2.5.0">
     <script>
         // Apply saved theme before paint to avoid flash
         (function () {
@@ -469,9 +469,26 @@
                             </button>
                         </div>
 
-                        <!-- Status Alert Line -->
+                        <!-- Visible Student Name Field Directly Entered -->
+                        <div class="entrance-name-group" id="entranceNameGroup">
+                            <div class="entrance-name-label-row">
+                                <label for="studentName" class="entrance-name-label">
+                                    <i class="fas fa-user-graduate"></i> Student Full Name:
+                                </label>
+                                <span class="name-status-hint" id="nameStatusHint"><i class="fas fa-hand-pointer"></i> Click student name below to enter directly</span>
+                            </div>
+                            <div class="input-with-icon entrance-input-box name-input-box">
+                                <i class="fas fa-user-check entrance-fa-icon"></i>
+                                <input type="text" id="studentName" name="studentName"
+                                    placeholder="Type hallticket and click student name to enter here directly..." readonly>
+                                <div id="nameVerifiedIcon" class="roll-verified-icon name-verified-icon" style="display:none;"
+                                    title="Student Name Entered Directly"><i class="fas fa-circle-check"></i></div>
+                            </div>
+                        </div>
+
+                        <!-- Status Alert Line with Clickable Person Name -->
                         <div id="rollMatchStatus" class="roll-match-status">
-                            <span class="match-info"><i class="fas fa-bolt text-warning"></i> Type any roll number and click <strong>Go</strong> to choose fee</span>
+                            <span class="match-info"><i class="fas fa-bolt text-warning"></i> Type hall ticket number and click student name or <strong>Go</strong></span>
                         </div>
 
                         <!-- Quick Test Pills -->
@@ -497,7 +514,6 @@
 
                     <!-- Hidden/Synchronized Profile Details for Checkout & Ledger -->
                     <div class="student-hidden-form-fields" id="studentFormDetails" style="display:none;">
-                        <input type="text" id="studentName">
                         <input type="text" id="studentRollDisplay">
                         <input type="tel" id="studentMobile">
                         <input type="email" id="studentEmail">
@@ -1511,7 +1527,7 @@
     </div>
 
     <!-- Script -->
-    <script src="payment.js"></script>
+    <script src="payment.js?v=2.5.0"></script>
 </body>
 
 </html>

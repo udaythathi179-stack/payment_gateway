@@ -117,6 +117,7 @@ const selectStudent = (st, toast) => {
 const handleGoClick = () => vm.runInContext('handleGoClick()', context);
 const handleVerifyAndProceed = () => vm.runInContext('handleVerifyAndProceed()', context);
 const resetStudentFields = () => vm.runInContext('resetStudentFields()', context);
+const enterPersonName = (name, roll) => vm.runInContext(`enterPersonName("${name}", "${roll}")`, context);
 
 console.log('Testing Runtime Logic in payment.js...');
 
@@ -200,5 +201,12 @@ selectStudent(matched510, false);
 assert.strictEqual(matched510.roll, '25QA5A0510');
 assert(document.getElementById('studentSection').value.includes('Section C'));
 console.log('  ✓ Lateral 510 populated: 25QA5A0510 (Section C)');
+
+// 8. Test enterPersonName function directly entering student name
+console.log('\nTesting enterPersonName directly entering name into field...');
+enterPersonName('Uday Kumar Thati', '24QA1A05G9');
+assert.strictEqual(document.getElementById('studentName').value, 'Uday Kumar Thati');
+assert.strictEqual(document.getElementById('studentRoll').value, '24QA1A05G9');
+console.log('  ✓ enterPersonName successfully entered Uday Kumar Thati into #studentName field');
 
 console.log('\nAll Runtime DOM Simulation Tests passed with 100% success!\n');

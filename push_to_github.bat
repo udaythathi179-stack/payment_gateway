@@ -7,6 +7,9 @@ if %ERRORLEVEL% neq 0 (
         set "PATH=%LOCALAPPDATA%\Programs\MinGit\cmd;%PATH%"
     )
 )
+if exist "C:\Program Files\GitHub CLI" (
+    set "PATH=C:\Program Files\GitHub CLI;%PATH%"
+)
 
 echo ========================================================
 echo BRIL Payment Gateway - GitHub Sync

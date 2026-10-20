@@ -3003,16 +3003,16 @@ const PaymentState = {
     amount: 72000,
     purpose: 'B.Tech Full Year Tuition Fee (2024-2028 Batch) - ₹72,000',
     student: {
-        roll: '24QA1A0501',
-        name: 'Aparanjitha A.C.Ancy',
+        roll: '',
+        name: '',
         program: 'B.Tech - Computer Science & Engineering (CSE)',
         branch: 'CSE',
         batch: '2024 - 2028',
-        section: 'Section A (Rolls 501 - 560)',
-        quota: 'Convenor Quota (EAPCET)',
+        section: '',
+        quota: '',
         isManagement: false,
-        mobile: '9848000000',
-        email: '24QA1A0501@b-iet.ac.in',
+        mobile: '',
+        email: '',
         tuitionFee: 72000,
         jntuFee: 6500,
         totalAnnualFee: 78500
@@ -3099,9 +3099,112 @@ function generateOrderReference() {
     if (orderRefEl) orderRefEl.textContent = PaymentState.orderId;
 }
 
-// Prefill default student (first from Section A)
+// Reset Student Fields in Provided Space
+function resetStudentFields() {
+    PaymentState.student = {
+        roll: '',
+        name: '',
+        program: 'B.Tech - Computer Science & Engineering (CSE)',
+        branch: 'CSE',
+        batch: '2024 - 2028',
+        section: '',
+        quota: '',
+        isManagement: false,
+        mobile: '',
+        email: '',
+        tuitionFee: 72000,
+        jntuFee: 6500,
+        totalAnnualFee: 78500
+    };
+
+    const rollDisplay = document.getElementById('studentRollDisplay');
+    const nameInput = document.getElementById('studentName');
+    const secInput = document.getElementById('studentSection');
+    const quotaInput = document.getElementById('studentQuota');
+    const mobileInput = document.getElementById('studentMobile');
+    const emailInput = document.getElementById('studentEmail');
+    const psBadge = document.getElementById('psStatusBadge');
+    const btnActionText = document.getElementById('btnProceedActionText');
+    const btnSubText = document.getElementById('btnProceedSubText');
+    const card = document.getElementById('studentVerifiedCard');
+    const verifiedIcon = document.getElementById('rollVerifiedIcon');
+    const rollInput = document.getElementById('studentRoll');
+    const verifyRollBtn = document.getElementById('verifyRollBtn');
+    const btnProvidedProceed = document.getElementById('btnProvidedSpaceProceed');
+
+    if (rollDisplay) {
+        rollDisplay.value = '';
+        rollDisplay.classList.remove('field-populated');
+    }
+    if (nameInput) {
+        nameInput.value = '';
+        nameInput.classList.remove('field-populated');
+    }
+    if (secInput) {
+        secInput.value = '';
+        secInput.classList.remove('field-populated');
+    }
+    if (quotaInput) {
+        quotaInput.value = '';
+        quotaInput.classList.remove('field-populated');
+    }
+    if (mobileInput) {
+        mobileInput.value = '';
+        mobileInput.classList.remove('field-populated');
+    }
+    if (emailInput) {
+        emailInput.value = '';
+        emailInput.classList.remove('field-populated');
+    }
+
+    if (psBadge) {
+        psBadge.innerHTML = '<span class="badge-waiting"><i class="fas fa-clock"></i> Awaiting Hall Ticket</span>';
+    }
+    if (btnActionText) {
+        btnActionText.textContent = 'Verify & Proceed to Fee Payment';
+    }
+    if (btnSubText) {
+        btnSubText.textContent = 'Enter Hall Ticket above to auto-load student records';
+    }
+    if (card) card.style.display = 'none';
+    if (verifiedIcon) verifiedIcon.style.display = 'none';
+    if (rollInput) rollInput.classList.remove('roll-input-matched');
+    if (verifyRollBtn) verifyRollBtn.classList.remove('btn-ready');
+    if (btnProvidedProceed) btnProvidedProceed.classList.remove('btn-ready');
+
+    const matchStatus = document.getElementById('rollMatchStatus');
+    if (matchStatus) {
+        matchStatus.innerHTML = '<span class="match-info"><i class="fas fa-bolt text-warning"></i> Type any roll number to auto-load student records</span>';
+    }
+}
+
+// Prefill default student (if specified via URL or demo; otherwise keeps field clean for user entry)
 function prefillDefaultStudent() {
-    selectStudent(CSE_STUDENTS_DATABASE[0], false);
+    try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const queryRoll = urlParams.get('roll') || urlParams.get('htno') || urlParams.get('hallticket');
+        if (queryRoll) {
+            const matched = findMatchingStudent(queryRoll);
+            if (matched) {
+                selectStudent(matched, false);
+                return;
+            }
+        }
+        if (urlParams.get('demo') === '1' || urlParams.get('demo') === 'true') {
+            selectStudent(CSE_STUDENTS_DATABASE[0], false);
+            return;
+        }
+    } catch (e) { /* ignore */ }
+
+    // Start with empty input ready for student to enter their hall ticket
+    const rollInput = document.getElementById('studentRoll');
+    if (rollInput) {
+        rollInput.value = '';
+        setTimeout(() => {
+            try { rollInput.focus(); } catch (e) {}
+        }, 100);
+    }
+    resetStudentFields();
 }
 
 // Select a student and populate form
@@ -3125,16 +3228,79 @@ function selectStudent(st, showToast = true) {
     };
 
     const rollInput = document.getElementById('studentRoll');
+    const rollDisplay = document.getElementById('studentRollDisplay');
     const nameInput = document.getElementById('studentName');
     const progInput = document.getElementById('academicProgram');
+    const secInput = document.getElementById('studentSection');
+    const quotaInput = document.getElementById('studentQuota');
     const mobileInput = document.getElementById('studentMobile');
     const emailInput = document.getElementById('studentEmail');
+    const psBadge = document.getElementById('psStatusBadge');
+    const btnActionText = document.getElementById('btnProceedActionText');
+    const btnSubText = document.getElementById('btnProceedSubText');
+    const verifyRollBtn = document.getElementById('verifyRollBtn');
+    const btnProvidedProceed = document.getElementById('btnProvidedSpaceProceed');
+    const verifiedIcon = document.getElementById('rollVerifiedIcon');
 
-    if (rollInput) rollInput.value = st.roll;
-    if (nameInput) nameInput.value = st.name;
-    if (progInput) progInput.value = st.program;
-    if (mobileInput) mobileInput.value = st.mobile;
-    if (emailInput) emailInput.value = st.email;
+    // Populate Hall Ticket inputs
+    if (rollInput) {
+        rollInput.value = st.roll;
+        rollInput.classList.add('roll-input-matched');
+    }
+    if (rollDisplay) {
+        rollDisplay.value = st.roll;
+        rollDisplay.classList.add('field-populated');
+    }
+
+    // Populate Name
+    if (nameInput) {
+        nameInput.value = st.name;
+        nameInput.classList.add('field-populated');
+    }
+
+    // Populate Program
+    if (progInput) {
+        progInput.value = st.program;
+        progInput.classList.add('field-populated');
+    }
+
+    // Populate Section & Batch
+    if (secInput) {
+        secInput.value = `${st.section} (${st.batch || 'Batch 2024 - 2028'})`;
+        secInput.classList.add('field-populated');
+    }
+
+    // Populate Quota
+    if (quotaInput) {
+        quotaInput.value = st.quota;
+        quotaInput.classList.add('field-populated');
+    }
+
+    // Populate Mobile & Email
+    if (mobileInput) {
+        mobileInput.value = st.mobile;
+        mobileInput.classList.add('field-populated');
+    }
+    if (emailInput) {
+        emailInput.value = st.email;
+        emailInput.classList.add('field-populated');
+    }
+
+    // Update Status Badge in Provided Space
+    if (psBadge) {
+        psBadge.innerHTML = `<span class="badge-matched"><i class="fas fa-circle-check"></i> Verified: ${st.name}</span>`;
+    }
+
+    // Update Button Texts & Glow
+    if (btnActionText) {
+        btnActionText.textContent = `Verify & Proceed with ${st.name} (${st.roll})`;
+    }
+    if (btnSubText) {
+        btnSubText.textContent = `Data loaded from institutional records • Click to choose fee payment`;
+    }
+    if (verifyRollBtn) verifyRollBtn.classList.add('btn-ready');
+    if (btnProvidedProceed) btnProvidedProceed.classList.add('btn-ready');
+    if (verifiedIcon) verifiedIcon.style.display = 'flex';
 
     // Sync quota dropdown if tuition tab is active
     const quotaDropdown = document.getElementById('subOptQuota');
@@ -3150,7 +3316,12 @@ function selectStudent(st, showToast = true) {
     if (step2Target) {
         step2Target.innerHTML = `Making payment for: <strong class="text-primary">${st.name}</strong> (<code>${st.roll}</code> &bull; ${st.section} &bull; ${st.quota})`;
     }
-    updateStepperProgress(2);
+
+    const matchStatus = document.getElementById('rollMatchStatus');
+    if (matchStatus) {
+        matchStatus.innerHTML = `<span class="match-success"><i class="fas fa-circle-check text-success"></i> <strong>${st.name}</strong> (${st.roll}) &bull; ${st.section} &bull; ${st.quota} &bull; Tuition: ₹72,000</span>`;
+    }
+
     if (typeof updateStep2ProceedBanner === 'function') {
         updateStep2ProceedBanner('tuition');
     }
@@ -3355,11 +3526,7 @@ function initStudentSearchAndAutocomplete() {
     function triggerAutoCheck(val, isExplicit = false) {
         if (!val || val.trim().length === 0) {
             if (suggestionsBox) suggestionsBox.style.display = 'none';
-            if (matchStatus) {
-                matchStatus.innerHTML = '<span class="match-info"><i class="fas fa-bolt text-warning"></i> Type any roll (e.g., <strong>501, 560, 561, 5D0, 5D1, 510</strong>) or <strong>24QA1A...</strong> to auto-load student details</span>';
-            }
-            if (verifiedIcon) verifiedIcon.style.display = 'none';
-            rollInput.classList.remove('roll-input-matched');
+            resetStudentFields();
             return;
         }
 
@@ -3367,20 +3534,21 @@ function initStudentSearchAndAutocomplete() {
         const matched = findMatchingStudent(trimmed);
 
         if (matched) {
-            // Immediate Automatic Fill from Database!
+            // Immediate Automatic Fill from Database into Provided Space!
             selectStudent(matched, isExplicit);
             if (suggestionsBox) suggestionsBox.style.display = 'none';
             rollInput.classList.add('roll-input-matched');
             if (verifiedIcon) verifiedIcon.style.display = 'flex';
-            if (matchStatus) {
-                matchStatus.innerHTML = `<span class="match-success"><i class="fas fa-circle-check text-success"></i> <strong>${matched.name}</strong> (${matched.roll}) &bull; ${matched.section} &bull; ${matched.quota} &bull; Tuition: ₹72,000</span>`;
-            }
             return;
         }
 
         // If not exact match yet, show search suggestions
         rollInput.classList.remove('roll-input-matched');
         if (verifiedIcon) verifiedIcon.style.display = 'none';
+        const verifyRollBtn = document.getElementById('verifyRollBtn');
+        const btnProvidedProceed = document.getElementById('btnProvidedSpaceProceed');
+        if (verifyRollBtn) verifyRollBtn.classList.remove('btn-ready');
+        if (btnProvidedProceed) btnProvidedProceed.classList.remove('btn-ready');
 
         const q = trimmed.toLowerCase();
         const matches = CSE_STUDENTS_DATABASE.filter(s => 
@@ -3441,19 +3609,15 @@ function initStudentSearchAndAutocomplete() {
 
     // 3. On Keydown (Enter / Tab keys)
     rollInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === 'Tab') {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            handleVerifyAndProceed();
+        } else if (e.key === 'Tab') {
             const val = rollInput.value.trim();
             const matched = findMatchingStudent(val);
             if (matched) {
                 selectStudent(matched, true);
                 if (suggestionsBox) suggestionsBox.style.display = 'none';
-                e.preventDefault();
-            } else {
-                const firstSugg = suggestionsBox?.querySelector('.suggestion-item:not(.no-match)');
-                if (firstSugg) {
-                    firstSugg.click();
-                    e.preventDefault();
-                }
             }
         }
     });
@@ -3462,9 +3626,12 @@ function initStudentSearchAndAutocomplete() {
     rollInput.addEventListener('blur', () => {
         setTimeout(() => {
             if (suggestionsBox) suggestionsBox.style.display = 'none';
-            const matched = findMatchingStudent(rollInput.value);
-            if (matched) {
-                selectStudent(matched, false);
+            const val = rollInput.value.trim();
+            if (val) {
+                const matched = findMatchingStudent(val);
+                if (matched) {
+                    selectStudent(matched, false);
+                }
             }
         }, 200);
     });
@@ -4655,28 +4822,60 @@ function quickFillRoll(shortOrFullRoll) {
     }
 }
 
-// Verify & Continue Button Click Handler
-function handleVerifyContinue() {
+// Verify & Proceed Button Click Handler (unified for Step 1)
+function handleVerifyAndProceed() {
     const rollInput = document.getElementById('studentRoll');
     if (!rollInput) return;
     const val = rollInput.value.trim();
     if (!val) {
         rollInput.focus();
-        showNotification('Please enter a roll number (e.g. 501, 561, 5D4, 510)');
+        showNotification('Please enter Hall Ticket / Roll Number (e.g. 501, 561, 5D4, 510 or 24QA1A0501)');
         return;
     }
 
     const matched = findMatchingStudent(val);
     if (matched) {
+        // 1. Directly take student data into provided space fields & state
         selectStudent(matched, true);
+
+        // 2. Hide suggestions
+        const box = document.getElementById('rollSuggestions');
+        if (box) box.style.display = 'none';
+
+        // 3. Mark Step 1 complete & activate Step 2
+        updateStepperProgress(2);
+
+        // 4. Highlight Step 2 and scroll smoothly
         const step2 = document.getElementById('paymentSelectionStep2');
         if (step2) {
-            step2.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            step2.classList.add('step2-active-highlight');
+            setTimeout(() => {
+                step2.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
         }
+        showNotification(`✓ Verified: ${matched.name} (${matched.roll}). Proceeding to fee payment.`);
     } else {
-        showNotification(`Roll "${val}" not found in CSE 2024-2028 database. Please select from directory or enter valid roll.`);
-        rollInput.focus();
+        // Check if custom details were entered in provided space
+        const nameVal = document.getElementById('studentName')?.value.trim();
+        if (nameVal) {
+            syncStudentState();
+            updateStepperProgress(2);
+            const step2 = document.getElementById('paymentSelectionStep2');
+            if (step2) {
+                step2.classList.add('step2-active-highlight');
+                step2.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+            showNotification(`Proceeding with details for ${nameVal} (${val}).`);
+        } else {
+            showNotification(`Roll "${val}" not found in CSE 2024-2028 database. Please select from directory or enter valid roll.`);
+            rollInput.focus();
+        }
     }
+}
+
+// Keep handleVerifyContinue as alias for compatibility
+function handleVerifyContinue() {
+    handleVerifyAndProceed();
 }
 
 // Change Roll Number Button Click Handler

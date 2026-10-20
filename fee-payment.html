@@ -463,8 +463,9 @@
                                 <div id="rollSuggestions" class="roll-suggestions-dropdown"></div>
                             </div>
                             <button type="button" class="btn-verify-continue" id="verifyRollBtn"
-                                onclick="handleVerifyContinue()">
-                                <span>Verify &amp; Continue</span>
+                                onclick="handleVerifyAndProceed()">
+                                <i class="fas fa-circle-check"></i>
+                                <span>Verify &amp; Proceed</span>
                                 <i class="fas fa-arrow-right"></i>
                             </button>
                         </div>
@@ -496,17 +497,130 @@
                         </div>
                     </div>
 
-                    <!-- Verified Student Record Card Display -->
-                    <div id="studentVerifiedCard" class="student-verified-card"></div>
+                    <!-- ======================================================== -->
+                    <!-- PROVIDED SPACE: STUDENT PROFILE & ACADEMIC DETAILS       -->
+                    <!-- ======================================================== -->
+                    <div class="student-provided-space" id="studentProvidedSpace">
+                        <div class="provided-space-header">
+                            <div class="ps-header-left">
+                                <div class="ps-header-icon">
+                                    <i class="fas fa-user-graduate"></i>
+                                </div>
+                                <div>
+                                    <h4 class="ps-title">Student Profile &amp; Verification Details</h4>
+                                    <p class="ps-subtitle">Official records directly loaded from institutional database</p>
+                                </div>
+                            </div>
+                            <div class="ps-status-badge" id="psStatusBadge">
+                                <span class="badge-waiting"><i class="fas fa-clock"></i> Awaiting Hall Ticket</span>
+                            </div>
+                        </div>
 
-                    <!-- Hidden/Synchronized Profile Details for Checkout -->
-                    <div class="student-hidden-form-fields" id="studentFormDetails" style="display:none;">
-                        <input type="text" id="studentName">
-                        <input type="tel" id="studentMobile">
-                        <input type="email" id="studentEmail">
-                        <select id="academicProgram">
-                            <option value="B.Tech - Computer Science & Engineering (CSE)" selected>B.Tech - CSE</option>
-                        </select>
+                        <!-- Provided Fields Grid (Directly Populated upon Entering Hall Ticket) -->
+                        <div class="provided-fields-grid" id="studentFormDetails">
+                            <!-- 1. Student Full Name -->
+                            <div class="ps-field-group">
+                                <label for="studentName" class="ps-label">
+                                    <i class="fas fa-user"></i> Student Full Name <span class="req-star">*</span>
+                                </label>
+                                <div class="ps-input-wrap">
+                                    <input type="text" id="studentName" name="studentName" class="ps-input" 
+                                        placeholder="Auto-loads on entering Hall Ticket..." required>
+                                    <span class="ps-field-indicator"><i class="fas fa-check-circle"></i></span>
+                                </div>
+                            </div>
+
+                            <!-- 2. Hall Ticket Number -->
+                            <div class="ps-field-group">
+                                <label for="studentRollDisplay" class="ps-label">
+                                    <i class="fas fa-id-badge"></i> Hall Ticket Number <span class="req-star">*</span>
+                                </label>
+                                <div class="ps-input-wrap">
+                                    <input type="text" id="studentRollDisplay" class="ps-input ps-input-mono font-bold" 
+                                        placeholder="Auto-loads (e.g. 24QA1A0501)..." readonly>
+                                    <span class="ps-field-indicator"><i class="fas fa-shield-halved"></i></span>
+                                </div>
+                            </div>
+
+                            <!-- 3. Program & Degree -->
+                            <div class="ps-field-group">
+                                <label for="academicProgram" class="ps-label">
+                                    <i class="fas fa-graduation-cap"></i> Program &amp; Degree <span class="req-star">*</span>
+                                </label>
+                                <div class="ps-input-wrap">
+                                    <select id="academicProgram" name="academicProgram" class="ps-input ps-select">
+                                        <option value="B.Tech - Computer Science & Engineering (CSE)" selected>B.Tech - Computer Science &amp; Engineering (CSE)</option>
+                                        <option value="B.Tech - CSE (Artificial Intelligence & ML)">B.Tech - CSE (AI &amp; ML)</option>
+                                        <option value="B.Tech - CSE (Data Science)">B.Tech - CSE (Data Science)</option>
+                                        <option value="B.Tech - Electronics & Communication (ECE)">B.Tech - Electronics &amp; Communication (ECE)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- 4. Section & Academic Batch -->
+                            <div class="ps-field-group">
+                                <label for="studentSection" class="ps-label">
+                                    <i class="fas fa-users-rectangle"></i> Section &amp; Academic Batch
+                                </label>
+                                <div class="ps-input-wrap">
+                                    <input type="text" id="studentSection" class="ps-input" 
+                                        placeholder="Section &amp; Batch (e.g. Section A)..." readonly>
+                                    <span class="ps-field-indicator"><i class="fas fa-check-circle"></i></span>
+                                </div>
+                            </div>
+
+                            <!-- 5. Admission Quota -->
+                            <div class="ps-field-group">
+                                <label for="studentQuota" class="ps-label">
+                                    <i class="fas fa-award"></i> Admission Quota Category
+                                </label>
+                                <div class="ps-input-wrap">
+                                    <input type="text" id="studentQuota" class="ps-input" 
+                                        placeholder="Convenor / Management Quota..." readonly>
+                                    <span class="ps-field-indicator"><i class="fas fa-check-circle"></i></span>
+                                </div>
+                            </div>
+
+                            <!-- 6. Registered Mobile Number -->
+                            <div class="ps-field-group">
+                                <label for="studentMobile" class="ps-label">
+                                    <i class="fas fa-phone"></i> Registered Mobile Number <span class="req-star">*</span>
+                                </label>
+                                <div class="ps-input-wrap">
+                                    <input type="tel" id="studentMobile" name="studentMobile" class="ps-input ps-input-mono" 
+                                        placeholder="10-digit mobile number" maxlength="10" required>
+                                    <span class="ps-field-indicator"><i class="fas fa-check-circle"></i></span>
+                                </div>
+                            </div>
+
+                            <!-- 7. Official College Email -->
+                            <div class="ps-field-group ps-field-full">
+                                <label for="studentEmail" class="ps-label">
+                                    <i class="fas fa-envelope"></i> Official College / Receipt Email <span class="req-star">*</span>
+                                </label>
+                                <div class="ps-input-wrap">
+                                    <input type="email" id="studentEmail" name="studentEmail" class="ps-input ps-input-mono" 
+                                        placeholder="Official student email for receipt delivery" required>
+                                    <span class="ps-field-indicator"><i class="fas fa-check-circle"></i></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Verified Student Record Card Display (Fee Ledger & Institutional Badges) -->
+                        <div id="studentVerifiedCard" class="student-verified-card"></div>
+
+                        <!-- Action Bar: Verify & Proceed Button inside Provided Space -->
+                        <div class="provided-space-actions">
+                            <button type="button" class="btn-verify-proceed-main" id="btnProvidedSpaceProceed"
+                                onclick="handleVerifyAndProceed()">
+                                <span class="btn-vp-icon"><i class="fas fa-circle-check"></i></span>
+                                <span class="btn-vp-text">
+                                    <strong id="btnProceedActionText">Verify &amp; Proceed to Fee Payment</strong>
+                                    <small id="btnProceedSubText">Confirm student data and choose tuition or JNTU fee</small>
+                                </span>
+                                <span class="btn-vp-arrow"><i class="fas fa-arrow-right"></i></span>
+                            </button>
+                        </div>
                     </div>
 
                     <!-- ======================================================== -->

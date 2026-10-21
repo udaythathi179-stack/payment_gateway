@@ -63,9 +63,9 @@ const BLOCKED_BASENAMES = new Set([
 
 const CACHE_CONTROL = {
   '.html': 'no-cache',
-  '.json': 'public, max-age=3600',
-  '.css': 'public, max-age=3600',
-  '.js': 'public, max-age=3600',
+  '.json': 'no-cache',
+  '.css': 'no-cache',
+  '.js': 'no-cache',
   '.png': 'public, max-age=86400',
   '.jpg': 'public, max-age=86400',
   '.webp': 'public, max-age=86400',

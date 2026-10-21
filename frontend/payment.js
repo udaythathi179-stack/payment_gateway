@@ -4541,19 +4541,26 @@ function simulatePaymentSuccess(methodUsed) {
     const rcptEmailEl = document.getElementById('rcptEmail');
     const rcptParticularsEl = document.getElementById('rcptParticulars');
 
-    if (rcptNoEl) rcptNoEl.textContent = record.receiptNo;
-    if (rcptTxnIdEl) rcptTxnIdEl.textContent = record.txnId;
-    if (rcptDateEl) rcptDateEl.textContent = record.date;
-    if (rcptModeEl) rcptModeEl.textContent = record.mode;
-    if (rcptNameEl) rcptNameEl.textContent = record.name;
-    if (rcptRollEl) rcptRollEl.textContent = record.roll;
-    if (rcptBranchEl) rcptBranchEl.textContent = record.branch;
-    if (rcptBatchEl) rcptBatchEl.textContent = record.batch || '2024 - 2028';
-    if (rcptSectionEl) rcptSectionEl.textContent = record.section || 'Section A';
-    if (rcptQuotaEl) rcptQuotaEl.textContent = record.quota || 'Convenor Quota (EAPCET)';
-    if (rcptMobileEl) rcptMobileEl.textContent = record.mobile || '+91-9848000000';
-    if (rcptEmailEl) rcptEmailEl.textContent = record.email || (record.roll + '@b-iet.ac.in');
-    if (rcptParticularsEl) rcptParticularsEl.textContent = record.purpose;
+    function enforceBlackText(el) {
+        if (!el) return;
+        el.style.setProperty('color', '#000000', 'important');
+        el.style.setProperty('-webkit-text-fill-color', '#000000', 'important');
+        el.style.setProperty('font-weight', '800', 'important');
+    }
+
+    if (rcptNoEl) { rcptNoEl.textContent = record.receiptNo; enforceBlackText(rcptNoEl); }
+    if (rcptTxnIdEl) { rcptTxnIdEl.textContent = record.txnId; enforceBlackText(rcptTxnIdEl); }
+    if (rcptDateEl) { rcptDateEl.textContent = record.date; enforceBlackText(rcptDateEl); }
+    if (rcptModeEl) { rcptModeEl.textContent = record.mode; enforceBlackText(rcptModeEl); }
+    if (rcptNameEl) { rcptNameEl.textContent = record.name; enforceBlackText(rcptNameEl); }
+    if (rcptRollEl) { rcptRollEl.textContent = record.roll; enforceBlackText(rcptRollEl); }
+    if (rcptBranchEl) { rcptBranchEl.textContent = record.branch; enforceBlackText(rcptBranchEl); }
+    if (rcptBatchEl) { rcptBatchEl.textContent = record.batch || '2024 - 2028'; enforceBlackText(rcptBatchEl); }
+    if (rcptSectionEl) { rcptSectionEl.textContent = record.section || 'Section A'; enforceBlackText(rcptSectionEl); }
+    if (rcptQuotaEl) { rcptQuotaEl.textContent = record.quota || 'Convenor Quota (EAPCET)'; enforceBlackText(rcptQuotaEl); }
+    if (rcptMobileEl) { rcptMobileEl.textContent = record.mobile || '+91-9848000000'; enforceBlackText(rcptMobileEl); }
+    if (rcptEmailEl) { rcptEmailEl.textContent = record.email || (record.roll + '@b-iet.ac.in'); enforceBlackText(rcptEmailEl); }
+    if (rcptParticularsEl) { rcptParticularsEl.textContent = record.purpose; enforceBlackText(rcptParticularsEl); }
 
     const formattedAmount = '₹' + record.amount.toLocaleString('en-IN', { minimumFractionDigits: 2 });
     const rcptTableAmount = document.getElementById('rcptTableAmount');
@@ -4704,19 +4711,26 @@ function reprintSavedReceipt(index) {
     const rcptEmailEl = document.getElementById('rcptEmail');
     const rcptParticularsEl = document.getElementById('rcptParticulars');
 
-    if (rcptNoEl) rcptNoEl.textContent = record.receiptNo;
-    if (rcptTxnIdEl) rcptTxnIdEl.textContent = record.txnId;
-    if (rcptDateEl) rcptDateEl.textContent = record.date;
-    if (rcptModeEl) rcptModeEl.textContent = record.mode;
-    if (rcptNameEl) rcptNameEl.textContent = record.name;
-    if (rcptRollEl) rcptRollEl.textContent = record.roll;
-    if (rcptBranchEl) rcptBranchEl.textContent = record.branch;
-    if (rcptBatchEl) rcptBatchEl.textContent = record.batch || '2024 - 2028';
-    if (rcptSectionEl) rcptSectionEl.textContent = record.section || 'Section A';
-    if (rcptQuotaEl) rcptQuotaEl.textContent = record.quota || 'Convenor Quota (EAPCET)';
-    if (rcptMobileEl) rcptMobileEl.textContent = record.mobile || '+91-9848000000';
-    if (rcptEmailEl) rcptEmailEl.textContent = record.email || (record.roll + '@b-iet.ac.in');
-    if (rcptParticularsEl) rcptParticularsEl.textContent = record.purpose;
+    function enforceBlackText(el) {
+        if (!el) return;
+        el.style.setProperty('color', '#000000', 'important');
+        el.style.setProperty('-webkit-text-fill-color', '#000000', 'important');
+        el.style.setProperty('font-weight', '800', 'important');
+    }
+
+    if (rcptNoEl) { rcptNoEl.textContent = record.receiptNo; enforceBlackText(rcptNoEl); }
+    if (rcptTxnIdEl) { rcptTxnIdEl.textContent = record.txnId; enforceBlackText(rcptTxnIdEl); }
+    if (rcptDateEl) { rcptDateEl.textContent = record.date; enforceBlackText(rcptDateEl); }
+    if (rcptModeEl) { rcptModeEl.textContent = record.mode; enforceBlackText(rcptModeEl); }
+    if (rcptNameEl) { rcptNameEl.textContent = record.name; enforceBlackText(rcptNameEl); }
+    if (rcptRollEl) { rcptRollEl.textContent = record.roll; enforceBlackText(rcptRollEl); }
+    if (rcptBranchEl) { rcptBranchEl.textContent = record.branch; enforceBlackText(rcptBranchEl); }
+    if (rcptBatchEl) { rcptBatchEl.textContent = record.batch || '2024 - 2028'; enforceBlackText(rcptBatchEl); }
+    if (rcptSectionEl) { rcptSectionEl.textContent = record.section || 'Section A'; enforceBlackText(rcptSectionEl); }
+    if (rcptQuotaEl) { rcptQuotaEl.textContent = record.quota || 'Convenor Quota (EAPCET)'; enforceBlackText(rcptQuotaEl); }
+    if (rcptMobileEl) { rcptMobileEl.textContent = record.mobile || '+91-9848000000'; enforceBlackText(rcptMobileEl); }
+    if (rcptEmailEl) { rcptEmailEl.textContent = record.email || (record.roll + '@b-iet.ac.in'); enforceBlackText(rcptEmailEl); }
+    if (rcptParticularsEl) { rcptParticularsEl.textContent = record.purpose; enforceBlackText(rcptParticularsEl); }
 
     const formattedAmount = '₹' + record.amount.toLocaleString('en-IN', { minimumFractionDigits: 2 });
     const rcptTableAmount = document.getElementById('rcptTableAmount');

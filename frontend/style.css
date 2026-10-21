@@ -2668,23 +2668,74 @@ html[data-theme="dark"] .lookup-result-item {
     color: #e2e8f0;
 }
 
-/* Printable receipt ALWAYS stays light for readability + printing */
+/* Printable receipt ALWAYS stays white background with deep pitch black text for readability + printing */
 html[data-theme="dark"] .receipt-card-container {
-    background: #1e293b;
+    background: #1e293b !important;
 }
 
-html[data-theme="dark"] .printable-receipt {
-    background: #ffffff;
-    color: #1e293b;
+html[data-theme="dark"] .printable-receipt,
+html[data-theme="dark"] #printableReceipt {
+    background: #ffffff !important;
+    color: #000000 !important;
 }
 
 html[data-theme="dark"] .printable-receipt h2,
 html[data-theme="dark"] .receipt-header-center h2 {
-    color: var(--primary-blue);
+    color: var(--primary-blue) !important;
 }
 
 html[data-theme="dark"] .receipt-qr-box {
-    background: #ffffff;
+    background: #ffffff !important;
+}
+
+/* Explicitly force pitch black for all receipt user details in dark mode */
+html[data-theme="dark"] #receiptModal .printable-receipt *,
+html[data-theme="dark"] #receiptModal .s-data,
+html[data-theme="dark"] #receiptModal .s-lbl,
+html[data-theme="dark"] #receiptModal .m-val,
+html[data-theme="dark"] #receiptModal .m-label,
+html[data-theme="dark"] #rcptName,
+html[data-theme="dark"] #rcptRoll,
+html[data-theme="dark"] #rcptBranch,
+html[data-theme="dark"] #rcptBatch,
+html[data-theme="dark"] #rcptSection,
+html[data-theme="dark"] #rcptQuota,
+html[data-theme="dark"] #rcptMobile,
+html[data-theme="dark"] #rcptEmail,
+html[data-theme="dark"] #rcptNo,
+html[data-theme="dark"] #rcptTxnId,
+html[data-theme="dark"] #rcptDate,
+html[data-theme="dark"] #rcptMode,
+html[data-theme="dark"] #rcptParticulars,
+html[data-theme="dark"] #rcptTableAmount,
+html[data-theme="dark"] #rcptTotalPaid,
+html[data-theme="dark"] #rcptAmountWords,
+html[data-theme="dark"] .receipt-table td {
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
+}
+
+html[data-theme="dark"] #receiptModal .s-lbl,
+html[data-theme="dark"] #receiptModal .m-label {
+    color: #0f172a !important;
+    -webkit-text-fill-color: #0f172a !important;
+    font-weight: 800 !important;
+}
+
+html[data-theme="dark"] #receiptModal .receipt-student-grid {
+    background: #ffffff !important;
+    border: 2px solid #0f172a !important;
+}
+
+html[data-theme="dark"] #receiptModal .s-info-item {
+    background: #f8fafc !important;
+    border: 1.5px solid #cbd5e1 !important;
+    border-left: 4px solid #0000cc !important;
+}
+
+html[data-theme="dark"] #receiptModal .receipt-meta-grid {
+    background: #f8fafc !important;
+    border: 2px solid #0f172a !important;
 }
 
 /* Top bars slightly tuned for dark */

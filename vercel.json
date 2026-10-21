@@ -1,9 +1,19 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "framework": null,
-  "buildCommand": "",
   "cleanUrls": true,
   "trailingSlash": false,
+  "rewrites": [
+    { "source": "/", "destination": "/frontend/index.html" },
+    { "source": "/index.html", "destination": "/frontend/index.html" },
+    { "source": "/fee-payment", "destination": "/frontend/fee-payment.html" },
+    { "source": "/fee-payment.html", "destination": "/frontend/fee-payment.html" },
+    { "source": "/students_data.json", "destination": "/database/students_data.json" },
+    { "source": "/api/students", "destination": "/database/students_data.json" },
+    { "source": "/payment.js", "destination": "/frontend/payment.js" },
+    { "source": "/style.css", "destination": "/frontend/style.css" },
+    { "source": "/robots.txt", "destination": "/frontend/robots.txt" },
+    { "source": "/css/(.*)", "destination": "/frontend/css/$1" }
+  ],
   "headers": [
     {
       "source": "/(.*)",
@@ -15,11 +25,15 @@
     },
     {
       "source": "/payment.js",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=3600" }]
+      "headers": [{ "key": "Cache-Control", "value": "no-cache" }]
     },
     {
       "source": "/style.css",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=3600" }]
+      "headers": [{ "key": "Cache-Control", "value": "no-cache" }]
+    },
+    {
+      "source": "/frontend/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "no-cache" }]
     },
     {
       "source": "/css/(.*)",

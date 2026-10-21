@@ -4,109 +4,136 @@ Official Online Fee Payment Portal for **Brilliant Institute of Engineering & Te
 
 Pay Tuition (₹72,000/yr), JNTU University Fee (₹6,500/yr), combined package (₹78,500), plus Exam/Transcript, Transport, Hostel and custom dues via PhonePe, Google Pay, Paytm, UPI QR, Cards and Net Banking with instant verifiable e-receipts.
 
-## Project structure
+---
 
-| File | Purpose |
-|---|---|
-| `index.html` | Portal UI (form, gateway modal, receipt, directory, FAQ, footer) |
-| `style.css` | Full portal stylesheet |
-| `payment.js` | Frontend gateway engine + embedded CSE student DB fallback |
-| `students_data.json` | 199 CSE 2024–2028 student records (source of truth for future API use) |
-| `server.js` | Zero-dependency production static server (Node 18+) |
-| `submit-fee-payment.php` | Optional PHP backend for order creation / verification on a LAMP/cPanel host |
-| `package.json` / `vercel.json` / `render.yaml` / `Procfile` / `Dockerfile` | Deployment configs |
+## Clean 3-Tier Architecture
 
-## Run locally
+The project is organized into three dedicated modules: **Frontend**, **Backend**, and **Database**.
+
+```
+BRIL/
+├── frontend/                     # Client application UI & assets
+│   ├── css/
+│   │   ├── home.css              # Main landing page styles
+│   │   └── style.css             # College branding styles
+│   ├── index.html                # College portal home & overview
+│   ├── fee-payment.html          # Interactive Fee Payment Portal
+│   ├── style.css                 # Fee payment portal layout styles
+│   ├── payment.js                # Gateway engine, validation & QR generator
+│   └── robots.txt                # Search engine directives
+│
+├── backend/                      # Server-side APIs & payment processing
+│   ├── test/                     # Automated unit, integration & boundary tests
+│   │   ├── test_portal.js
+│   │   ├── test_ui_elements.js
+│   │   ├── test_hallticket_verify_flow.js
+│   │   └── test_runtime_dom.js
+│   ├── server.js                 # Zero-dependency hardened Node.js HTTP server
+│   ├── submit-fee-payment.php    # PHP payment order creation & ERP sync handler
+│   └── .env.example              # Server environment variable templates
+│
+├── database/                     # Data models, schemas & seed data
+│   ├── students_data.json        # 199 CSE student records (Sections A, B, C)
+│   ├── schema.sql                # Production MySQL / MariaDB relational DDL
+│   ├── seed.sql                  # Database population script with 199 student records
+│   ├── db.js                     # Zero-dependency Node.js data layer
+│   ├── db_config.php             # PHP PDO database connection helper
+│   └── README.md                 # Database schema documentation & ER details
+│
+├── package.json                  # Root runner & dependency config
+├── Dockerfile                    # Containerization specification
+├── Procfile                      # Process file for Heroku / Railway
+├── render.yaml                   # Infrastructure-as-code for Render
+├── vercel.json                   # Edge routing & security headers for Vercel
+└── push_to_github.bat            # One-click batch synchronization with GitHub
+```
+
+---
+
+## 1. Frontend (`frontend/`)
+
+- **`index.html`**: College home page highlighting autonomous accreditation, fee schedules, online portals, and campus updates.
+- **`fee-payment.html`**: Clean 3-step fee payment workflow:
+  1. Hall Ticket verification (auto-populating student profile and fee heads)
+  2. Fee option selection (Tuition Fee ₹72,000, JNTU University Fee ₹6,500, or Combined ₹78,500)
+  3. Dynamic UPI QR generation and instant digital receipt download.
+- **`payment.js`**: Frontend payment engine handling instant calculation, QR generation, UPI intents, and modal transitions.
+
+---
+
+## 2. Backend (`backend/`)
+
+- **`server.js`**: Hardened static server with zero external dependencies. Features:
+  - Strict Content-Security-Policy (CSP), nosniff, frame-options, and referrer headers.
+  - Path traversal defense (`..` and `%2e%2e` blocked).
+  - Secret blocking (`.env`, `*.sql`, `*.php`, tooling files blocked with `403 Forbidden`).
+  - Health check endpoints (`/health` and `/api/health`).
+  - Fee schedule API (`/api/config`).
+  - Student database API (`/api/students` and `/students_data.json`).
+- **`submit-fee-payment.php`**: Server-side webhook handler for PhonePe, Razorpay, or custom UPI payment verifications.
+- **`test/`**: 27+ automated tests validating data integrity, security boundaries, and payment flows.
+
+---
+
+## 3. Database (`database/`)
+
+- **`students_data.json`**: Complete JSON database of 199 B.Tech CSE students (Batch 2024–2028).
+- **`schema.sql`**: Production schema for MySQL / MariaDB / Cloud SQL with tables:
+  - `students`: Roll number, full name, section, quota, email, phone, fee ledger, and balance.
+  - `fee_structures`: Annual fee schedules per academic year.
+  - `fee_payments`: Transaction ledger recording receipt numbers, UTRs, and payment status.
+  - `payment_transactions`: Gateway API logs and webhook audit trail.
+  - `audit_logs`: Finance audit trail.
+  - Reporting views: `vw_student_fee_summary` and `vw_daily_collection_summary`.
+- **`seed.sql`**: Comprehensive SQL seed script with all 199 students.
+- **`db.js`**: Node.js data helper for query and filter operations.
+- **`db_config.php`**: Secure PHP PDO database connection wrapper.
+
+---
+
+## Running Locally
 
 ```bash
-npm install   # no dependencies, validates setup
-npm start     # serves http://localhost:3000
-# or
+# 1. Run server (starts on http://localhost:3000)
+npm start
+
+# 2. Or run dev mode
+npm run dev
+
+# 3. Custom port (optional)
 PORT=4000 npm start
 ```
 
-Health check: `GET /health` → `{"status":"ok",...}`
+### URLs
+- **Home**: [http://localhost:3000](http://localhost:3000)
+- **Fee Payment Portal**: [http://localhost:3000/fee-payment](http://localhost:3000/fee-payment)
+- **Health Check**: [http://localhost:3000/health](http://localhost:3000/health)
+- **Student Data API**: [http://localhost:3000/api/students](http://localhost:3000/api/students)
+- **Portal Config**: [http://localhost:3000/api/config](http://localhost:3000/api/config)
 
-Useful routes:
+---
 
-- `/` → portal
-- `/payment.js`, `/style.css`, `/students_data.json`, `/robots.txt`
-- `/health`, `/api/health`, `/api/config`
-- Blocked (403/404): `/.git/*`, `/.env`, `/*.php`, `/package.json`
+## Automated Test Suite
 
-## Test checklist (pre-deploy)
-
-```bash
-npm test                      # Runs syntax checks + 22 automated endpoint & security tests
-node test/test_portal.js      # Direct test suite execution
-```
-
-Manual:
-
-1. Open `/`, enter roll `501`, `561`, `5D4`, full `24QA1A0501` → student card verifies.
-2. Switch Tuition / JNTU / Combined / Other fees → amount, summary and QR update.
-3. Open gateway modal → UPI / QR / Card / NetBanking tabs render.
-4. Complete payment (demo) → receipt modal, print, Find Receipt lookup.
-5. Open Directory (199) → filter A/B/C/Mgmt + search works.
-6. Check `/health` returns 200 JSON.
-7. Confirm traversal blocked: `/..%2Fserver.js` and `/../package.json` do NOT leak files.
-8. Confirm `submit-fee-payment.php` is NOT served by Node (403).
-
-## Deploy
-
-### Option A — Render / Railway / any Node host
-
-- Build: `npm install`
-- Start: `npm start`
-- Env: `NODE_ENV=production`, `PORT` is auto-injected (code respects `process.env.PORT`)
-- Health check path: `/health`
-- `render.yaml` is included for one-click Render deploys.
-
-### Option B — Vercel (static)
+Run all test suites with a single command:
 
 ```bash
-npx vercel --prod
+npm test
 ```
 
-`vercel.json` forces a **static site** deployment from the repo root:
+Verifies:
+1. Student master data integrity (199 unique records, 0 duplicates).
+2. All portal static endpoints (`/`, `/fee-payment`, `/health`, `/payment.js`, etc.).
+3. Security boundary defenses (blocking traversal, source code, and dotfiles).
+4. Form validation and Go button hall ticket navigation.
+5. DOM simulation tests for all student batches and sections.
 
-- `"framework": null` — disables Vercel's Node.js backend auto-detection (otherwise `package.json` + `server.js` make Vercel bundle only `index.html` / `fee-payment.html` into a serverless function and every `/css/*`, `/style.css`, `/payment.js` request returns 404 → unstyled page).
-- `"buildCommand": ""` — skips the build step so `css/`, `style.css`, `payment.js`, `students_data.json` and `robots.txt` are served as-is.
+---
 
-`server.js` is not used on Vercel; all files are served from the repo root.
+## Sync with GitHub
 
-### Option C — Netlify / Cloudflare Pages / S3 static
+Run the included batch script to commit and push changes:
 
-- Publish directory: repo root (`.`).
-- No build command needed. Optional: `npm test` as build check.
-
-### Option D — Docker / VPS
-
-```bash
-docker build -t bril-fee-portal .
-docker run -p 3000:3000 -e NODE_ENV=production bril-fee-portal
-curl http://localhost:3000/health
+```bat
+push_to_github.bat
 ```
-
-### Option E — cPanel shared hosting (PHP)
-
-Upload `index.html`, `style.css`, `payment.js`, `students_data.json`, `robots.txt` to `public_html/`.
-Upload `submit-fee-payment.php` separately and set env vars in cPanel (never hardcode secrets):
-
-`DB_HOST`, `DB_USER`, `DB_PASS`, `DB_NAME`, `PHONEPE_MERCHANT_ID`, `PHONEPE_SALT_KEY`, `PHONEPE_SALT_INDEX`, `RAZORPAY_KEY_ID`, `RAZORPAY_KEY_SECRET`
-
-The Node `server.js` intentionally refuses to serve `*.php` so secrets can't leak from the Node deployment.
-
-## Security notes
-
-- Fixed: previous `server.js` joined `req.url` directly → path traversal (`/../server.js` leaked source). Now uses `path.normalize` + `path.relative` containment, blocks dotfiles, `*.php`, `*.bat`, `package.json`.
-- Security headers enabled: `nosniff`, `SAMEORIGIN`, `Referrer-Policy`, scoped `Content-Security-Policy` allowing only cdnjs/jsdelivr/Google Fonts.
-- No `X-Powered-By` leak, method whitelist (GET/HEAD + `/health`), no directory listing, graceful shutdown.
-- `submit-fee-payment.php` no longer ships default passwords/keys; missing env = empty string (fail closed).
-- Frontend uses `innerHTML` for dynamic sub-options — keep student data trusted, or migrate to `textContent` templating before accepting external input.
-
-## Known limitations / next steps
-
-- `payment.js` embeds the student DB (~150 KB) duplicated in `students_data.json` for offline demo. For production, switch to `fetch('/students_data.json')` with embedded fallback to cut bundle size.
-- Payments are currently simulated client-side (`simulatePaymentSuccess`). Wire `create_order` / `verify_payment` to Razorpay/PhonePe server verification before collecting live money.
-- Add real `favicon.ico`, Open Graph image, and analytics if required.

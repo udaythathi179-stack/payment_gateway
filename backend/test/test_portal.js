@@ -10,7 +10,10 @@ const fs = require('fs');
 const path = require('path');
 const assert = require('assert');
 
-const ROOT_DIR = path.resolve(__dirname, '..');
+const ROOT_DIR = path.resolve(__dirname, '..', '..');
+const BACKEND_DIR = path.join(ROOT_DIR, 'backend');
+const FRONTEND_DIR = path.join(ROOT_DIR, 'frontend');
+const DATABASE_DIR = path.join(ROOT_DIR, 'database');
 
 let passedTests = 0;
 let failedTests = 0;
@@ -61,8 +64,8 @@ function request(options, body = null) {
 async function main() {
   console.log('=== 1. Static Files & Data Integrity Tests ===');
 
-  runTest('students_data.json exists and is valid JSON', () => {
-    const filePath = path.join(ROOT_DIR, 'students_data.json');
+  runTest('students_data.json exists and is valid JSON in database directory', () => {
+    const filePath = path.join(DATABASE_DIR, 'students_data.json');
     assert(fs.existsSync(filePath), 'students_data.json missing');
     const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
     assert(Array.isArray(data), 'students_data.json must be an array');
@@ -81,23 +84,27 @@ async function main() {
     console.log(`    (Verified ${data.length} student records, 0 duplicates)`);
   });
 
-  runTest('Required portal assets exist', () => {
+  runTest('Required portal assets exist across frontend, backend, and database', () => {
     const requiredFiles = [
-      'index.html',
-      'style.css',
-      'payment.js',
-      'server.js',
-      'package.json',
-      'Dockerfile',
-      'vercel.json',
-      'render.yaml',
-      'Procfile',
-      'robots.txt',
-      'fee-payment.html',
-      '.dockerignore',
+      path.join(FRONTEND_DIR, 'index.html'),
+      path.join(FRONTEND_DIR, 'style.css'),
+      path.join(FRONTEND_DIR, 'payment.js'),
+      path.join(FRONTEND_DIR, 'fee-payment.html'),
+      path.join(FRONTEND_DIR, 'robots.txt'),
+      path.join(BACKEND_DIR, 'server.js'),
+      path.join(BACKEND_DIR, 'submit-fee-payment.php'),
+      path.join(DATABASE_DIR, 'students_data.json'),
+      path.join(DATABASE_DIR, 'schema.sql'),
+      path.join(DATABASE_DIR, 'seed.sql'),
+      path.join(ROOT_DIR, 'package.json'),
+      path.join(ROOT_DIR, 'Dockerfile'),
+      path.join(ROOT_DIR, 'vercel.json'),
+      path.join(ROOT_DIR, 'render.yaml'),
+      path.join(ROOT_DIR, 'Procfile'),
+      path.join(ROOT_DIR, '.dockerignore'),
     ];
     for (const f of requiredFiles) {
-      assert(fs.existsSync(path.join(ROOT_DIR, f)), `Missing required file: ${f}`);
+      assert(fs.existsSync(f), `Missing required file: ${f}`);
     }
   });
 
@@ -108,7 +115,7 @@ async function main() {
   process.env.HOST = '127.0.0.1';
   process.env.NODE_ENV = 'test';
 
-  const server = require(path.join(ROOT_DIR, 'server.js'));
+  const server = require(path.join(BACKEND_DIR, 'server.js'));
   
   await new Promise((resolve) => {
     if (server.listening) {
@@ -164,8 +171,16 @@ async function main() {
       assert.strictEqual(json.jntuFee, 6500);
     });
 
-    await runAsyncTest('GET /students_data.json returns valid JSON student data', async () => {
+    await runAsyncTest('GET /students_data.json returns valid JSON student data from database', async () => {
       const res = await request({ host, port, path: '/students_data.json', method: 'GET' });
+      assert.strictEqual(res.statusCode, 200);
+      assert(res.headers['content-type'].includes('application/json'));
+      const list = JSON.parse(res.body);
+      assert(Array.isArray(list) && list.length > 50);
+    });
+
+    await runAsyncTest('GET /api/students returns valid JSON student data from database', async () => {
+      const res = await request({ host, port, path: '/api/students', method: 'GET' });
       assert.strictEqual(res.statusCode, 200);
       assert(res.headers['content-type'].includes('application/json'));
       const list = JSON.parse(res.body);

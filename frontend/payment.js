@@ -4538,6 +4538,7 @@ function simulatePaymentSuccess(methodUsed) {
     const rcptSectionEl = document.getElementById('rcptSection');
     const rcptQuotaEl = document.getElementById('rcptQuota');
     const rcptMobileEl = document.getElementById('rcptMobile');
+    const rcptEmailEl = document.getElementById('rcptEmail');
     const rcptParticularsEl = document.getElementById('rcptParticulars');
 
     if (rcptNoEl) rcptNoEl.textContent = record.receiptNo;
@@ -4547,10 +4548,11 @@ function simulatePaymentSuccess(methodUsed) {
     if (rcptNameEl) rcptNameEl.textContent = record.name;
     if (rcptRollEl) rcptRollEl.textContent = record.roll;
     if (rcptBranchEl) rcptBranchEl.textContent = record.branch;
-    if (rcptBatchEl) rcptBatchEl.textContent = record.batch;
-    if (rcptSectionEl) rcptSectionEl.textContent = record.section;
-    if (rcptQuotaEl) rcptQuotaEl.textContent = record.quota;
-    if (rcptMobileEl) rcptMobileEl.textContent = record.mobile;
+    if (rcptBatchEl) rcptBatchEl.textContent = record.batch || '2024 - 2028';
+    if (rcptSectionEl) rcptSectionEl.textContent = record.section || 'Section A';
+    if (rcptQuotaEl) rcptQuotaEl.textContent = record.quota || 'Convenor Quota (EAPCET)';
+    if (rcptMobileEl) rcptMobileEl.textContent = record.mobile || '+91-9848000000';
+    if (rcptEmailEl) rcptEmailEl.textContent = record.email || (record.roll + '@b-iet.ac.in');
     if (rcptParticularsEl) rcptParticularsEl.textContent = record.purpose;
 
     const formattedAmount = '₹' + record.amount.toLocaleString('en-IN', { minimumFractionDigits: 2 });
@@ -4699,6 +4701,7 @@ function reprintSavedReceipt(index) {
     const rcptSectionEl = document.getElementById('rcptSection');
     const rcptQuotaEl = document.getElementById('rcptQuota');
     const rcptMobileEl = document.getElementById('rcptMobile');
+    const rcptEmailEl = document.getElementById('rcptEmail');
     const rcptParticularsEl = document.getElementById('rcptParticulars');
 
     if (rcptNoEl) rcptNoEl.textContent = record.receiptNo;
@@ -4710,8 +4713,9 @@ function reprintSavedReceipt(index) {
     if (rcptBranchEl) rcptBranchEl.textContent = record.branch;
     if (rcptBatchEl) rcptBatchEl.textContent = record.batch || '2024 - 2028';
     if (rcptSectionEl) rcptSectionEl.textContent = record.section || 'Section A';
-    if (rcptQuotaEl) rcptQuotaEl.textContent = record.quota || 'Convenor Quota';
-    if (rcptMobileEl) rcptMobileEl.textContent = record.mobile;
+    if (rcptQuotaEl) rcptQuotaEl.textContent = record.quota || 'Convenor Quota (EAPCET)';
+    if (rcptMobileEl) rcptMobileEl.textContent = record.mobile || '+91-9848000000';
+    if (rcptEmailEl) rcptEmailEl.textContent = record.email || (record.roll + '@b-iet.ac.in');
     if (rcptParticularsEl) rcptParticularsEl.textContent = record.purpose;
 
     const formattedAmount = '₹' + record.amount.toLocaleString('en-IN', { minimumFractionDigits: 2 });

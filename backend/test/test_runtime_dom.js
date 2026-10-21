@@ -92,10 +92,11 @@ global.QRCode = function() {};
 ].forEach(id => createMockElement(id));
 
 // Load students data
-const studentsData = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'students_data.json'), 'utf8'));
+const ROOT_DIR = path.resolve(__dirname, '..', '..');
+const studentsData = JSON.parse(fs.readFileSync(path.join(ROOT_DIR, 'database', 'students_data.json'), 'utf8'));
 
 // Extract database and functions from payment.js
-const paymentCode = fs.readFileSync(path.join(__dirname, '..', 'payment.js'), 'utf8');
+const paymentCode = fs.readFileSync(path.join(ROOT_DIR, 'frontend', 'payment.js'), 'utf8');
 
 // Evaluate in sandbox
 const vm = require('vm');

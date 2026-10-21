@@ -11,7 +11,11 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-const ROOT_DIR = __dirname;
+const BACKEND_DIR = __dirname;
+const ROOT_DIR = path.resolve(__dirname, '..');
+const FRONTEND_DIR = path.join(ROOT_DIR, 'frontend');
+const DATABASE_DIR = path.join(ROOT_DIR, 'database');
+
 const HOST = process.env.HOST || '0.0.0.0';
 const PORT = process.env.PORT !== undefined && !Number.isNaN(Number.parseInt(process.env.PORT, 10))
   ? Number.parseInt(process.env.PORT, 10)
@@ -36,11 +40,13 @@ const MIME_TYPES = {
   '.ttf': 'font/ttf',
 };
 
-// Never serve these as static files (secrets / server code / tooling).
+// Never serve these as static files (secrets / server code / tooling / database scripts).
 const BLOCKED_EXTENSIONS = new Set(['.php', '.bat', '.env', '.log', '.sql']);
 const BLOCKED_BASENAMES = new Set([
   '.env',
+  '.env.example',
   '.gitignore',
+  '.dockerignore',
   'package.json',
   'package-lock.json',
   'server.js',
@@ -48,6 +54,11 @@ const BLOCKED_BASENAMES = new Set([
   'render.yaml',
   'Procfile',
   'vercel.json',
+  'submit-fee-payment.php',
+  'schema.sql',
+  'seed.sql',
+  'db.js',
+  'db_config.php',
 ]);
 
 const CACHE_CONTROL = {
@@ -82,7 +93,6 @@ function setSecurityHeaders(res) {
       "form-action 'self' https:",
     ].join('; ')
   );
-  // Only send HSTS when behind HTTPS in production; harmless on plain HTTP.
   if (process.env.NODE_ENV === 'production') {
     res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
   }
@@ -123,23 +133,41 @@ function resolveSafePath(urlPathname) {
   if (decoded.includes('\0')) return null;
 
   // Reject any traversal attempt outright (encoded or plain).
-  // Normalizing "/../x" to "/x" would otherwise let "%2e%2e/x" resolve
-  // inside the root and leak files like server.js.
   const segments = decoded.split(/[/\\]+/);
   if (segments.includes('..')) return null;
 
-  // Normalize and force containment inside ROOT_DIR (defense in depth).
   const normalized = path.normalize(decoded).replace(/^(\.\.[/\\])+/, '');
-  const joined = path.join(ROOT_DIR, normalized);
-  const relative = path.relative(ROOT_DIR, joined);
+  const basename = path.basename(normalized);
+
+  // Block dotfiles (.git, .env) and explicit blocked files
+  if (basename.startsWith('.')) return null;
+  if (BLOCKED_BASENAMES.has(basename)) return null;
+  if (BLOCKED_EXTENSIONS.has(path.extname(normalized).toLowerCase())) return null;
+
+  // Direct access to backend internals or sensitive folders is forbidden
+  if (normalized.startsWith('backend') || normalized.startsWith('/backend') ||
+      normalized.startsWith('test') || normalized.startsWith('/test')) {
+    return null;
+  }
+
+  // 1. Check in database directory if requesting students_data.json
+  if (basename === 'students_data.json') {
+    return path.join(DATABASE_DIR, 'students_data.json');
+  }
+
+  // 2. Normalize path inside frontend directory
+  let targetPath;
+  if (normalized.startsWith('frontend') || normalized.startsWith('/frontend')) {
+    const subPath = normalized.replace(/^[/\\]?frontend[/\\]?/, '');
+    targetPath = path.join(FRONTEND_DIR, subPath);
+  } else {
+    targetPath = path.join(FRONTEND_DIR, normalized);
+  }
+
+  const relative = path.relative(FRONTEND_DIR, targetPath);
   if (relative.startsWith('..') || path.isAbsolute(relative)) return null;
 
-  const basename = path.basename(joined);
-  if (basename.startsWith('.')) return null; // block dotfiles (.git, .env)
-  if (BLOCKED_BASENAMES.has(basename)) return null;
-  if (BLOCKED_EXTENSIONS.has(path.extname(joined).toLowerCase())) return null;
-
-  return joined;
+  return targetPath;
 }
 
 function serveFile(req, res, filePath, stats) {
@@ -169,6 +197,17 @@ function handleRequest(req, res) {
   const rawUrl = req.url || '/';
   const pathname = rawUrl.split('?')[0].split('#')[0] || '/';
 
+  // Explicit security block check for protected names requested at root
+  const baseRequested = path.basename(pathname);
+  if (BLOCKED_BASENAMES.has(baseRequested) || BLOCKED_EXTENSIONS.has(path.extname(pathname).toLowerCase())) {
+    return sendText(res, 403, '403 Forbidden');
+  }
+
+  // Path traversal check
+  if (pathname.includes('..') || rawUrl.includes('%2e%2e') || rawUrl.includes('%2E%2E')) {
+    return sendText(res, 403, '403 Forbidden');
+  }
+
   // Health checks (load balancers / Docker / Render / uptime monitors).
   if (pathname === '/health' || pathname === '/api/health') {
     if (method !== 'GET' && method !== 'HEAD') return sendText(res, 405, '405 Method Not Allowed');
@@ -191,13 +230,24 @@ function handleRequest(req, res) {
     });
   }
 
+  // JSON API for student records from database
+  if (pathname === '/api/students' || pathname === '/students_data.json') {
+    if (method !== 'GET' && method !== 'HEAD') return sendText(res, 405, '405 Method Not Allowed');
+    const jsonPath = path.join(DATABASE_DIR, 'students_data.json');
+    fs.stat(jsonPath, (err, stats) => {
+      if (err || !stats.isFile()) return sendText(res, 404, '404 Not Found');
+      return serveFile(req, res, jsonPath, stats);
+    });
+    return;
+  }
+
   if (method !== 'GET' && method !== 'HEAD') {
     return sendText(res, 405, '405 Method Not Allowed');
   }
 
   // Friendly favicon: avoid noisy 404s when no icon file is shipped.
   if (pathname === '/favicon.ico') {
-    const localIcon = path.join(ROOT_DIR, 'favicon.ico');
+    const localIcon = path.join(FRONTEND_DIR, 'favicon.ico');
     fs.stat(localIcon, (err, stats) => {
       if (!err && stats.isFile()) return serveFile(req, res, localIcon, stats);
       setSecurityHeaders(res);
@@ -209,9 +259,9 @@ function handleRequest(req, res) {
 
   let filePath;
   if (pathname === '/') {
-    filePath = path.join(ROOT_DIR, 'index.html');
+    filePath = path.join(FRONTEND_DIR, 'index.html');
   } else if (pathname === '/fee-payment' || pathname === '/payment') {
-    filePath = path.join(ROOT_DIR, 'fee-payment.html');
+    filePath = path.join(FRONTEND_DIR, 'fee-payment.html');
   } else {
     const safe = resolveSafePath(pathname);
     if (!safe) return sendText(res, 403, '403 Forbidden');

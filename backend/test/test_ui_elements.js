@@ -1,9 +1,27 @@
+'use strict';
+
 const fs = require('fs');
+const path = require('path');
 const assert = require('assert');
 
-const html = fs.readFileSync('fee-payment.html', 'utf8');
-const js = fs.readFileSync('payment.js', 'utf8');
-const css = fs.readFileSync('style.css', 'utf8');
+const ROOT_DIR = path.resolve(__dirname, '..', '..');
+const FRONTEND_DIR = path.join(ROOT_DIR, 'frontend');
+
+const htmlPath = fs.existsSync(path.join(FRONTEND_DIR, 'fee-payment.html'))
+  ? path.join(FRONTEND_DIR, 'fee-payment.html')
+  : 'fee-payment.html';
+
+const jsPath = fs.existsSync(path.join(FRONTEND_DIR, 'payment.js'))
+  ? path.join(FRONTEND_DIR, 'payment.js')
+  : 'payment.js';
+
+const cssPath = fs.existsSync(path.join(FRONTEND_DIR, 'style.css'))
+  ? path.join(FRONTEND_DIR, 'style.css')
+  : 'style.css';
+
+const html = fs.readFileSync(htmlPath, 'utf8');
+const js = fs.readFileSync(jsPath, 'utf8');
+const css = fs.readFileSync(cssPath, 'utf8');
 
 const requiredIds = [
   'cardFeeTuition', 'cardFeeJntu', 'cardFeeCombined',

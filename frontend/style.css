@@ -1856,103 +1856,148 @@ body {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     background: #f8fafc;
-    border: 1px solid #e2e8f0;
+    border: 2px solid #0f172a;
     border-radius: 8px;
-    padding: 12px 14px;
-    gap: 10px;
-    margin-bottom: 16px;
+    padding: 12px 16px;
+    gap: 12px;
+    margin-bottom: 18px;
 }
 
 .meta-item {
     display: flex;
     flex-direction: column;
+    gap: 3px;
 }
 
 .m-label {
-    font-size: 10px;
-    color: #64748b;
+    font-size: 11px;
+    color: #0f172a;
     text-transform: uppercase;
-    font-weight: 700;
+    font-weight: 800;
+    letter-spacing: 0.04em;
 }
 
 .m-val {
-    font-size: 12.5px;
-    color: var(--dark-navy);
+    font-size: 13.5px;
+    color: #000000;
+    font-weight: 800;
 }
 
 .receipt-student-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px 20px;
-    margin-bottom: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 12px 16px;
+    margin-bottom: 22px;
     background: #ffffff;
-    border: 1px solid #e2e8f0;
+    border: 2px solid #0f172a;
     border-radius: 8px;
-    padding: 14px 18px;
+    padding: 16px 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .s-info-item {
     display: flex;
     justify-content: space-between;
-    font-size: 13px;
+    align-items: baseline;
+    font-size: 13.5px;
+    padding: 8px 12px;
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-left: 4px solid #0000cc;
+    border-radius: 6px;
 }
 
 .s-lbl {
-    color: #64748b;
-    font-weight: 600;
+    color: #0f172a;
+    font-weight: 800;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-right: 8px;
+    white-space: nowrap;
 }
 
 .s-data {
-    color: var(--dark-navy);
-    font-weight: 700;
+    color: #000000;
+    font-weight: 800;
+    font-size: 13.5px;
+    text-align: right;
+    word-break: break-word;
 }
 
 /* RECEIPT TABLE */
 .receipt-table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 16px;
-    font-size: 13px;
+    margin-bottom: 18px;
+    font-size: 13.5px;
+    border: 2px solid #0f172a;
 }
 
 .receipt-table th {
-    background: var(--primary-blue);
-    border: 1px solid var(--primary-blue);
-    padding: 8px 12px;
+    background: #0000cc;
+    border: 1.5px solid #0f172a;
+    padding: 10px 14px;
     text-align: left;
-    font-size: 11.5px;
+    font-size: 12px;
     text-transform: uppercase;
     color: #ffffff;
+    font-weight: 800;
+    letter-spacing: 0.04em;
 }
 
 .receipt-table td {
-    border: 1px solid #e2e8f0;
-    padding: 10px 12px;
+    border: 1.5px solid #cbd5e1;
+    padding: 10px 14px;
+    color: #000000;
+    font-weight: 700;
 }
 
 .table-subtotal-row td {
-    background: #fafafa;
-    border-top: 1px solid #cbd5e1;
+    background: #f8fafc;
+    border-top: 1.5px solid #0f172a;
+    color: #000000;
+    font-weight: 800;
 }
 
 .table-total-row td {
-    background: #e6e9ff;
-    border-top: 2px solid var(--primary-blue);
-    font-size: 14px;
+    background: #eef2ff;
+    border-top: 2px solid #0000cc;
+    border-bottom: 2px solid #0000cc;
+    font-size: 14.5px;
+    color: #000000;
 }
 
 .table-total-row strong {
     font-family: 'Outfit', sans-serif;
-    color: var(--primary-blue);
-    font-size: 16px;
+    color: #000099;
+    font-size: 17px;
+    font-weight: 900;
 }
 
 .amount-in-words {
     background: #f8fafc;
-    border-left: 4px solid var(--primary-blue);
-    padding: 10px 14px;
-    font-size: 12px;
+    border: 1.5px solid #0f172a;
+    border-left: 5px solid #0000cc;
+    padding: 12px 16px;
+    font-size: 13px;
     margin-bottom: 24px;
+    color: #000000;
+    border-radius: 6px;
+}
+
+.amount-in-words strong {
+    color: #0f172a;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 11.5px;
+    letter-spacing: 0.03em;
+    margin-right: 6px;
+}
+
+.amount-in-words span {
+    color: #000000;
+    font-weight: 800;
 }
 
 .receipt-footer-signatures {
@@ -2703,6 +2748,21 @@ html[data-theme="dark"] .portal-nav {
     .receipt-table th,
     .receipt-watermark,
     .stamp-circle {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .receipt-student-grid,
+    .receipt-meta-grid,
+    .s-info-item,
+    .s-lbl,
+    .s-data,
+    .m-label,
+    .m-val,
+    .receipt-table td,
+    .amount-in-words,
+    .amount-in-words * {
+        color: #000000 !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
     }

@@ -1769,16 +1769,10 @@ body {
 }
 
 .receipt-watermark {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-30deg);
-    font-size: 90px;
-    font-weight: 900;
-    color: rgba(0, 0, 204, 0.06);
-    pointer-events: none;
-    user-select: none;
-    letter-spacing: 0.1em;
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
 }
 
 .receipt-header {
@@ -1853,76 +1847,83 @@ body {
 }
 
 .receipt-meta-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    background: #f8fafc;
-    border: 2px solid #0f172a;
-    border-radius: 8px;
-    padding: 12px 16px;
-    gap: 12px;
-    margin-bottom: 18px;
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    background: #f8fafc !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 8px !important;
+    padding: 12px 14px !important;
+    gap: 10px !important;
+    margin-bottom: 16px !important;
 }
 
 .meta-item {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2px !important;
 }
 
 .m-label {
-    font-size: 11px;
-    color: #0f172a;
-    text-transform: uppercase;
-    font-weight: 800;
-    letter-spacing: 0.04em;
+    font-size: 11px !important;
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
+    text-transform: uppercase !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.03em !important;
 }
 
 .m-val {
-    font-size: 13.5px;
-    color: #000000;
-    font-weight: 800;
+    font-size: 13px !important;
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
+    font-weight: 800 !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
 }
 
 .receipt-student-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 12px 16px;
-    margin-bottom: 22px;
-    background: #ffffff;
-    border: 2px solid #0f172a;
-    border-radius: 8px;
-    padding: 16px 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px 24px !important;
+    margin-bottom: 20px !important;
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 8px !important;
+    padding: 14px 18px !important;
+    box-shadow: none !important;
 }
 
 .s-info-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    font-size: 13.5px;
-    padding: 8px 12px;
-    background: #f8fafc;
-    border: 1px solid #cbd5e1;
-    border-left: 4px solid #0000cc;
-    border-radius: 6px;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    font-size: 13.5px !important;
+    padding: 6px 0 !important;
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 1px dashed #e2e8f0 !important;
+    border-radius: 0 !important;
 }
 
 .s-lbl {
-    color: #0f172a;
-    font-weight: 800;
-    font-size: 11.5px;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-    margin-right: 8px;
-    white-space: nowrap;
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
+    font-weight: 700 !important;
+    font-size: 13px !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+    margin-right: 12px !important;
+    white-space: nowrap !important;
 }
 
 .s-data {
-    color: #000000;
-    font-weight: 800;
-    font-size: 13.5px;
-    text-align: right;
-    word-break: break-word;
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
+    font-weight: 800 !important;
+    font-size: 13.5px !important;
+    text-align: right !important;
+    white-space: normal !important;
+    word-break: normal !important;
 }
 
 /* RECEIPT TABLE */
@@ -2724,18 +2725,22 @@ html[data-theme="dark"] #receiptModal .m-label {
 
 html[data-theme="dark"] #receiptModal .receipt-student-grid {
     background: #ffffff !important;
-    border: 2px solid #0f172a !important;
+    border: 1px solid #cbd5e1 !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px 24px !important;
+    box-shadow: none !important;
 }
 
 html[data-theme="dark"] #receiptModal .s-info-item {
-    background: #f8fafc !important;
-    border: 1.5px solid #cbd5e1 !important;
-    border-left: 4px solid #0000cc !important;
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 1px dashed #e2e8f0 !important;
+    border-radius: 0 !important;
 }
 
 html[data-theme="dark"] #receiptModal .receipt-meta-grid {
     background: #f8fafc !important;
-    border: 2px solid #0f172a !important;
+    border: 1px solid #cbd5e1 !important;
 }
 
 /* Top bars slightly tuned for dark */
@@ -3780,11 +3785,11 @@ html[data-theme="dark"] .dir-meta {
     color: #94a3b8;
 }
 
-/* Receipt Student Grid 6-item layout */
+/* Receipt Student Grid fitted 2-column layout */
 .receipt-student-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) !important;
-    gap: 10px 14px !important;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px 24px !important;
 }
 
 

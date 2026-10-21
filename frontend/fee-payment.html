@@ -24,8 +24,8 @@
     <!-- Canvas Confetti -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-    <!-- Custom CSS (Cache-busting version v=2.5.2) -->
-    <link rel="stylesheet" href="style.css?v=2.5.2">
+    <!-- Custom CSS (Cache-busting version v=2.5.3) -->
+    <link rel="stylesheet" href="style.css?v=2.5.3">
     <script>
         // Apply saved theme before paint to avoid flash
         (function () {
@@ -1324,9 +1324,6 @@
             <!-- The Official Printable Receipt Document -->
             <div class="printable-receipt" id="printableReceipt">
 
-                <!-- Watermark -->
-                <div class="receipt-watermark">BRIL PAID</div>
-
                 <!-- Receipt Header -->
                 <div class="receipt-header">
                     <div class="receipt-header-left">
@@ -1348,59 +1345,48 @@
                 <div class="receipt-divider"></div>
 
                 <!-- Receipt Metadata Grid -->
-                <div class="receipt-meta-grid" style="background: #f8fafc !important; border: 2px solid #0f172a !important;">
+                <div class="receipt-meta-grid">
                     <div class="meta-item">
-                        <span class="m-label" style="color: #0f172a !important; font-weight: 800 !important; -webkit-text-fill-color: #0f172a !important;">Receipt Number:</span>
-                        <strong class="m-val" id="rcptNo" style="color: #000000 !important; font-weight: 800 !important; -webkit-text-fill-color: #000000 !important;">BRIL-REC-2026-8819</strong>
+                        <span class="m-label">Receipt Number:</span>
+                        <strong class="m-val" id="rcptNo">BRIL-REC-2026-8819</strong>
                     </div>
                     <div class="meta-item">
-                        <span class="m-label" style="color: #0f172a !important; font-weight: 800 !important; -webkit-text-fill-color: #0f172a !important;">Transaction Reference:</span>
-                        <strong class="m-val" id="rcptTxnId" style="color: #000000 !important; font-weight: 800 !important; -webkit-text-fill-color: #000000 !important;">TXN-PHONPE-9821738210</strong>
+                        <span class="m-label">Transaction Reference:</span>
+                        <strong class="m-val" id="rcptTxnId">TXN-PHONPE-9821738210</strong>
                     </div>
                     <div class="meta-item">
-                        <span class="m-label" style="color: #0f172a !important; font-weight: 800 !important; -webkit-text-fill-color: #0f172a !important;">Payment Date &amp; Time:</span>
-                        <strong class="m-val" id="rcptDate" style="color: #000000 !important; font-weight: 800 !important; -webkit-text-fill-color: #000000 !important;">12-Oct-2026 12:15 PM</strong>
+                        <span class="m-label">Payment Date &amp; Time:</span>
+                        <strong class="m-val" id="rcptDate">12-Oct-2026 12:15 PM</strong>
                     </div>
                     <div class="meta-item">
-                        <span class="m-label" style="color: #0f172a !important; font-weight: 800 !important; -webkit-text-fill-color: #0f172a !important;">Payment Mode:</span>
-                        <strong class="m-val" id="rcptMode" style="color: #000000 !important; font-weight: 800 !important; -webkit-text-fill-color: #000000 !important;">PhonePe UPI</strong>
+                        <span class="m-label">Payment Mode:</span>
+                        <strong class="m-val" id="rcptMode">PhonePe UPI</strong>
                     </div>
                 </div>
 
-                <!-- Student Information Grid (Full Details - High Contrast Pure Black Ink) -->
-                <div class="receipt-student-grid" style="background: #ffffff !important; border: 2px solid #0f172a !important;">
-                    <div class="s-info-item" style="background: #f8fafc !important; border: 1.5px solid #cbd5e1 !important; border-left: 4px solid #0000cc !important;">
-                        <span class="s-lbl" style="color: #0f172a !important; font-weight: 800 !important; -webkit-text-fill-color: #0f172a !important;">Student Name:</span>
-                        <strong class="s-data" id="rcptName" style="color: #000000 !important; font-weight: 800 !important; -webkit-text-fill-color: #000000 !important; font-size: 14px !important;">Aparanjitha A.C.Ancy</strong>
+                <!-- Student Information Grid (Fitted 2-Column Layout - Like Previous, Pure Black Visible Font) -->
+                <div class="receipt-student-grid">
+                    <div class="s-info-item">
+                        <span class="s-lbl">Student Name:</span>
+                        <strong class="s-data" id="rcptName">Uday Kumar Thati</strong>
                     </div>
-                    <div class="s-info-item" style="background: #f8fafc !important; border: 1.5px solid #cbd5e1 !important; border-left: 4px solid #0000cc !important;">
-                        <span class="s-lbl" style="color: #0f172a !important; font-weight: 800 !important; -webkit-text-fill-color: #0f172a !important;">Hall Ticket / Roll No:</span>
-                        <strong class="s-data" id="rcptRoll" style="color: #000000 !important; font-weight: 800 !important; -webkit-text-fill-color: #000000 !important; font-size: 14px !important;">24QA1A0501</strong>
+                    <div class="s-info-item">
+                        <span class="s-lbl">Hall Ticket / Roll No:</span>
+                        <strong class="s-data" id="rcptRoll">24QA1A05G9</strong>
                     </div>
-                    <div class="s-info-item" style="background: #f8fafc !important; border: 1.5px solid #cbd5e1 !important; border-left: 4px solid #0000cc !important;">
-                        <span class="s-lbl" style="color: #0f172a !important; font-weight: 800 !important; -webkit-text-fill-color: #0f172a !important;">Academic Program:</span>
-                        <strong class="s-data" id="rcptBranch" style="color: #000000 !important; font-weight: 800 !important; -webkit-text-fill-color: #000000 !important;">B.Tech - Computer Science & Engineering (CSE)</strong>
+                    <div class="s-info-item">
+                        <span class="s-lbl">Branch / Department:</span>
+                        <strong class="s-data" id="rcptBranch">Computer Science &amp; Engineering (CSE)</strong>
                     </div>
-                    <div class="s-info-item" style="background: #f8fafc !important; border: 1.5px solid #cbd5e1 !important; border-left: 4px solid #0000cc !important;">
-                        <span class="s-lbl" style="color: #0f172a !important; font-weight: 800 !important; -webkit-text-fill-color: #0f172a !important;">Academic Batch:</span>
-                        <strong class="s-data" id="rcptBatch" style="color: #000000 !important; font-weight: 800 !important; -webkit-text-fill-color: #000000 !important;">2024 - 2028</strong>
+                    <div class="s-info-item">
+                        <span class="s-lbl">Mobile Number:</span>
+                        <strong class="s-data" id="rcptMobile">+91-9848000167</strong>
                     </div>
-                    <div class="s-info-item" style="background: #f8fafc !important; border: 1.5px solid #cbd5e1 !important; border-left: 4px solid #0000cc !important;">
-                        <span class="s-lbl" style="color: #0f172a !important; font-weight: 800 !important; -webkit-text-fill-color: #0f172a !important;">Class Section:</span>
-                        <strong class="s-data" id="rcptSection" style="color: #000000 !important; font-weight: 800 !important; -webkit-text-fill-color: #000000 !important;">Section A (501 to 560)</strong>
-                    </div>
-                    <div class="s-info-item" style="background: #f8fafc !important; border: 1.5px solid #cbd5e1 !important; border-left: 4px solid #0000cc !important;">
-                        <span class="s-lbl" style="color: #0f172a !important; font-weight: 800 !important; -webkit-text-fill-color: #0f172a !important;">Admission Quota:</span>
-                        <strong class="s-data" id="rcptQuota" style="color: #000000 !important; font-weight: 800 !important; -webkit-text-fill-color: #000000 !important;">Convenor Quota (EAPCET)</strong>
-                    </div>
-                    <div class="s-info-item" style="background: #f8fafc !important; border: 1.5px solid #cbd5e1 !important; border-left: 4px solid #0000cc !important;">
-                        <span class="s-lbl" style="color: #0f172a !important; font-weight: 800 !important; -webkit-text-fill-color: #0f172a !important;">Mobile Number:</span>
-                        <strong class="s-data" id="rcptMobile" style="color: #000000 !important; font-weight: 800 !important; -webkit-text-fill-color: #000000 !important;">+91-9848000000</strong>
-                    </div>
-                    <div class="s-info-item" style="background: #f8fafc !important; border: 1.5px solid #cbd5e1 !important; border-left: 4px solid #0000cc !important;">
-                        <span class="s-lbl" style="color: #0f172a !important; font-weight: 800 !important; -webkit-text-fill-color: #0f172a !important;">College Email:</span>
-                        <strong class="s-data" id="rcptEmail" style="color: #000000 !important; font-weight: 800 !important; -webkit-text-fill-color: #000000 !important;">24QA1A0501@b-iet.ac.in</strong>
-                    </div>
+                    <!-- Extended details present for scripts without breaking layout -->
+                    <span id="rcptBatch" style="display:none;">2024 - 2028</span>
+                    <span id="rcptSection" style="display:none;">Section C</span>
+                    <span id="rcptQuota" style="display:none;">Convenor Quota (EAPCET)</span>
+                    <span id="rcptEmail" style="display:none;">24QA1A05G9@b-iet.ac.in</span>
                 </div>
 
                 <!-- Receipt Table -->

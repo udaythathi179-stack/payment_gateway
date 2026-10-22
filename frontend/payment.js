@@ -3026,7 +3026,7 @@ const PaymentState = {
 const UPI_CONFIG = {
     vpa: 'brilcollege@sbi',
     name: 'Brilliant Institute of Engineering and Technology',
-    merchantCode: '8220' // Educational Services
+    merchantCode: '' // Left blank to prevent NPCI unverified merchant rejection on UPI apps
 };
 
 // Initialize on DOM Ready
@@ -4194,11 +4194,22 @@ function updateAmountDisplays() {
     if (modalFeeTitle) modalFeeTitle.textContent = PaymentState.purpose;
 }
 
+// Build Standard NPCI UPI Query Parameters (clean format without invalid merchant codes)
+function generateUpiQueryParams() {
+    const encodedName = encodeURIComponent(UPI_CONFIG.name);
+    const roll = PaymentState.student?.roll || 'Student';
+    const purpose = PaymentState.purpose || 'Fee Payment';
+    const encodedNote = encodeURIComponent(`${roll} - ${purpose}`);
+    const orderRef = PaymentState.orderId ? encodeURIComponent(PaymentState.orderId) : '';
+    let params = `pa=${encodeURIComponent(UPI_CONFIG.vpa)}&pn=${encodedName}&am=${PaymentState.amount}&cu=INR&tn=${encodedNote}`;
+    if (orderRef) params += `&tr=${orderRef}`;
+    if (UPI_CONFIG.merchantCode) params += `&mc=${encodeURIComponent(UPI_CONFIG.merchantCode)}`;
+    return params;
+}
+
 // Generate Standard National UPI URI String
 function generateUpiString() {
-    const encodedName = encodeURIComponent(UPI_CONFIG.name);
-    const encodedNote = encodeURIComponent(`${PaymentState.student.roll} - ${PaymentState.purpose}`);
-    return `upi://pay?pa=${UPI_CONFIG.vpa}&pn=${encodedName}&mc=${UPI_CONFIG.merchantCode}&tid=${PaymentState.orderId}&tr=${PaymentState.orderId}&tn=${encodedNote}&am=${PaymentState.amount}&cu=INR`;
+    return `upi://pay?${generateUpiQueryParams()}`;
 }
 
 // Helper to safely render QR code regardless of library variation
@@ -4312,6 +4323,9 @@ function openPaymentModal() {
     renderModalQrCode();
     startModalTimer();
 
+    const statusCard = document.getElementById('mobileUpiStatusCard');
+    if (statusCard) statusCard.style.display = 'none';
+
     document.getElementById('paymentGatewayModal').classList.add('open');
 }
 
@@ -4319,6 +4333,9 @@ function openPaymentModal() {
 function closePaymentModal() {
     document.getElementById('paymentGatewayModal').classList.remove('open');
     if (PaymentState.countdownInterval) clearInterval(PaymentState.countdownInterval);
+
+    const statusCard = document.getElementById('mobileUpiStatusCard');
+    if (statusCard) statusCard.style.display = 'none';
 }
 
 // Switch Gateway Tabs
@@ -4369,31 +4386,137 @@ function startModalTimer() {
     }, 1000);
 }
 
-// Execute Payment with Specific App (PhonePe, Google Pay, Paytm)
+// Build platform-specific deep link for Android / iOS
+function buildAppDeepLink(appName) {
+    const isAndroid = /Android/i.test(navigator.userAgent);
+    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+    const queryParams = generateUpiQueryParams();
+
+    if (isAndroid) {
+        if (appName === 'PhonePe') {
+            // Official Android Intent for PhonePe app
+            return `intent://pay?${queryParams}#Intent;scheme=upi;package=com.phonepe.app;end`;
+        } else if (appName === 'Google Pay' || appName === 'GPay') {
+            // Official Android Intent for Google Pay app
+            return `intent://pay?${queryParams}#Intent;scheme=upi;package=com.google.android.apps.nbu.paisa.user;end`;
+        } else if (appName === 'Paytm') {
+            // Official Android Intent for Paytm app
+            return `intent://pay?${queryParams}#Intent;scheme=upi;package=net.one97.paytm;end`;
+        } else {
+            // Universal UPI Chooser for any installed app
+            return `upi://pay?${queryParams}`;
+        }
+    } else if (isIOS) {
+        if (appName === 'PhonePe') {
+            return `phonepe://pay?${queryParams}`;
+        } else if (appName === 'Google Pay' || appName === 'GPay') {
+            return `gpay://upi/pay?${queryParams}`;
+        } else if (appName === 'Paytm') {
+            return `paytmmp://pay?${queryParams}`;
+        } else {
+            return `upi://pay?${queryParams}`;
+        }
+    }
+
+    // Default fallback
+    return `upi://pay?${queryParams}`;
+}
+
+// Safely launch URI without triggering net::ERR_UNKNOWN_URL_SCHEME browser crash
+function safeLaunchUri(uri, onFallback) {
+    let appLaunched = false;
+
+    const blurOrHideHandler = () => {
+        appLaunched = true;
+    };
+
+    window.addEventListener('blur', blurOrHideHandler, { once: true });
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) appLaunched = true;
+    }, { once: true });
+
+    // Invisible temporary anchor prevents browser address bar navigation error
+    const link = document.createElement('a');
+    link.href = uri;
+    link.style.display = 'none';
+    link.setAttribute('rel', 'noopener noreferrer');
+    document.body.appendChild(link);
+
+    try {
+        link.click();
+    } catch (e) {
+        console.warn('Safe URI launch error:', e);
+    } finally {
+        setTimeout(() => {
+            if (link.parentNode) link.parentNode.removeChild(link);
+        }, 500);
+    }
+
+    // Check after 1.8 seconds if user was not switched to external app
+    setTimeout(() => {
+        if (!appLaunched && document.visibilityState === 'visible') {
+            if (typeof onFallback === 'function') {
+                onFallback();
+            }
+        }
+    }, 1800);
+}
+
+// Show Mobile UPI Status Card
+function showMobileUpiStatus(appName) {
+    const card = document.getElementById('mobileUpiStatusCard');
+    const title = document.getElementById('upiStatusTitle');
+    const desc = document.getElementById('upiStatusDesc');
+
+    if (card && title && desc) {
+        title.textContent = `Opening ${appName}...`;
+        desc.textContent = `Connecting to ${appName} for ₹${PaymentState.amount.toLocaleString('en-IN')}. Approve the transaction in your app or choose an option below:`;
+        card.style.display = 'block';
+        card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+}
+
+// Handle Mobile Fallback when App is Not Installed or Launch is Blocked
+function handleMobileUpiFallback(appName) {
+    const title = document.getElementById('upiStatusTitle');
+    const desc = document.getElementById('upiStatusDesc');
+
+    if (title && desc) {
+        title.textContent = `Unable to launch ${appName} directly`;
+        desc.textContent = `If ${appName} is not installed or your browser blocked direct opening, choose an option below to proceed:`;
+    }
+}
+
+// Confirm Mobile Payment Success
+function confirmMobilePaymentSuccess() {
+    const mode = PaymentState.selectedPaymentMode || 'UPI Mobile';
+    showProcessingModal('Verifying Payment Ledger...', 'Reconciling transaction with college fee database...');
+    setTimeout(() => {
+        simulatePaymentSuccess(mode);
+    }, 1500);
+}
+
+// Execute Payment with Specific App (PhonePe, Google Pay, Paytm, Any UPI)
 function executeAppPayment(appName) {
     PaymentState.selectedPaymentMode = `${appName} UPI`;
 
     const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-    const upiUri = generateUpiString();
+    const deepLink = buildAppDeepLink(appName);
 
     if (isMobile) {
-        let appScheme = upiUri;
-        if (appName === 'PhonePe') {
-            appScheme = upiUri.replace('upi://', 'phonepe://');
-        } else if (appName === 'Paytm') {
-            appScheme = upiUri.replace('upi://', 'paytmmp://');
-        }
+        // Show in-modal status & fallback card
+        showMobileUpiStatus(appName);
 
-        window.location.href = appScheme;
-
-        setTimeout(() => {
-            showProcessingModal(`Waiting for approval on ${appName}...`, `Please approve the payment request of ₹${PaymentState.amount.toLocaleString('en-IN')} on ${appName}`);
-            setTimeout(() => {
-                simulatePaymentSuccess(`${appName} App`);
-            }, 3500);
-        }, 1000);
+        // Safe launch without crashing browser to ERR_UNKNOWN_URL_SCHEME
+        safeLaunchUri(deepLink, () => {
+            handleMobileUpiFallback(appName);
+        });
     } else {
-        showProcessingModal(`Connecting to ${appName} Gateway...`, `Forwarding authorization request for ₹${PaymentState.amount.toLocaleString('en-IN')}`);
+        // Desktop: show gateway processing modal & simulate success
+        showProcessingModal(
+            `Connecting to ${appName} Gateway...`,
+            `Forwarding authorization request for ₹${PaymentState.amount.toLocaleString('en-IN')}`
+        );
         setTimeout(() => {
             simulatePaymentSuccess(`${appName} UPI`);
         }, 2200);

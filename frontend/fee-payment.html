@@ -1157,6 +1157,38 @@
                                 </div>
                                 <button type="button" class="btn-app-pay">Pay with Paytm</button>
                             </div>
+
+                            <!-- Any UPI App (Universal Intent / BHIM / CRED / Navi) -->
+                            <div class="modal-app-choice" onclick="executeAppPayment('Any UPI App')">
+                                <div class="choice-icon any-color"><i class="fas fa-bolt"></i></div>
+                                <div class="choice-text">
+                                    <strong>Any UPI App</strong>
+                                    <span>Open BHIM, CRED, Navi &amp; All Apps</span>
+                                </div>
+                                <button type="button" class="btn-app-pay">Open UPI App</button>
+                            </div>
+                        </div>
+
+                        <!-- Mobile UPI Launch Status & Fallback Helper -->
+                        <div id="mobileUpiStatusCard" class="mobile-upi-status-card" style="display: none;">
+                            <div class="upi-status-header">
+                                <div class="upi-status-spinner"><i class="fas fa-circle-notch fa-spin"></i></div>
+                                <div class="upi-status-text">
+                                    <strong id="upiStatusTitle">Launching Payment App...</strong>
+                                    <p id="upiStatusDesc">Please approve the payment request in your UPI app.</p>
+                                </div>
+                            </div>
+                            <div class="upi-fallback-actions">
+                                <button type="button" class="btn-upi-fallback" onclick="executeAppPayment('Any UPI App')">
+                                    <i class="fas fa-mobile-screen-button"></i> Try Any UPI App
+                                </button>
+                                <button type="button" class="btn-upi-fallback" onclick="switchGatewayTab('qr')">
+                                    <i class="fas fa-qrcode"></i> Scan Dynamic QR
+                                </button>
+                                <button type="button" class="btn-upi-complete" onclick="confirmMobilePaymentSuccess()">
+                                    <i class="fas fa-check-circle"></i> I Completed Payment / Verify
+                                </button>
+                            </div>
                         </div>
 
                         <div class="or-divider"><span>OR ENTER ANY UPI ID (VPA)</span></div>

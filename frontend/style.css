@@ -1460,6 +1460,127 @@ body {
 .pp-color { background: var(--phonepe-purple); }
 .gp-color { background: #ffffff; border: 2px solid #e2e8f0; color: var(--gpay-blue); }
 .pt-color { background: var(--paytm-cyan); }
+.any-color { background: linear-gradient(135deg, #0d9488, #047857); }
+
+.mobile-upi-status-card {
+    background: #f0fdf4;
+    border: 1.5px solid #86efac;
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin: 16px 0;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.08);
+    animation: fadeInSlide 0.3s ease-out;
+}
+
+[data-theme="dark"] .mobile-upi-status-card {
+    background: #064e3b;
+    border-color: #059669;
+}
+
+.upi-status-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.upi-status-spinner {
+    font-size: 22px;
+    color: #16a34a;
+}
+
+[data-theme="dark"] .upi-status-spinner {
+    color: #4ade80;
+}
+
+.upi-status-text strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    color: #14532d;
+}
+
+[data-theme="dark"] .upi-status-text strong {
+    color: #dcfce7;
+}
+
+.upi-status-text p {
+    margin: 2px 0 0 0;
+    font-size: 12px;
+    color: #166534;
+    line-height: 1.4;
+}
+
+[data-theme="dark"] .upi-status-text p {
+    color: #bbf7d0;
+}
+
+.upi-fallback-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed rgba(22, 163, 74, 0.3);
+}
+
+.btn-upi-fallback {
+    flex: 1;
+    min-width: 130px;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    color: #1e293b;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all 0.2s;
+}
+
+.btn-upi-fallback:hover {
+    background: #f1f5f9;
+    border-color: #94a3b8;
+}
+
+[data-theme="dark"] .btn-upi-fallback {
+    background: #1e293b;
+    border-color: #334155;
+    color: #f1f5f9;
+}
+
+[data-theme="dark"] .btn-upi-fallback:hover {
+    background: #334155;
+}
+
+.btn-upi-complete {
+    flex: 1;
+    min-width: 170px;
+    background: linear-gradient(135deg, #16a34a, #15803d);
+    color: #ffffff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    box-shadow: 0 2px 6px rgba(22, 163, 74, 0.25);
+    transition: all 0.2s;
+}
+
+.btn-upi-complete:hover {
+    background: linear-gradient(135deg, #15803d, #166534);
+    transform: translateY(-1px);
+}
+
 
 .choice-text {
     flex: 1;
